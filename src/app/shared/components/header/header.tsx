@@ -9,19 +9,24 @@ const Header = () => {
     }
 
     return (
-        <Segment inverted >
+        <Segment inverted>
             <Menu inverted pointing secondary>
-                <Menu.Item name='cronograma' active={activeItem === 'cronograma'} onClick={() => handleItemClick('cronograma')} />
                 <Menu.Item
-                    name='messages'
-                    active={activeItem === 'messages'}
-                    onClick={() => handleItemClick('messages')}
-                />
+                    name='chronos'
+                    active={activeItem === 'Chronos'}
+                    onClick={() => handleItemClick('Chronos')} />
                 <Menu.Item
-                    name='friends'
-                    active={activeItem === 'friends'}
-                    onClick={() => handleItemClick('friends')}
+                    name='cronogramas'
+                    active={activeItem === 'cronogramas'}
+                    onClick={() => handleItemClick('cronogramas')}
                 />
+                <Menu.Menu position='right'>
+                    <Menu.Item
+                        name='entrar'
+                        active={activeItem === 'entrar'}
+                        onClick={() => handleItemClick('entrar')}
+                    />
+                </Menu.Menu>
             </Menu>
         </Segment>
 
