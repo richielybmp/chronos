@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Menu, Segment } from 'semantic-ui-react'
+import { Menu, Segment, Button } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
     const [activeItem, setActiveItem] = useState('cronograma')
@@ -12,6 +13,8 @@ const Header = () => {
         <Segment inverted>
             <Menu inverted pointing secondary>
                 <Menu.Item
+                    as={Link}
+                    to={`${process.env.PUBLIC_URL}/`}
                     name='chronos'
                     active={activeItem === 'Chronos'}
                     onClick={() => handleItemClick('Chronos')} />
@@ -21,11 +24,16 @@ const Header = () => {
                     onClick={() => handleItemClick('cronogramas')}
                 />
                 <Menu.Menu position='right'>
-                    <Menu.Item
-                        name='entrar'
-                        active={activeItem === 'entrar'}
-                        onClick={() => handleItemClick('entrar')}
-                    />
+                    {/* futuramente o link irá mudar para a página de login e o login redireciona para o /cronograma */}
+                    <Button basic inverted
+                        as={Link}
+                        to={`${process.env.PUBLIC_URL}/cronograma`}
+                    >
+                        Entrar
+                    </Button>
+                    <Button basic inverted>
+                        Cadastrar
+                    </Button>
                 </Menu.Menu>
             </Menu>
         </Segment>
