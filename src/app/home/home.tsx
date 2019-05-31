@@ -1,30 +1,22 @@
 import React from 'react'
-import { Route, Switch, Link } from 'react-router-dom';
-import Header from '../shared/components/header/header';
-import Disciplinas from '../core/disciplinas';
-import { Button } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
+import { Route } from 'react-router-dom';
+import Header from '../shared/components/header/Header';
+import Disciplinas from '../core/Disciplinas';
+import Main from '../core/Main';
 
-function HomeContent({ match }: any) {
-    return (
-        <>
-            <Button as={Link} to={`${match.url}/disciplinas`}>
-                Disciplinas
-            </Button>
-            <h3>Hi from Home Content</h3>
-        </>
-    )
-}
+const Home = ({ match }: any) => { //assume main component.
+    console.log(match);
 
-function Home({ match }: any) {
     return (
         <>
             <Header />
-            <Switch>
-                <Route path={`${match.url}/`} exact={true} component={HomeContent} />
-                <Route path={`${match.url}/disciplinas`} exact={true} component={Disciplinas} />
-            </Switch>
+            <Container text style={{ marginTop: '7em' }}>
+                <Route path={`${match.url}`} exact component={Main} ></Route>
+                <Route path={`${match.url}/disciplinas`} exact component={Disciplinas}></Route>
+            </Container>
         </>
     )
-}
+};
 
 export default Home

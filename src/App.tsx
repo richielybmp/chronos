@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Image } from 'semantic-ui-react';
-import Footer from './app/shared/components/footer/footer';
-import Header from './app/shared/components/header/header';
+import Footer from './app/shared/components/footer/Footer';
+import Header from './app/shared/components/header/Header';
 
 const App: React.FC = () => {
   return (
