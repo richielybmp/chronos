@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => (
     <Grid textAlign='center' verticalAlign='middle' style={{
@@ -24,7 +25,12 @@ const LoginForm = () => (
                         type='password'
                     />
 
-                    <Button color='teal' fluid size='large'>
+                    <Button
+                        color='teal'
+                        fluid
+                        size='large'
+                        as={Link}
+                        to={`${process.env.PUBLIC_URL}/cronograma`}>
                         Login
                     </Button>
                 </Segment>
