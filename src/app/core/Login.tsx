@@ -1,10 +1,12 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
+import logo from '../../assets/images/logo.png'
+import bgimage from '../../assets/images/study-login-bg.png'
 
 const LoginForm = () => (
     <Grid textAlign='center' verticalAlign='middle' style={{
-        backgroundImage: "url(" + "https://www.pixelstalk.net/wp-content/uploads/2016/11/Education-Wallpapers-HD-Free-Download.jpg" + ")",
+        backgroundImage: "url(" + bgimage + ")",
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
@@ -12,7 +14,7 @@ const LoginForm = () => (
     }}>
         <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='teal' textAlign='center'>
-                <Image src='https://react.semantic-ui.com/logo.png' /> Log-in to your account
+                <Image src={logo} /> Log-in to your account
             </Header>
             <Form size='large'>
                 <Segment stacked>
@@ -30,7 +32,7 @@ const LoginForm = () => (
                         fluid
                         size='large'
                         as={Link}
-                        to={`${process.env.PUBLIC_URL}/cronograma`}>
+                        to={`${process.env.PUBLIC_URL}/cronogramas`}>
                         Login
                     </Button>
                 </Segment>

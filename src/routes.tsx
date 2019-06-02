@@ -8,7 +8,7 @@ const createIndexRoutes = () => (
     <BrowserRouter>
         <Switch>
             <Route path={`${process.env.PUBLIC_URL}/`} exact={true} component={App} />
-            <Route path={`${process.env.PUBLIC_URL}/cronograma`} component={Home} />
+            <Route path={`${process.env.PUBLIC_URL}/cronogramas`} component={Home} />
             <Route path={`${process.env.PUBLIC_URL}/entrar`} component={LoginForm} />
         </Switch>
     </BrowserRouter>
