@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import { Responsive, Segment, Menu, Container, Button, Sidebar, Icon } from 'semantic-ui-react';
 import HomePageHeading from './HomePageHeading';
 import { Link } from 'react-router-dom';
+import Utils from '../utils/utils'
 
-const getScreenWidth = (): any => {
-    const isSSR = typeof window === 'undefined'
-
-    return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
-}
+const larguraTablet = Responsive.onlyTablet.minWidth
 
 
 class MobileContainer extends Component {
@@ -24,7 +21,7 @@ class MobileContainer extends Component {
         return (
             <Responsive
                 as={Sidebar.Pushable}
-                getWidth={getScreenWidth}
+                getWidth={() => Utils.getScreenWidth(larguraTablet)}
                 maxWidth={Responsive.onlyMobile.maxWidth}
             >
                 <Sidebar

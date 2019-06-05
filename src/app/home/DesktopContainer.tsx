@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import { Responsive, Visibility, Segment, Menu, Container, Button } from 'semantic-ui-react';
 import HomePageHeading from './HomePageHeading';
 import { Link } from 'react-router-dom';
+import Utils from '../utils/utils'
 
-const getScreenWidth = (): any => {
-    const isSSR = typeof window === 'undefined'
-
-    return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
-}
+const larguraTablet = Responsive.onlyTablet.minWidth
 
 class DesktopContainer extends Component {
     state: any = {}
@@ -20,7 +17,7 @@ class DesktopContainer extends Component {
         const { fixed } = this.state
 
         return (
-            <Responsive getWidth={getScreenWidth} minWidth={Responsive.onlyTablet.minWidth}>
+            <Responsive getWidth={() => Utils.getScreenWidth(larguraTablet)} minWidth={Responsive.onlyTablet.minWidth}>
                 <Visibility
                     once={false}
                     onBottomPassed={this.showFixedMenu}

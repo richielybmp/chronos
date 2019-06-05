@@ -1,13 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Card } from 'semantic-ui-react';
 import DisciplinaCard from '../shared/components/cards/DisciplinaCard';
 import cronogramas from '../utils/mock-disciplinas'
 
-function CronogramaList({ match }: any) {
+function CronogramaList() {
+
+    const [listaDeCronogramas, setListaDeCronogramas] = useState(cronogramas);
+
     return (
         <>
             <Card.Group>
-                {cronogramas.map((item, index) => {
+                {listaDeCronogramas.map((item, index) => {
                     return (
                         <DisciplinaCard key={index} disciplina={item} />
                     )
