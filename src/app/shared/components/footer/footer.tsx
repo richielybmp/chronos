@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment, Image, Container, Grid, Header, List, Divider } from 'semantic-ui-react'
+import { Segment, Container, Grid, Header, List, Divider } from 'semantic-ui-react'
 
 const Footer = () => {
     return (
@@ -24,20 +24,19 @@ const Footer = () => {
                 </Grid>
 
                 <Divider inverted section />
-                <Image centered size='mini' src='/logo.png' />
                 <List horizontal inverted divided link size='small'>
                     <List.Item as='a' href='#'>
                         Site Map
-          </List.Item>
+                    </List.Item>
                     <List.Item as='a' href='#'>
                         Contact Us
-          </List.Item>
+                    </List.Item>
                     <List.Item as='a' href='#'>
                         Terms and Conditions
-          </List.Item>
+                    </List.Item>
                     <List.Item as='a' href='#'>
                         Privacy Policy
-          </List.Item>
+                    </List.Item>
                 </List>
             </Container>
         </Segment>

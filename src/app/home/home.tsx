@@ -1,21 +1,28 @@
 import React from 'react'
-import { Route } from 'react-router-dom';
-import Header from '../shared/components/header/Header';
-import Disciplinas from '../core/Disciplinas';
-import Main from '../core/Main';
-import Cronograma from '../core/Cronograma';
+import { ReactNodeLike } from 'prop-types'
+import DesktopContainer from './DesktopContainer';
+import MobileContainer from './MobileContainer';
+import SegmentMock from '../shared/components/mock/SegmentMock';
 
-const Home = ({ match }: any) => { //assume main component.
+interface ResponsiveContainerProps {
+    children: ReactNodeLike,
+}
+
+const ResponsiveContainer = ({ children }: ResponsiveContainerProps) => (
+    <div>
+        <DesktopContainer>{children}</DesktopContainer>
+        <MobileContainer>{children}</MobileContainer>
+    </div>
+)
+
+function Home() {
     return (
-        <>
-            <Header />
-            <div style={{ marginTop: '7em', }}>
-                <Route path={`${match.url}`} exact component={Main} ></Route>
-                <Route path={`${match.url}/:id`} exact component={Cronograma}></Route>
-                <Route path={`${match.url}/disciplinas`} exact component={Disciplinas}></Route>
-            </div>
-        </>
+        <ResponsiveContainer>
+            <SegmentMock />
+            <SegmentMock />
+            <SegmentMock />
+        </ResponsiveContainer>
     )
-};
+}
 
 export default Home

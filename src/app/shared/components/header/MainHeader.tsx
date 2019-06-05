@@ -1,8 +1,8 @@
 import React from 'react'
-import { Menu, Button, Container, Image } from 'semantic-ui-react'
+import { Menu, Container, Image, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-const Header = () => {
+const MainHeader = () => {
     return (
         <>
             <Menu fixed='top' inverted>
@@ -15,14 +15,10 @@ const Header = () => {
                         Chronos
                     </Menu.Item>
                     <Menu.Menu position='right'>
-                        {/* futuramente o link irá mudar para a página de login e o login redireciona para o /cronograma */}
                         <Menu.Item >
-                            <Button basic inverted
-                                as={Link}
-                                to={`${process.env.PUBLIC_URL}/entrar`}
-                            >
-                                Entrar
-                            </Button>
+                            <Header as='h2'>
+                                <Image circular src='https://react.semantic-ui.com/images/avatar/large/patrick.png' />
+                            </Header>
                         </Menu.Item>
                     </Menu.Menu>
                 </Container>
@@ -31,4 +27,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default MainHeader

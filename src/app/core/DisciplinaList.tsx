@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-function Disciplinas({ match }: any) {
+function DisciplinasList({ match }: any) {
     const id = match.params.id;
     console.log(id);
 
@@ -13,9 +13,9 @@ function Disciplinas({ match }: any) {
             >
                 Home Cronogramas
             </Button>
-            <h3>Hi from Disciplinas</h3>
+            <h3>DisciplinasList</h3>
         </>
     )
 }
 
-export default Disciplinas
+export default DisciplinasList

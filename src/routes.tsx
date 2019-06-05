@@ -1,15 +1,15 @@
 import React from 'react'
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import Home from './app/home/Home';
 import App from './App';
-import LoginForm from './app/core/Login';
+import CronogramaList from './app/core/Main';
+import Login from './app/core/Login';
 
 const createIndexRoutes = () => (
     <BrowserRouter>
         <Switch>
-            <Route path={`${process.env.PUBLIC_URL}/`} exact={true} component={App} />
-            <Route path={`${process.env.PUBLIC_URL}/cronogramas`} component={Home} />
-            <Route path={`${process.env.PUBLIC_URL}/entrar`} component={LoginForm} />
+            <Route path={`${process.env.PUBLIC_URL}/`} exact component={App} />
+            <Route path={`${process.env.PUBLIC_URL}/cronogramas`} component={CronogramaList} />
+            <Route path={`${process.env.PUBLIC_URL}/entrar`} component={Login} />
         </Switch>
     </BrowserRouter>
 );

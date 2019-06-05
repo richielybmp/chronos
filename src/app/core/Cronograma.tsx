@@ -13,7 +13,7 @@ function Cronograma({ match }: any) {
             >
                 Home Cronogramas
             </Button>
-            <h3>Hi from Cronograma Detail</h3>
+            <h3>Cronograma {id}</h3>
         </>
     )
 }
