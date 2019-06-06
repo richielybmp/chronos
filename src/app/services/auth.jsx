@@ -14,7 +14,4 @@ export const logout = () => {
 
 };
 
-// export const refreshToken = () => {
-//   localStorage.setItem(TOKEN_KEY, getToken());
-// };
 

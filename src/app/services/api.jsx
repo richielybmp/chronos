@@ -3,8 +3,7 @@ import { getToken, logout, TOKEN_KEY } from './auth';
 
 
 const api = axios.create({
-  // baseURL: "http://localhost:8000"
-  baseURL: "http://api.vizzarconsultoria.com"
+  baseURL: "http://localhost:8000"
 });
 
 api.interceptors.request.use(async config => {
