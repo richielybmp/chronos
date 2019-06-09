@@ -4,7 +4,8 @@ import { Cronograma } from "../domain";
 import { chronosReducer } from "../adapters/redux/chronos";
 
 export type ChronosState = {
-    cronogramas: Cronograma[]
+    cronogramas: Cronograma[],
+    cronogramaOnDetail: Cronograma,
 }
 
 const reducers = {

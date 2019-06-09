@@ -1,21 +1,27 @@
 import React from 'react'
-import { Card, Button, Header, Icon } from 'semantic-ui-react';
-import { Cronograma, ChronosState, addCronogramaAction, chronosSelector } from 'core';
+import { Card, Button } from 'semantic-ui-react';
+import { Cronograma, ChronosState, cronogramasSelector, setOnDetailAction } from 'core';
 import { connect } from 'react-redux';
 import CronogramaCard from '../shared/components/cards/CronogramaCard';
 import { Link } from 'react-router-dom';
+import { EmptyHeader } from '../shared/components/header/EmptyHeader';
 
 interface Props {
     cronogramas: Cronograma[];
     match: any,
+    setOnDetailAction: (id: string) => void,
 }
 
 export const CronogramaList = (props: Props) => {
 
+
+    const handleCronogramaOnDetail = (id: string) => {
+        props.setOnDetailAction(id);
+    }
+
     const hasCronogramas = props.cronogramas.length > 0;
     return (
         <>
-
             {hasCronogramas ? (
                 <>
                     <Button
@@ -29,29 +35,25 @@ export const CronogramaList = (props: Props) => {
 
                     <Card.Group>
                         {props.cronogramas.map((item, index) => {
-                            console.log(index, item)
                             return (
-                                <CronogramaCard key={index} cronograma={item} />
+                                <CronogramaCard
+                                    key={index}
+                                    cronograma={item}
+                                    setOnDetail={() => {
+                                        return handleCronogramaOnDetail(item.codigo);
+                                    }}
+                                />
                             )
                         })}
                     </Card.Group>
                 </>)
                 :
-                <Header as='h2' icon textAlign='center'>
-                    <Icon name='settings' />
-                    Você ainda não possui nenhum cronograma
-                    <Header.Subheader>Comece criando seu primeiro plano de estudos.</Header.Subheader>
-                    <br />
-                    <Button
-                        as={Link}
-                        to={`${props.match.url}/novo-cronograma`}
-                        size='large'
-                        color='blue'
-                    // onClick={addCronograma}
-                    >
-                        Novo Cronograma
-                    </Button>
-                </Header>
+                <EmptyHeader
+                    icon='table'
+                    title='Você ainda não possui nenhum cronograma'
+                    subtitle='Comece criando seu primeiro plano de estudos.'
+                    btnTitle="Novo cronograma"
+                    linkTo={`${props.match.url}/novo-cronograma`} />
             }
 
         </>
@@ -59,11 +61,11 @@ export const CronogramaList = (props: Props) => {
 }
 
 const mapStateToProps = (state: ChronosState) => ({
-    cronogramas: chronosSelector(state),
+    cronogramas: cronogramasSelector(state.cronogramas),
 });
 
 const mapDispatchToProps = {
-    addCronograma: addCronogramaAction,
+    setOnDetailAction: setOnDetailAction,
     match: {}
 };
 

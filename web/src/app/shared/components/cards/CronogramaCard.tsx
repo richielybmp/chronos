@@ -4,24 +4,26 @@ import { Link } from 'react-router-dom';
 import { Cronograma } from 'core';
 
 interface CronogramaCardProps {
-    cronograma: Cronograma
+    cronograma: Cronograma,
+    setOnDetail: () => void
 }
 
 function CronogramaCard(props: CronogramaCardProps) {
 
-    const { disciplinas, codigo, descricao } = props.cronograma
+    const { disciplinas, codigo, descricao, dataInicio } = props.cronograma
 
     return (
         <Card
             as={Link}
             to={`cronogramas/${codigo}`}
+            onClick={props.setOnDetail}
         >
             <Card.Content>
-                <Card.Header content={`${codigo} - ${descricao}`} />
+                <Card.Header content={descricao} />
                 <Card.Meta content={disciplinas.length + ' disciplinas'} />
-                <Card.Description content={descricao} />
+                <Card.Description content={dataInicio.toDateString()} />
             </Card.Content>
-        </Card>
+        </Card >
     )
 }
 

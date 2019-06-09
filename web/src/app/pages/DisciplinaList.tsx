@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 function DisciplinasList({ match }: any) {
     const id = match.params.id;
-    console.log(id);
 
     return (
         <>

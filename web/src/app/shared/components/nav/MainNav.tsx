@@ -2,7 +2,7 @@ import React from 'react'
 import { Menu, Container, Image, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-const MainHeader = () => {
+const MainNav = () => {
     return (
         <>
             <Menu fixed='top' inverted>
@@ -27,4 +27,4 @@ const MainHeader = () => {
     )
 }
 
-export default MainHeader
+export default MainNav

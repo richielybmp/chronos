@@ -1,9 +1,9 @@
 import React from 'react'
-import { Route } from 'react-router-dom';
-import Header from '../shared/components/header/MainHeader';
+import { Route, Switch } from 'react-router-dom';
+import Header from '../shared/components/nav/MainNav';
 import Cronograma from './Cronograma';
 import CronogramaList from './CronogramaList';
-import NewCronogramaForm from './NewCronogramaForm';
+import NewCronogramaForm from './forms/NewCronogramaForm';
 
 const Main = ({ match }: any) => {
     return (
@@ -11,10 +11,12 @@ const Main = ({ match }: any) => {
             <Header />
             <div style={{ marginTop: '7em' }}>
                 {/* <SidebarExampleTransitions> */}
-                <Route path={`${match.url}`} exact component={CronogramaList} />
-                <Route path={`${match.url}/:id`} exact component={Cronograma} />
-                <Route path={`${match.url}/novo-cronograma`} exact component={NewCronogramaForm} />
-                {/* </SidebarExampleTransitions> */}
+                <Switch>
+                    <Route path={`${match.url}`} exact component={CronogramaList} />
+                    <Route path={`${match.url}/novo-cronograma`} exact component={NewCronogramaForm} />
+                    <Route path={`${match.url}/:id`} component={Cronograma} />
+                    {/* </SidebarExampleTransitions> */}
+                </Switch>
             </div>
         </>
     )

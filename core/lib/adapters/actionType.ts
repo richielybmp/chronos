@@ -4,6 +4,7 @@ export enum EnumActionType {
     ADD_CRONOGRAMA = 'ADD_CRONOGRAMA',
     UPDATE_CRONOGRAMA = 'UPDATE_CRONOGRAMA',
     DELETE_CRONOGRAMA = 'DELETE_CRONOGRAMA',
+    SET_ON_DETAIL = 'SET_ON_DETAIL',
 }
 
 type ActionType = {
@@ -12,8 +13,8 @@ type ActionType = {
 };
 
 type ActionTypeID = {
+    id: string,
     type: string,
-    id: number,
 };
 
 export const addCronogramaAction = (cronograma: Cronograma): ActionType => ({
@@ -27,36 +28,12 @@ export const updateCronogramaAction = (cronograma: Cronograma): ActionType => ({
     cronograma: cronograma,
 });
 
-export const deleteCronogramaAction = (id: number): ActionTypeID => ({
+export const deleteCronogramaAction = (id: string): ActionTypeID => ({
     type: EnumActionType.DELETE_CRONOGRAMA,
     id: id,
 });
 
-
-
-
-// import { Cronograma } from "../Cronograma";
-
-// type ActionType = {
-//     type: string,
-//     item: Cronograma
-// };
-
-// const ADD_CRONOGRAMA = "ADD_CRONOGRAMA";
-// const UPDATE_CRONOGRAMA = "UPDATE_CRONOGRAMA";
-// const DELETE_CRONOGRAMA = "DELETE_CRONOGRAMA";
-
-// export const addCronograma = (item: Cronograma): ActionType => ({
-//     type: ADD_CRONOGRAMA,
-//     item,
-// });
-
-// export const updateCronograma = (item: Cronograma): ActionType => ({
-//     type: UPDATE_CRONOGRAMA,
-//     item,
-// });
-
-// export const deleteCronograma = (item: Cronograma): ActionType => ({
-//     type: DELETE_CRONOGRAMA,
-//     item,
-// });
+export const setOnDetailAction = (id: string): ActionTypeID => ({
+    type: EnumActionType.SET_ON_DETAIL,
+    id: id,
+});
