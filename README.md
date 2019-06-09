@@ -8,4 +8,5 @@ Projeto Final - Especialização Full Stack - Chronos
 
 ## Web project
 
+    $ yarn upgrade core
     $ yarn run start
