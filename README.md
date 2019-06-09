@@ -1,9 +1,11 @@
 # chronos
 Projeto Final - Especialização Full Stack - Chronos
 
-No projeto core
---yarn build
+## Core project
 
-No projeto web
---yarn upgrade core
---yarn run start
+    $ yarn build
+
+
+## Web project
+
+    $ yarn run start
