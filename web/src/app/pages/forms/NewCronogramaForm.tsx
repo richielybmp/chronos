@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
-import { Cronograma, addCronogramaAction, ChronosState } from 'core';
+import { Cronograma, CronogramaStateType } from 'core';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 
@@ -83,10 +83,10 @@ export const NewCronogramaForm = (props: Props) => {
     )
 }
 
-const mapStateToProps = (state: ChronosState) => ({});
+const mapStateToProps = (state: CronogramaStateType) => ({});
 
 const mapDispatchToProps = {
-    addCronograma: addCronogramaAction,
+    //addCronograma: addCronogramaAction,
     history: null,
     match: null,
 };

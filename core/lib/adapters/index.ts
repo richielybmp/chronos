@@ -1,2 +1,2 @@
 export * from './redux'
-export * from './actionType'
+export * from './actions/cronogramaActions'

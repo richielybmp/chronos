@@ -1,20 +1,20 @@
 import React from 'react'
 import { Button, Header, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { ChronosState, Cronograma, cronogramaOnDetailSelector } from 'core';
+import { Cronograma, CronogramaStateType } from 'core';
 import { connect } from 'react-redux';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
 
 interface Props {
     match: any,
-    cronograma: Cronograma,
+    cronograma: any,
 }
 
 export const CronogramaDetail = (props: Props) => {
-    const hasValue = props.cronograma != null
+    const hasValue = props.cronograma.cronograma != null
 
     if (hasValue) {
-        const { codigo, descricao } = props.cronograma
+        const { codigo, descricao } = props.cronograma.cronograma
         return (
             <>
                 <Button as={Link} to={`../cronogramas`}>
@@ -41,10 +41,11 @@ export const CronogramaDetail = (props: Props) => {
     }
 }
 
-const mapStateToProps = (state: ChronosState) => ({
-    cronograma: cronogramaOnDetailSelector(state.cronogramas)
-});
-
+const mapStateToProps = (state: any) => {
+    return {
+        cronograma: state.cronogramas.cronogramaOnDetail
+    }
+};
 const mapDispatchToProps = {};
 
 export default connect(

@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Header from '../shared/components/nav/MainNav';
 import Cronograma from './Cronograma';
-import CronogramaList from './CronogramaList';
+import CronogramaList from '../containers/CronogramaListContainer';
 import NewCronogramaForm from './forms/NewCronogramaForm';
 
 const Main = ({ match }: any) => {

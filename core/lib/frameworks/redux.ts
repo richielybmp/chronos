@@ -3,9 +3,16 @@ import { createLogger } from "redux-logger";
 import { Cronograma } from "../domain";
 import { chronosReducer } from "../adapters/redux/chronos";
 
-export type ChronosState = {
-    cronogramas: Cronograma[],
-    cronogramaOnDetail: Cronograma,
+export interface CronogramaState {
+    cronogramas: Cronograma[];
+    error: any;
+    loading: boolean;
+}
+
+export type CronogramaStateType = {
+    cronogramasList: CronogramaState,
+    novoCronograma: CronogramaState,
+    cronogramaOnDetail: CronogramaState,
 }
 
 const reducers = {

@@ -1,25 +1,37 @@
-import React from 'react'
-import { Card, Button } from 'semantic-ui-react';
-import { Cronograma, ChronosState, cronogramasSelector, setOnDetailAction } from 'core';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react'
+import { Card, Button, Dimmer, Loader } from 'semantic-ui-react';
 import CronogramaCard from '../shared/components/cards/CronogramaCard';
 import { Link } from 'react-router-dom';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
+import { CronogramaState, Cronograma } from 'core';
 
 interface Props {
-    cronogramas: Cronograma[];
+    cronogramaList: CronogramaState;
     match: any,
-    setOnDetailAction: (id: string) => void,
+    fetchCronogramas: () => void
+    fetchCronograma: (id: string) => void,
 }
 
-export const CronogramaList = (props: Props) => {
+const CronogramaList = (props: Props) => {
 
+    const { cronogramas, loading } = props.cronogramaList
+    const hasCronogramas = cronogramas.length > 0;
 
     const handleCronogramaOnDetail = (id: string) => {
-        props.setOnDetailAction(id);
+        props.fetchCronograma(id)
     }
 
-    const hasCronogramas = props.cronogramas.length > 0;
+    useEffect(() => {
+        props.fetchCronogramas()
+    }, [])
+
+
+    if (loading) {
+        return <Dimmer active inverted>
+            <Loader size='mini'>Loading</Loader>
+        </Dimmer>
+    }
+
     return (
         <>
             {hasCronogramas ? (
@@ -34,7 +46,7 @@ export const CronogramaList = (props: Props) => {
                     </Button>
 
                     <Card.Group>
-                        {props.cronogramas.map((item, index) => {
+                        {cronogramas.map((item: Cronograma, index) => {
                             return (
                                 <CronogramaCard
                                     key={index}
@@ -60,16 +72,4 @@ export const CronogramaList = (props: Props) => {
     )
 }
 
-const mapStateToProps = (state: ChronosState) => ({
-    cronogramas: cronogramasSelector(state.cronogramas),
-});
-
-const mapDispatchToProps = {
-    setOnDetailAction: setOnDetailAction,
-    match: {}
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(CronogramaList);
+export default CronogramaList
