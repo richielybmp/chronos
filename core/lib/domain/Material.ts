@@ -3,7 +3,7 @@ import { DtoCodigoDescricao } from "./DtoCodigoDescricao";
 export class Material extends DtoCodigoDescricao {
     private _porcentagem: number
 
-    constructor(codigo: string, descricao: String, porcentagem: number) {
+    constructor(codigo: string, descricao: string, porcentagem: number) {
         super(codigo, descricao)
         this._porcentagem = porcentagem
     }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Header, Segment } from 'semantic-ui-react';
+import { Button, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
 import { CronogramaState } from 'core';
@@ -18,7 +18,6 @@ const CronogramaDetail = (props: Props) => {
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
-
     return (
         <>
             {cronograma != null ? (
@@ -29,11 +28,14 @@ const CronogramaDetail = (props: Props) => {
                     <Header as='h3' dividing>
                         {cronograma.descricao}
                     </Header>
-                    <Segment vertical>
+                    <Header as='h3' >
                         {cronograma.codigo}
+                    </Header>
+                    <Header as='h3' >
                         {cronograma.dataInicio.toString()}
-                    </Segment>
-                    <DisciplinaListContainer />
+                    </Header>
+
+                    <DisciplinaListContainer disciplinas={cronograma.disciplinas} matchUrl={props.match} />
                 </>)
                 :
                 <EmptyHeader

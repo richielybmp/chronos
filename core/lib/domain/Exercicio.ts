@@ -4,7 +4,7 @@ export class Exercicio extends DtoCodigoDescricao {
     private _quantidade: number
     private _acertos: number
 
-    constructor(codigo: string, descricao: String, quantidade: number, acertos: number) {
+    constructor(codigo: string, descricao: string, quantidade: number, acertos: number) {
         super(codigo, descricao)
         this._quantidade = quantidade
         this._acertos = acertos

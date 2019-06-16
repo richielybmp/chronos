@@ -1,64 +1,33 @@
-import React, { useEffect } from 'react'
-import { Button, Card } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import LoaderComponent from '../shared/components/loader/LoaderComponent';
+import React from 'react'
 import { Disciplina } from 'core';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
+import DisciplinaTab from '../shared/components/cards/DisciplinaTab';
 
-
-const DisciplinaList = ({ match }: any) => {
-
-    return (
-        <EmptyHeader
-            icon='table'
-            title='Você ainda não possui nenhuma Disciplina criada'
-            subtitle='Adicione disciplinas para poder acompanhar.'
-            btnTitle="Nova disicplina"
-            linkTo={`/nova-disciplina`}
-        />
-    )
+interface Props {
+    disciplinas: Disciplina[],
+    matchUrl: any,
 }
 
-// interface Props {
-//     disciplinaList: any;
-//     match: any,
-//     fetchDisciplinas: () => void
-//     fetchDisciplina: (id: string) => void,
-// }
+const DisciplinaList = (props: Props) => {
+    const { disciplinas, matchUrl } = props
 
-// const DisciplinaList = (props: Props) => {
-//     const { disciplinas, error, loading } = props.disciplinaList
-//     //const hasDisciplinas = disciplinas.length > 0;
-//     const hasDisciplinas = false
+    const hasDisciplinas = disciplinas.length > 0
 
-//     useEffect(() => {
-//         props.fetchDisciplinas()
-//     }, [])
+    if (!hasDisciplinas) {
+        return (
+            <EmptyHeader
+                icon='table'
+                title='Você ainda não possui nenhuma Disciplina criada'
+                subtitle='Adicione disciplinas para poder acompanhar.'
+                btnTitle="Nova disicplina"
+                linkTo={`/nova-disciplina`}
+            />
+        )
+    }
 
-//     if (loading) {
-//         return <LoaderComponent tamanho='big' titulo="Carregando" />
-//     }
-
-//     return (
-//         <>
-//             {hasDisciplinas ? (
-//                 <Card.Group>
-//                     {disciplinas.map((item: Disciplina, index: number) => {
-//                         return (<h1>Hello, it's me, Mario!</h1>)
-//                     })}
-//                 </Card.Group>
-//             )
-//                 :
-//                 <EmptyHeader
-//                     icon='table'
-//                     title='Você ainda não possui nenhuma disciplina criada'
-//                     subtitle='Adicione disciplinas para poder acompanhar.'
-//                     btnTitle="Nova disicplina"
-//                     linkTo={`${props.match.url}/nova-disciplina`} />
-//             }
-
-//         </>
-//     )
-// }
+    return (
+        <DisciplinaTab disciplinas={disciplinas} matchUrl={matchUrl} />
+    )
+}
 
 export default DisciplinaList

@@ -8,7 +8,7 @@ export class Cronograma extends DtoCodigoDescricao {
 
     constructor(
         codigo: string,
-        descricao: String,
+        descricao: string,
         dataInicio: Date,
         dataFim: Date,
         disciplinas: Disciplina[]) {

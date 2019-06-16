@@ -1,9 +1,9 @@
 export class DtoCodigoDescricao {
     private _codigo: string = '';
 
-    private _descricao: String = '';
+    private _descricao: string = '';
 
-    constructor(codigo: string, descricao: String) {
+    constructor(codigo: string, descricao: string) {
         this._codigo = codigo;
         this._descricao = descricao;
     }
@@ -16,11 +16,11 @@ export class DtoCodigoDescricao {
         this._codigo = value;
     }
 
-    public get descricao(): String {
+    public get descricao(): string {
         return this._descricao;
     }
 
-    public set descricao(value: String) {
+    public set descricao(value: string) {
         this._descricao = value;
     }
 }

@@ -4,7 +4,7 @@ import { Assunto } from "./Assunto";
 export class Disciplina extends DtoCodigoDescricao {
     private _assuntos: Assunto[]
 
-    constructor(codigo: string, descricao: String, assuntos: Assunto[]) {
+    constructor(codigo: string, descricao: string, assuntos: Assunto[]) {
         super(codigo, descricao)
         this._assuntos = assuntos
     }

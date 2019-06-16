@@ -4,6 +4,7 @@ import Header from '../shared/components/nav/MainNav';
 import CronogramaList from '../containers/CronogramaListContainer';
 import CronogramaContainer from '../containers/CronogramaContainer';
 import NewCronogramaFormContainer from '../containers/NewCronogramaFormContainer';
+import NewDisciplinaForm from './forms/NewDisciplinaForm';
 
 const Main = ({ match }: any) => {
     return (
@@ -14,6 +15,7 @@ const Main = ({ match }: any) => {
                 <Switch>
                     <Route path={`${match.url}`} exact component={CronogramaList} />
                     <Route path={`${match.url}/novo-cronograma`} exact component={NewCronogramaFormContainer} />
+                    <Route path={`${match.url}/:id/nova-disciplina`} component={NewDisciplinaForm} />
                     <Route path={`${match.url}/:id`} component={CronogramaContainer} />
                     {/* </SidebarExampleTransitions> */}
                 </Switch>

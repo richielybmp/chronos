@@ -11,7 +11,7 @@ export class Assunto extends DtoCodigoDescricao {
 
     constructor(
         codigo: string,
-        descricao: String,
+        descricao: string,
         materiais: Material[],
         revisoes: Revisao[],
         exercicios: Exercicio[],

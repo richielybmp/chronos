@@ -5,7 +5,7 @@ export class Revisao extends DtoCodigoDescricao {
     private _escopo: EnumEscopo
     private _quantidade: number
 
-    constructor(codigo: string, descricao: String, escopo: EnumEscopo, quantidade: number) {
+    constructor(codigo: string, descricao: string, escopo: EnumEscopo, quantidade: number) {
         super(codigo, descricao)
         this._escopo = escopo
         this._quantidade = quantidade

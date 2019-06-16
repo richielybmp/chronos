@@ -1,4 +1,4 @@
-import { Cronograma, EnumCronogramaActions } from "../../domain";
+import { Cronograma, EnumCronogramaActions, Disciplina, Assunto } from "../../domain";
 import { CronogramaActionsType } from "../actions/cronogramaActions";
 import { CronogramasState, CronogramaState } from "../../frameworks";
 
@@ -14,14 +14,43 @@ const INITIAL_STATE = {
     cronogramaOnDetail: { cronograma: null, error: null, loading: false },
 };
 
+//#region 'Mock'
+var mock_assunto1: Assunto[] = [
+    new Assunto('111', 'Assunto 1', [], [], [], 'anotações1'),
+    new Assunto('112', 'Assunto 2', [], [], [], 'anotações2'),
+    new Assunto('113', 'Assunto 3', [], [], [], 'anotações3'),
+    new Assunto('114', 'Assunto 4', [], [], [], 'anotações4'),
+]
+
+var mock_assunto2: Assunto[] = [
+    new Assunto('115', 'Assunto 5', [], [], [], 'anotações5'),
+    new Assunto('116', 'Assunto 6', [], [], [], 'anotações6'),
+    new Assunto('117', 'Assunto 7', [], [], [], 'anotações7'),
+    new Assunto('118', 'Assunto 8', [], [], [], 'anotações8'),
+]
+
+var mock_assunto3: Assunto[] = [
+    new Assunto('119', 'Assunto 9', [], [], [], 'anotações9'),
+    new Assunto('1110', 'Assunto 10', [], [], [], 'anotações10'),
+    new Assunto('1111', 'Assunto 11', [], [], [], 'anotações11'),
+    new Assunto('1112', 'Assunto 12', [], [], [], 'anotações12'),
+]
+
+var mock_discicplinas: Disciplina[] = [
+    new Disciplina('11', 'Disicplina 1', mock_assunto1),
+    new Disciplina('12', 'Disicplina 2', mock_assunto2),
+    new Disciplina('13', 'Disicplina 3', mock_assunto3),
+]
+
 var mock: Cronograma[] = [
     new Cronograma(
-        '1', "Cronograma 1", new Date(), new Date(), []
+        '1', "Cronograma 1", new Date(), new Date(), mock_discicplinas
     ),
     new Cronograma(
-        '2', "Cronograma 2", new Date(), new Date(), []
+        '2', "Cronograma 2", new Date(), new Date(), mock_discicplinas
     ),
 ]
+//#endregion
 
 export const chronosReducer = (
     state: ChronosStateType = INITIAL_STATE,
@@ -36,7 +65,6 @@ export const chronosReducer = (
                 cronogramasList: { cronogramas: [], error: null, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_SUCCESS:
-
             return {
                 ...state,
                 cronogramasList: { cronogramas: mock, error: null, loading: false }
@@ -56,10 +84,9 @@ export const chronosReducer = (
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_SUCCESS:
-            let c_mock: Cronograma = new Cronograma("1", "Cronograma em detalhe", new Date(), new Date(), [])
             return {
                 ...state,
-                cronogramaOnDetail: { cronograma: c_mock, error: null, loading: false }
+                cronogramaOnDetail: { cronograma: mock[0], error: null, loading: false }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_FAILURE:
             error = action.payload || { message: action.payload.message };
