@@ -3,9 +3,9 @@ import {
     fetchCronogramas,
     fetchCronogramasSuccess,
     fetchCronogramasFailure,
+    fetchCronograma,
     fetchCronogramaFailure,
     fetchCronogramaSuccess,
-    fetchCronograma
 } from "core";
 import CronogramaList from "../pages/CronogramaList";
 
@@ -17,6 +17,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
+        // Obter todos os cronogramas.
         fetchCronogramas: () => {
             var promisse = dispatch(fetchCronogramas())
 
@@ -31,8 +32,10 @@ const mapDispatchToProps = (dispatch: any) => {
             });
         },
 
+        // Obter um cronograma específico.
         fetchCronograma: (id: string) => {
             var promisse = dispatch(fetchCronograma(id))
+
             promisse.payload.then((response: any) => {
                 const data = response.data;
                 if (!response.error) {

@@ -1,21 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
-import { Cronograma, CronogramaStateType } from 'core';
-import { connect } from 'react-redux';
+import { Cronograma, CronogramaState } from 'core';
 import uuid from 'uuid';
+import LoaderComponent from '../../shared/components/loader/LoaderComponent';
 
 interface Props {
-    addCronograma: (c: Cronograma) => void;
-    history: any;
-    match: any;
+    novoCronograma: CronogramaState,
+    history: any,
+    createCronograma: (data: any, jwtToken: any) => void,
+    resetMe: () => void,
 }
 
 export const NewCronogramaForm = (props: Props) => {
 
+    const { cronograma, error, loading } = props.novoCronograma
+
+    //#region 'States'
     const [cronogramaTitulo, setNovoCronogramaTitulo] = useState('')
     const [cronogramaDataInicio, setNovoCronogramaDataInicio] = useState('')
     const [cronogramaDataFim, setNovoCronogramaDataFim] = useState('')
+    //#endregion
 
+    //#region 'Handles'
     const handleTituloChange = (e: any) => {
         setNovoCronogramaTitulo(e.target.value)
     }
@@ -27,16 +33,32 @@ export const NewCronogramaForm = (props: Props) => {
     const handleDataFimChange = (e: any) => {
         setNovoCronogramaDataFim(e.target.value)
     }
+    //#endregion
 
-    const addCronograma = (e: any) => {
+    const addCronograma = (e: any, dispatch: any) => {
         e.preventDefault();
         const c = new Cronograma(uuid(), cronogramaTitulo, new Date(cronogramaDataInicio), new Date(cronogramaDataFim), []);
-        props.addCronograma(c)
-        props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
+        props.createCronograma(c, sessionStorage.getItem('AuthToken'))
+    }
+
+    useEffect(() => {
+        if (cronograma && !error) {
+            props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
+        }
+    })
+
+    useEffect(() => {
+        return () => {
+            props.resetMe()
+        };
+    }, []);
+
+    if (loading) {
+        return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
 
     return (
-        <Form onSubmit={(e: any) => addCronograma(e)}>
+        <Form onSubmit={(e: any, dispatch: any) => addCronograma(e, dispatch)}>
             <Container text style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
                 <Grid columns={1} container stackable>
                     <Grid.Column>
@@ -82,16 +104,3 @@ export const NewCronogramaForm = (props: Props) => {
         </Form>
     )
 }
-
-const mapStateToProps = (state: CronogramaStateType) => ({});
-
-const mapDispatchToProps = {
-    //addCronograma: addCronogramaAction,
-    history: null,
-    match: null,
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NewCronogramaForm);

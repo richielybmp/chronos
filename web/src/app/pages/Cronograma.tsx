@@ -1,54 +1,50 @@
 import React from 'react'
 import { Button, Header, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Cronograma, CronogramaStateType } from 'core';
-import { connect } from 'react-redux';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
+import { CronogramaState } from 'core';
+import LoaderComponent from '../shared/components/loader/LoaderComponent';
+import DisciplinaListContainer from '../containers/DisciplinaListContainer';
 
 interface Props {
     match: any,
-    cronograma: any,
+    cronogramaOnDetail: CronogramaState,
 }
 
-export const CronogramaDetail = (props: Props) => {
-    const hasValue = props.cronograma.cronograma != null
+const CronogramaDetail = (props: Props) => {
 
-    if (hasValue) {
-        const { codigo, descricao } = props.cronograma.cronograma
-        return (
-            <>
-                <Button as={Link} to={`../cronogramas`}>
-                    Home Cronogramas
+    const { cronograma, loading } = props.cronogramaOnDetail
+
+    if (loading) {
+        return <LoaderComponent tamanho='big' titulo="Carregando" />
+    }
+
+    return (
+        <>
+            {cronograma != null ? (
+                <>
+                    <Button as={Link} to={`../cronogramas`}>
+                        Voltar para a lista de Cronogramas
                     </Button>
-                <Header as='h3' dividing>
-                    {descricao}
-                </Header>
-                <Segment vertical>
-                    {codigo}
-                </Segment>
-            </>
-        )
-    }
-    else {
-        return (
-            <EmptyHeader
-                icon='warning'
-                title='Algo de estranho aconteceu'
-                subtitle='Tente voltar para sua lista de cronogramas'
-                btnTitle='Voltar'
-                linkTo={`/cronogramas`} />
-        )
-    }
+                    <Header as='h3' dividing>
+                        {cronograma.descricao}
+                    </Header>
+                    <Segment vertical>
+                        {cronograma.codigo}
+                        {cronograma.dataInicio.toString()}
+                    </Segment>
+                    <DisciplinaListContainer />
+                </>)
+                :
+                <EmptyHeader
+                    icon='warning'
+                    title='Algo de estranho aconteceu'
+                    subtitle='Tente voltar para sua lista de cronogramas'
+                    btnTitle='Voltar'
+                    linkTo={`/cronogramas`} />
+            }
+        </>
+    )
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        cronograma: state.cronogramas.cronogramaOnDetail
-    }
-};
-const mapDispatchToProps = {};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(CronogramaDetail);
+export default CronogramaDetail;

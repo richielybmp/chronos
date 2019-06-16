@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
-import { Card, Button, Dimmer, Loader } from 'semantic-ui-react';
+import { Card, Button } from 'semantic-ui-react';
 import CronogramaCard from '../shared/components/cards/CronogramaCard';
 import { Link } from 'react-router-dom';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
-import { CronogramaState, Cronograma } from 'core';
+import { Cronograma, CronogramasState } from 'core';
+import LoaderComponent from '../shared/components/loader/LoaderComponent';
 
 interface Props {
-    cronogramaList: CronogramaState;
+    cronogramaList: CronogramasState;
     match: any,
     fetchCronogramas: () => void
     fetchCronograma: (id: string) => void,
@@ -25,11 +26,8 @@ const CronogramaList = (props: Props) => {
         props.fetchCronogramas()
     }, [])
 
-
     if (loading) {
-        return <Dimmer active inverted>
-            <Loader size='mini'>Loading</Loader>
-        </Dimmer>
+        return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
 
     return (
