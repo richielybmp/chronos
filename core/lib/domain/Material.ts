@@ -1,11 +1,30 @@
 import { DtoCodigoDescricao } from "./DtoCodigoDescricao";
+import { Artefato } from "./Artefato";
 
-export class Material extends DtoCodigoDescricao {
+export class Material extends Artefato {
     private _porcentagem: number
+    private _codigo: string = '';
+    private _descricao: string = '';
 
     constructor(codigo: string, descricao: string, porcentagem: number) {
-        super(codigo, descricao)
+        super()
         this._porcentagem = porcentagem
+    }
+
+    public get codigo(): string {
+        return this._codigo;
+    }
+
+    public set codigo(value: string) {
+        this._codigo = value;
+    }
+
+    public get descricao(): string {
+        return this._descricao;
+    }
+
+    public set descricao(value: string) {
+        this._descricao = value;
     }
 
     public get porcentagem(): number {

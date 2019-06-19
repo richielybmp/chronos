@@ -1,26 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Button } from 'semantic-ui-react';
 import CronogramaCard from '../shared/components/cards/CronogramaCard';
 import { Link } from 'react-router-dom';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
 import { Cronograma, CronogramasState } from 'core';
 import LoaderComponent from '../shared/components/loader/LoaderComponent';
+import ModalContainer from '../shared/components/modal/ModalContainer';
+import NewCronogramaFormContainer from '../containers/NewCronogramaFormContainer';
 
 interface Props {
     cronogramaList: CronogramasState;
     match: any,
+    history: any,
     fetchCronogramas: () => void
     fetchCronograma: (id: string) => void,
 }
 
-const CronogramaList = (props: Props) => {
+function CronogramaList(props: Props) {
+
+    const [modalShowToggle, setmodalShowToggle] = useState(false)
 
     const { cronogramas, loading } = props.cronogramaList
     const hasCronogramas = cronogramas.length > 0;
-
-    const handleCronogramaOnDetail = (id: string) => {
-        props.fetchCronograma(id)
-    }
 
     useEffect(() => {
         props.fetchCronogramas()
@@ -30,21 +31,33 @@ const CronogramaList = (props: Props) => {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
 
+    const handleCronogramaOnDetail = (id: string) => {
+        props.fetchCronograma(id)
+    }
+
+    const handlePopModal = () => {
+        setmodalShowToggle(!modalShowToggle)
+    }
+
+    const handleCloseModal = () => {
+        setmodalShowToggle(false)
+    }
+
     return (
         <>
             {hasCronogramas ? (
                 <>
-                    <Button
-                        size='large'
-                        color='blue'
-                        as={Link}
-                        to={`${props.match.url}/novo-cronograma`}
-                    >
+                    {/* as={Link} to={`${props.match.url}/novo-cronograma`} */}
+                    <Button size='large' color='blue' onClick={() => handlePopModal()} >
                         Novo Cronograma
                     </Button>
 
+                    <ModalContainer show={modalShowToggle} toggle={() => handlePopModal()}>
+                        <NewCronogramaFormContainer history={props.history} toggle={() => handleCloseModal()} />
+                    </ModalContainer>
+
                     <Card.Group>
-                        {cronogramas.map((item: Cronograma, index) => {
+                        {cronogramas.map((item: Cronograma, index: number) => {
                             return (
                                 <CronogramaCard
                                     key={index}

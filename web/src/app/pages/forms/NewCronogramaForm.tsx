@@ -9,6 +9,7 @@ interface Props {
     history: any,
     createCronograma: (data: any, jwtToken: any) => void,
     resetMe: () => void,
+    toggle: () => void,
 }
 
 export const NewCronogramaForm = (props: Props) => {
@@ -41,9 +42,11 @@ export const NewCronogramaForm = (props: Props) => {
         props.createCronograma(c, sessionStorage.getItem('AuthToken'))
     }
 
+    //#region 'Effects'
     useEffect(() => {
         if (cronograma && !error) {
-            props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
+            //props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
+            props.toggle()
         }
     })
 
@@ -52,6 +55,7 @@ export const NewCronogramaForm = (props: Props) => {
             props.resetMe()
         };
     }, []);
+    //#endregion
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
@@ -59,7 +63,7 @@ export const NewCronogramaForm = (props: Props) => {
 
     return (
         <Form onSubmit={(e: any, dispatch: any) => addCronograma(e, dispatch)}>
-            <Container text style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
+            <Container text style={{ padding: '5em 0em' }}>
                 <Grid columns={1} container stackable>
                     <Grid.Column>
                         <Form.Field>
@@ -101,6 +105,6 @@ export const NewCronogramaForm = (props: Props) => {
                     </Button>
                 </Grid>
             </Container>
-        </Form>
+        </Form >
     )
 }

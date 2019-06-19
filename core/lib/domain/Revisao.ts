@@ -1,14 +1,33 @@
 import { EnumEscopo } from "./enumeradores/EnumEscopo";
 import { DtoCodigoDescricao } from "./DtoCodigoDescricao";
+import { Artefato } from "./Artefato";
 
-export class Revisao extends DtoCodigoDescricao {
+export class Revisao extends Artefato {
     private _escopo: EnumEscopo
     private _quantidade: number
+    private _codigo: string = '';
+    private _descricao: string = '';
 
     constructor(codigo: string, descricao: string, escopo: EnumEscopo, quantidade: number) {
-        super(codigo, descricao)
+        super()
         this._escopo = escopo
         this._quantidade = quantidade
+    }
+
+    public get codigo(): string {
+        return this._codigo;
+    }
+
+    public set codigo(value: string) {
+        this._codigo = value;
+    }
+
+    public get descricao(): string {
+        return this._descricao;
+    }
+
+    public set descricao(value: string) {
+        this._descricao = value;
     }
 
     public get escopo(): EnumEscopo {

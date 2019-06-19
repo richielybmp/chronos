@@ -14,7 +14,7 @@ const Main = ({ match }: any) => {
                 {/* <SidebarExampleTransitions> */}
                 <Switch>
                     <Route path={`${match.url}`} exact component={CronogramaList} />
-                    <Route path={`${match.url}/novo-cronograma`} exact component={NewCronogramaFormContainer} />
+                    {/* <Route path={`${match.url}/novo-cronograma`} exact component={NewCronogramaFormContainer} /> */}
                     <Route path={`${match.url}/:id/nova-disciplina`} component={NewDisciplinaForm} />
                     <Route path={`${match.url}/:id`} component={CronogramaContainer} />
                     {/* </SidebarExampleTransitions> */}
