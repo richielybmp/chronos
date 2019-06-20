@@ -7,6 +7,7 @@ import { Cronograma, CronogramasState } from 'core';
 import LoaderComponent from '../shared/components/loader/LoaderComponent';
 import ModalContainer from '../shared/components/modal/ModalContainer';
 import NewCronogramaFormContainer from '../containers/NewCronogramaFormContainer';
+import ModalNovoCronograma from './modal/ModalNovoCronograma';
 
 interface Props {
     cronogramaList: CronogramasState;
@@ -52,9 +53,11 @@ function CronogramaList(props: Props) {
                         Novo Cronograma
                     </Button>
 
-                    <ModalContainer show={modalShowToggle} toggle={() => handlePopModal()}>
-                        <NewCronogramaFormContainer history={props.history} toggle={() => handleCloseModal()} />
-                    </ModalContainer>
+                    <ModalNovoCronograma
+                        history={props.history}
+                        show={modalShowToggle}
+                        toggle={() => handlePopModal()}
+                        close={() => handleCloseModal()} />
 
                     <Card.Group>
                         {cronogramas.map((item: Cronograma, index: number) => {

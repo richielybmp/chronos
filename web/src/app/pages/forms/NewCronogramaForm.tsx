@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
+import { Form, Button, Grid, Container, Input, Modal, Segment } from 'semantic-ui-react';
 import { Cronograma, CronogramaState } from 'core';
 import uuid from 'uuid';
 import LoaderComponent from '../../shared/components/loader/LoaderComponent';
@@ -9,7 +9,7 @@ interface Props {
     history: any,
     createCronograma: (data: any, jwtToken: any) => void,
     resetMe: () => void,
-    toggle: () => void,
+    close: () => void,
 }
 
 export const NewCronogramaForm = (props: Props) => {
@@ -46,7 +46,7 @@ export const NewCronogramaForm = (props: Props) => {
     useEffect(() => {
         if (cronograma && !error) {
             //props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
-            props.toggle()
+            props.close()
         }
     })
 
@@ -58,12 +58,14 @@ export const NewCronogramaForm = (props: Props) => {
     //#endregion
 
     if (loading) {
-        return <LoaderComponent tamanho='big' titulo="Carregando" />
+        return (<Container style={{ padding: '5em 1em' }}>
+            <LoaderComponent tamanho='big' titulo="Carregando" />
+        </Container>)
     }
 
     return (
         <Form onSubmit={(e: any, dispatch: any) => addCronograma(e, dispatch)}>
-            <Container text style={{ padding: '5em 0em' }}>
+            <Container text style={{ padding: '2em 2em' }}>
                 <Grid columns={1} container stackable>
                     <Grid.Column>
                         <Form.Field>
@@ -76,7 +78,7 @@ export const NewCronogramaForm = (props: Props) => {
                     </Grid.Column>
                     <Grid.Column width={8}>
                         <Form.Field>
-                            <label>Título do cronograma</label>
+                            <label>Data de início</label>
                             <Input
                                 type="date"
                                 icon='calendar alternate outline'
@@ -88,7 +90,7 @@ export const NewCronogramaForm = (props: Props) => {
                     </Grid.Column>
                     <Grid.Column width={8}>
                         <Form.Field>
-                            <label>Título do cronograma</label>
+                            <label>Data estimada do término</label>
                             <Input
                                 type="date"
                                 icon='calendar alternate outline'
@@ -99,11 +101,23 @@ export const NewCronogramaForm = (props: Props) => {
                         </Form.Field>
                     </Grid.Column>
 
-                    <Button
-                        type='submit'
-                    >Salvar
-                    </Button>
                 </Grid>
+                <Segment floated='right' basic >
+                    <Modal.Actions >
+                        {/* <Button
+                            as={Button}
+                            color='red'
+                            content='Cancelar'
+                            onClick={() => props.close()}>
+                        </Button> */}
+                        <Button
+                            positive
+                            icon='checkmark'
+                            labelPosition='right'
+                            content='Salvar'
+                        />
+                    </Modal.Actions>
+                </Segment>
             </Container>
         </Form >
     )

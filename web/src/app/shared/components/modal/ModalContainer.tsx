@@ -29,6 +29,8 @@ function ModalContainer(props: ModalProps) {
                 closeOnEscape={true}
                 closeOnDimmerClick={true}
                 onClose={() => close()}
+                closeIcon
+                size='small'
             >
                 {children}
             </Modal>
