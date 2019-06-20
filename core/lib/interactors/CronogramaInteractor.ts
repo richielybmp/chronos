@@ -5,6 +5,7 @@ import { Cronograma } from "../domain";
 const API_URL = 'https://jsonplaceholder.typicode.com'
 
 export class CronogramaInteractor {
+
     //cronogramaRepository: CronogramaRepository;
 
     constructor() {
@@ -45,4 +46,21 @@ export class CronogramaInteractor {
             // }
         })
     }
+
+    updateCronograma(c: Cronograma) {
+        return axios.get(`${API_URL}/todos`);
+        // return axios({
+        //     method: 'PUT',
+        //     data: JSON.stringify({
+        //         title: 'foo',
+        //         body: 'bar',
+        //         userId: 1
+        //     }),
+        //     url: `${API_URL}/todos`,
+        //     headers: {
+        //         "Content-type": "application/json; charset=UTF-8"
+        //     }
+        // })
+    }
+
 }

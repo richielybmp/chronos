@@ -21,7 +21,7 @@ function CronogramaList(props: Props) {
 
     const [modalShowToggle, setmodalShowToggle] = useState(false)
 
-    const { cronogramas, loading } = props.cronogramaList
+    const { cronogramas, loading, error } = props.cronogramaList
     const hasCronogramas = cronogramas.length > 0;
 
     useEffect(() => {
@@ -32,6 +32,7 @@ function CronogramaList(props: Props) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
 
+    //#region 'Handles'
     const handleCronogramaOnDetail = (id: string) => {
         props.fetchCronograma(id)
     }
@@ -43,15 +44,16 @@ function CronogramaList(props: Props) {
     const handleCloseModal = () => {
         setmodalShowToggle(false)
     }
+    //#endregion
 
     return (
-        <>
+        <div style={{ padding: '2em 5em' }}>
             {hasCronogramas ? (
-                <>
-                    {/* as={Link} to={`${props.match.url}/novo-cronograma`} */}
-                    <Button size='large' color='blue' onClick={() => handlePopModal()} >
+                < >
+                    <Button size='large' color='green' content='Novo cronograma' icon='plus' labelPosition='right' onClick={() => handlePopModal()} />
+                    {/* <Button size='large' color='blue' onClick={() => handlePopModal()} >
                         Novo Cronograma
-                    </Button>
+                    </Button> */}
 
                     <ModalNovoCronograma
                         history={props.history}
@@ -59,7 +61,8 @@ function CronogramaList(props: Props) {
                         toggle={() => handlePopModal()}
                         close={() => handleCloseModal()} />
 
-                    <Card.Group>
+                    {/* fazer esse componente ficar responisvo */}
+                    <Card.Group style={{ padding: '2em 0em' }}>
                         {cronogramas.map((item: Cronograma, index: number) => {
                             return (
                                 <CronogramaCard
@@ -82,7 +85,7 @@ function CronogramaList(props: Props) {
                     linkTo={`${props.match.url}/novo-cronograma`} />
             }
 
-        </>
+        </div>
     )
 }
 

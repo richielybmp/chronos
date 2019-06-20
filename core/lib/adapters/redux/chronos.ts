@@ -62,7 +62,8 @@ export const chronosReducer = (
         case EnumCronogramaActions.FETCH_CRONOGRAMAS:
             return {
                 ...state,
-                cronogramasList: { cronogramas: [], error: null, loading: true }
+                cronogramasList: { cronogramas: [], error: null, loading: true },
+                cronogramaOnDetail: { cronograma: null, error: null, loading: false }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_SUCCESS:
             return {
@@ -121,6 +122,27 @@ export const chronosReducer = (
             return {
                 ...state,
                 novoCronograma: { cronograma: null, error: null, loading: false }
+            };
+        //#endregion
+
+        //#region 'UPDATE cronograma'
+        case EnumCronogramaActions.UPDATE_CRONOGRAMA:
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: true, error: false }
+            };
+        case EnumCronogramaActions.UPDATE_CRONOGRAMA_SUCCESS:
+            mock[0].descricao = "FOI DESCRICAO ATUALIZADA"
+            const updated = mock[0]
+            return {
+                ...state,
+                cronogramaOnDetail: { cronograma: updated, error: null, loading: false },
+            };
+        case EnumCronogramaActions.UPDATE_CRONOGRAMA_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
             };
         //#endregion
         default:

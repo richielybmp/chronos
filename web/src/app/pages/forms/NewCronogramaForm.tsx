@@ -6,8 +6,10 @@ import LoaderComponent from '../../shared/components/loader/LoaderComponent';
 
 interface Props {
     novoCronograma: CronogramaState,
+    cronogramaOnDetail: CronogramaState,
     history: any,
     createCronograma: (data: any, jwtToken: any) => void,
+    editCronograma: (data: any, jwtToken: any) => void,
     resetMe: () => void,
     close: () => void,
 }
@@ -20,6 +22,7 @@ export const NewCronogramaForm = (props: Props) => {
     const [cronogramaTitulo, setNovoCronogramaTitulo] = useState('')
     const [cronogramaDataInicio, setNovoCronogramaDataInicio] = useState('')
     const [cronogramaDataFim, setNovoCronogramaDataFim] = useState('')
+    const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
 
     //#region 'Handles'
@@ -39,16 +42,32 @@ export const NewCronogramaForm = (props: Props) => {
     const addCronograma = (e: any, dispatch: any) => {
         e.preventDefault();
         const c = new Cronograma(uuid(), cronogramaTitulo, new Date(cronogramaDataInicio), new Date(cronogramaDataFim), []);
-        props.createCronograma(c, sessionStorage.getItem('AuthToken'))
+
+        if (!ehEdicao) {
+            props.createCronograma(c, sessionStorage.getItem('AuthToken'))
+        }
+        else {
+            props.editCronograma(c, sessionStorage.getItem('AuthToken'))
+            props.close()
+        }
     }
 
     //#region 'Effects'
     useEffect(() => {
         if (cronograma && !error) {
-            //props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
             props.close()
         }
     })
+
+    useEffect(() => {
+        if (props.cronogramaOnDetail.cronograma != null) {
+            const { cronograma, error, loading } = props.cronogramaOnDetail
+            setNovoCronogramaTitulo(cronograma.descricao)
+            setNovoCronogramaDataInicio(cronograma.dataInicio.toISOString().slice(0, 10))
+            setNovoCronogramaDataFim(cronograma.dataFim.toISOString().slice(0, 10))
+            setEhEdicao(true)
+        }
+    }, [props.cronogramaOnDetail])
 
     useEffect(() => {
         return () => {
@@ -83,7 +102,8 @@ export const NewCronogramaForm = (props: Props) => {
                                 type="date"
                                 icon='calendar alternate outline'
                                 iconPosition='left'
-                                placeholder='Data início'
+                                placeholder='Data final'
+                                defaultValue={cronogramaDataInicio}
                                 onChange={(e) => handleDataInicioChange(e)}
                             />
                         </Form.Field>
@@ -96,6 +116,7 @@ export const NewCronogramaForm = (props: Props) => {
                                 icon='calendar alternate outline'
                                 iconPosition='left'
                                 placeholder='Data final'
+                                defaultValue={cronogramaDataFim}
                                 onChange={(e) => handleDataFimChange(e)}
                             />
                         </Form.Field>

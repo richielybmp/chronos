@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Menu, Segment, Icon, List } from 'semantic-ui-react'
+import { Menu, Segment, Icon, List, Button } from 'semantic-ui-react'
 import { Disciplina, Assunto } from 'core';
 import { Link } from 'react-router-dom';
 
@@ -42,11 +42,8 @@ function DisciplinaTab(props: DisciplinaTabProps) {
                     <Menu.Item
                         name='nova-disciplina'
                         active={activeItem === 'nova-disciplina'}
-                        as={Link}
-                        to={`${matchUrl.url}/nova-disciplina`}
                     >
-                        <Icon name='add' />
-                        Nova Disciplina
+                        <Button inverted color='green' floated='right' content='Nova disciplina' icon='add' labelPosition='right' as={Link} to={`${matchUrl.url}/nova-disciplina`} />
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>

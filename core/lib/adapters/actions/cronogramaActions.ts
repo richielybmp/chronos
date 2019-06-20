@@ -85,3 +85,26 @@ export function createCronogramaFailure(error: any) {
     };
 }
 //#endregion
+
+//#region "Actions para UPDATE CRONOGRAMA POR ID"
+export function updateCronograma(c: Cronograma) {
+    return {
+        type: EnumCronogramaActions.UPDATE_CRONOGRAMA,
+        payload: interactor.updateCronograma(c)
+    };
+}
+
+export function updateCronogramaSuccess(cronogramaSelecionado: Cronograma) {
+    return {
+        type: EnumCronogramaActions.UPDATE_CRONOGRAMA_SUCCESS,
+        payload: cronogramaSelecionado
+    };
+}
+
+export function updateCronogramaFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.UPDATE_CRONOGRAMA_FAILURE,
+        payload: error
+    };
+}
+//#endregion
