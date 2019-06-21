@@ -1361,6 +1361,14 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/react@^16.8.22":
+  version "16.8.22"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.22.tgz#7f18bf5ea0c1cad73c46b6b1c804a3ce0eec6d54"
+  integrity sha512-C3O1yVqk4sUXqWyx0wlys76eQfhrQhiDhDlHBrjER76lR2S2Agiid/KpOU9oCqj1dISStscz7xXz1Cg8+sCQeA==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
 "@types/reactstrap@^8.0.1":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@types/reactstrap/-/reactstrap-8.0.1.tgz#356cc359657a9f6bc84a2f689656cb8790229aaa"
@@ -2874,6 +2882,7 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.0"
   dependencies:
     "@types/node" "12.0.2"
+    "@types/react" "^16.8.22"
     "@types/redux-logger" "3.0.6"
     axios "^0.19.0"
     redux "4.0.0"

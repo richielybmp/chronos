@@ -66,9 +66,8 @@ function CronogramaList(props: Props) {
                         {/* <Card.Group> */}
                         {cronogramas.map((item: Cronograma, index: number) => {
                             return (
-                                <Grid.Column mobile={16}  >
+                                <Grid.Column mobile={16} key={index} >
                                     <CronogramaCard
-                                        key={index}
                                         cronograma={item}
                                         setOnDetail={() => {
                                             return handleCronogramaOnDetail(item.codigo);

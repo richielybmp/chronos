@@ -1,6 +1,6 @@
 import { Assunto, Disciplina, Cronograma } from "./domain";
 
-//#region 'Mock'
+//#region 'Assunto'
 var mock_assunto1: Assunto[] = [
     new Assunto('111', 'Assunto 1', [], [], [], 'anotações1'),
     new Assunto('112', 'Assunto 2', [], [], [], 'anotações2'),
@@ -21,6 +21,7 @@ var mock_assunto3: Assunto[] = [
     new Assunto('1111', 'Assunto 11', [], [], [], 'anotações11'),
     new Assunto('1112', 'Assunto 12', [], [], [], 'anotações12'),
 ]
+//#endregion
 
 var mock_discicplinas: Disciplina[] = [
     new Disciplina('11', 'Disicplina 1', mock_assunto1),
@@ -38,8 +39,42 @@ var mock_discicplinas: Disciplina[] = [
     new Disciplina('113', 'Disicplina 13', mock_assunto3),
 ]
 
+var mock_assunto_natureza: Assunto[] = [
+    new Assunto('111', 'Biologia 1', [], [], [], 'anotações1'),
+    new Assunto('112', 'Biologia 2', [], [], [], 'anotações2'),
+    new Assunto('113', 'Química', [], [], [], 'anotações3'),
+    new Assunto('114', 'Física', [], [], [], 'anotações4'),
+]
+
+var mock_assunto_humanas: Assunto[] = [
+    new Assunto('111', 'Geografia', [], [], [], 'anotações1'),
+    new Assunto('112', 'História', [], [], [], 'anotações2'),
+    new Assunto('113', 'Filosofia', [], [], [], 'anotações3'),
+    new Assunto('114', 'Sociologia', [], [], [], 'anotações4'),
+    new Assunto('114', 'Atualidades', [], [], [], 'anotações4'),
+]
+
+var mock_assunto_linguagens: Assunto[] = [
+    new Assunto('114', 'Português', [], [], [], 'anotações4'),
+    new Assunto('111', 'Inglês', [], [], [], 'anotações1'),
+    new Assunto('112', 'Literatura', [], [], [], 'anotações2'),
+    new Assunto('113', 'Redação', [], [], [], 'anotações3'),
+]
+
+var mock_assunto_matematica: Assunto[] = [
+    new Assunto('114', 'Matemática 1', [], [], [], 'anotações4'),
+    new Assunto('111', 'Matemática 2', [], [], [], 'anotações1'),
+]
+
+var mock_discicplinas_enem: Disciplina[] = [
+    new Disciplina('11', 'Ciências da Natureza', mock_assunto_natureza),
+    new Disciplina('12', 'Ciências Humanas', mock_assunto_humanas),
+    new Disciplina('13', 'Linguagens e Redação', mock_assunto_linguagens),
+    new Disciplina('14', 'Matemática', mock_assunto_matematica),
+]
+
 var mock: Cronograma[] = [
-    new Cronograma('1', "Cronograma 1", new Date(), new Date(), mock_discicplinas),
+    new Cronograma('1', "Enem", new Date(), new Date(), mock_discicplinas_enem),
     new Cronograma('2', "Cronograma 2", new Date(), new Date(), mock_discicplinas),
     new Cronograma('3', "Cronograma 3", new Date(), new Date(), mock_discicplinas),
     new Cronograma('4', "Cronograma 4", new Date(), new Date(), mock_discicplinas),

@@ -11,7 +11,6 @@ interface CronogramaCardProps {
 function CronogramaCard(props: CronogramaCardProps) {
 
     const { disciplinas, codigo, descricao, dataInicio } = props.cronograma
-
     return (
         <Card
             fluid

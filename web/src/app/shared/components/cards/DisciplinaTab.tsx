@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Menu, Segment, Icon, List, Button } from 'semantic-ui-react'
+import { Menu, Segment, Icon, List, Button, Accordion } from 'semantic-ui-react'
 import { Disciplina, Assunto } from 'core';
 import { Link } from 'react-router-dom';
 
@@ -17,53 +17,73 @@ function DisciplinaTab(props: DisciplinaTabProps) {
     const [activeAssuntos, setActiveAssuntos] = useState(disciplinas[0].assuntos)
 
     const handleItemClick = (name: string) => {
-        setActiveItem(name)
+        activeItem === name ? setActiveItem('') : setActiveItem(name)
         var d = disciplinas.find(x => x.descricao === name)
-
         if (d)
             setActiveAssuntos(d.assuntos)
     }
 
     return (
         <div>
-            <Menu attached='top' tabular>
-
-                {disciplinas.map((item: Disciplina, index) => {
-                    return (
-                        <Menu.Item
-                            key={index}
-                            name={item.descricao}
-                            active={activeItem === item.descricao}
-                            onClick={() => handleItemClick(item.descricao)} />
-                    )
-                })}
-
-                <Menu.Menu position='right'>
-                    <Menu.Item
-                        name='nova-disciplina'
-                        active={activeItem === 'nova-disciplina'}
-                    >
-                        <Button inverted color='green' floated='right' content='Nova disciplina' icon='add' labelPosition='right' as={Link} to={`${matchUrl.url}/nova-disciplina`} />
-                    </Menu.Item>
-                </Menu.Menu>
-            </Menu>
-
-            <Segment attached='bottom'>
-                <List divided relaxed>
-                    {activeAssuntos.map((item: Assunto, index) => {
+            <Accordion fluid styled>
+                {
+                    disciplinas.map((item: Disciplina, index: number) => {
                         return (
-                            <List.Item>
-                                <List.Content>
-                                    <List.Header>{`Assunto ${item.descricao}`}</List.Header>
-                                    {item.codigo}
-                                </List.Content>
-                            </List.Item>
+                            < div key={index}>
+                                <Accordion.Title
+                                    style={{ backgroundColor: 'lightgrey' }}
+                                    active={activeItem === item.descricao}
+                                    onClick={() => handleItemClick(item.descricao)}>
+                                    {item.descricao}
+                                </Accordion.Title>
+                                <Accordion.Content active={activeItem === item.descricao}>
+                                    <List divided relaxed>
+                                        {activeAssuntos.map((item: Assunto, idx: number) => {
+                                            return (
+                                                <List.Item key={idx} >
+                                                    <List.Content>
+                                                        <List.Header>{item.descricao}</List.Header>
+                                                        <List.Description>Revisões: {item.revisoes.length}</List.Description>
+                                                        <List.Description>Exercícios: {item.exercicios.length}</List.Description>
+                                                    </List.Content>
+                                                </List.Item>
+                                            )
+                                        })}
+                                    </List>
+                                </Accordion.Content>
+                            </div>
                         )
-                    })}
-                </List>
-            </Segment>
+                    })
+                }
+            </Accordion>
+
         </div>
     )
 }
 
 export default DisciplinaTab
+
+
+    // < Menu attached = 'top' tabular >
+
+    //     {
+    //         disciplinas.map((item: Disciplina, index) => {
+    //             return (
+    //                 <Menu.Item
+    //                     key={index}
+    //                     name={item.descricao}
+    //                     active={activeItem === item.descricao}
+    //                     onClick={() => handleItemClick(item.descricao)} />
+    //             )
+    //         })
+    //     }
+
+    //     < Menu.Menu position = 'right' >
+    //         <Menu.Item
+    //             name='nova-disciplina'
+    //             active={activeItem === 'nova-disciplina'}
+    //         >
+    //             <Button inverted color='green' floated='right' content='Nova disciplina' icon='add' labelPosition='right' as={Link} to={`${matchUrl.url}/nova-disciplina`} />
+    //         </Menu.Item>
+    //             </Menu.Menu >
+    //         </Menu >
