@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Button } from 'semantic-ui-react';
+import { Card, Button, Container, Grid } from 'semantic-ui-react';
 import CronogramaCard from '../shared/components/cards/CronogramaCard';
-import { Link } from 'react-router-dom';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
 import { Cronograma, CronogramasState } from 'core';
 import LoaderComponent from '../shared/components/loader/LoaderComponent';
-import ModalContainer from '../shared/components/modal/ModalContainer';
-import NewCronogramaFormContainer from '../containers/NewCronogramaFormContainer';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
 
 interface Props {
@@ -22,15 +19,12 @@ function CronogramaList(props: Props) {
     const [modalShowToggle, setmodalShowToggle] = useState(false)
 
     const { cronogramas, loading, error } = props.cronogramaList
+
     const hasCronogramas = cronogramas.length > 0;
 
     useEffect(() => {
         props.fetchCronogramas()
     }, [])
-
-    if (loading) {
-        return <LoaderComponent tamanho='big' titulo="Carregando" />
-    }
 
     //#region 'Handles'
     const handleCronogramaOnDetail = (id: string) => {
@@ -46,43 +40,53 @@ function CronogramaList(props: Props) {
     }
     //#endregion
 
+    if (loading) {
+        return <LoaderComponent tamanho='big' titulo="Carregando" />
+    }
+
     return (
-        <div style={{ padding: '2em 5em' }}>
+        <div>
+            <ModalNovoCronograma
+                history={props.history}
+                show={modalShowToggle}
+                toggle={() => handlePopModal()}
+                close={() => handleCloseModal()} />
+
             {hasCronogramas ? (
-                < >
-                    <Button size='large' color='green' content='Novo cronograma' icon='plus' labelPosition='right' onClick={() => handlePopModal()} />
-                    {/* <Button size='large' color='blue' onClick={() => handlePopModal()} >
-                        Novo Cronograma
-                    </Button> */}
+                <Container fluid style={{ padding: '1em 1em' }}>
+                    <Grid columns={4}>
+                        <Grid.Row>
+                            <Grid.Column mobile={16} tablet={6} computer={4} >
+                                <Button fluid size='large' color='green' content='Criar cronograma' icon='plus' labelPosition='right' onClick={() => handlePopModal()} />
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
 
-                    <ModalNovoCronograma
-                        history={props.history}
-                        show={modalShowToggle}
-                        toggle={() => handlePopModal()}
-                        close={() => handleCloseModal()} />
-
-                    {/* fazer esse componente ficar responisvo */}
-                    <Card.Group style={{ padding: '2em 0em' }}>
+                    <Grid columns={6}>
+                        {/* <Card.Group> */}
                         {cronogramas.map((item: Cronograma, index: number) => {
                             return (
-                                <CronogramaCard
-                                    key={index}
-                                    cronograma={item}
-                                    setOnDetail={() => {
-                                        return handleCronogramaOnDetail(item.codigo);
-                                    }}
-                                />
+                                <Grid.Column mobile={16}  >
+                                    <CronogramaCard
+                                        key={index}
+                                        cronograma={item}
+                                        setOnDetail={() => {
+                                            return handleCronogramaOnDetail(item.codigo);
+                                        }}
+                                    />
+                                </Grid.Column>
                             )
                         })}
-                    </Card.Group>
-                </>)
+                        {/* </Card.Group> */}
+                    </Grid>
+                </Container>)
                 :
                 <EmptyHeader
                     icon='table'
                     title='Você ainda não possui nenhum cronograma'
                     subtitle='Comece criando seu primeiro plano de estudos.'
                     btnTitle="Novo cronograma"
-                    linkTo={`${props.match.url}/novo-cronograma`} />
+                    onClick={() => handlePopModal()} />
             }
 
         </div>

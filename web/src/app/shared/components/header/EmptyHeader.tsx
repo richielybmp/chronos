@@ -6,21 +6,28 @@ interface Props {
     icon: any,
     title: string,
     subtitle: string,
-    linkTo: string,
+    linkTo?: string,
     btnTitle: string,
+    onClick?: () => void,
 }
 
 export function EmptyHeader(props: Props) {
 
-    const { icon, title, subtitle, linkTo, btnTitle } = props;
+    const { icon, title, subtitle, linkTo, btnTitle, onClick } = props;
 
     return <Header as='h2' icon textAlign='center'>
         <Icon name={icon} />
         {title}
         <Header.Subheader>{subtitle}</Header.Subheader>
         <br />
-        <Button as={Link} to={linkTo} size='large' color='blue'>
-            {btnTitle}
-        </Button>
+        {linkTo == null && onClick ?
+            <Button onClick={onClick} size='large' color='blue'>
+                {btnTitle}
+            </Button>
+            : (
+                <Button as={Link} to={linkTo} size='large' color='blue'>
+                    {btnTitle}
+                </Button>
+            )}
     </Header>;
 }

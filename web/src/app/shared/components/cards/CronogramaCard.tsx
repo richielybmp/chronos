@@ -14,13 +14,15 @@ function CronogramaCard(props: CronogramaCardProps) {
 
     return (
         <Card
+            fluid
             as={Link}
             to={`cronogramas/${codigo}`}
             onClick={props.setOnDetail}
+            color='black'
         >
             <Card.Content>
                 <Card.Header content={descricao} />
-                <Card.Meta content={disciplinas.length + ' disciplinas'} />
+                <Card.Meta content={disciplinas.length + ' Disciplinas'} />
                 <Card.Description content={dataInicio.toDateString()} />
             </Card.Content>
         </Card >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Grid, Container, Input, Modal, Segment } from 'semantic-ui-react';
+import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
 import { Cronograma, CronogramaState } from 'core';
 import uuid from 'uuid';
 import LoaderComponent from '../../shared/components/loader/LoaderComponent';
@@ -122,23 +122,18 @@ export const NewCronogramaForm = (props: Props) => {
                         </Form.Field>
                     </Grid.Column>
 
+                    <Grid.Column floated='right' mobile={16} tablet={6} computer={4}>
+                        <Form.Field>
+                            <Button
+                                fluid
+                                icon='check'
+                                positive
+                                labelPosition='right'
+                                content='Salvar'
+                            />
+                        </Form.Field>
+                    </Grid.Column>
                 </Grid>
-                <Segment floated='right' basic >
-                    <Modal.Actions >
-                        {/* <Button
-                            as={Button}
-                            color='red'
-                            content='Cancelar'
-                            onClick={() => props.close()}>
-                        </Button> */}
-                        <Button
-                            positive
-                            icon='checkmark'
-                            labelPosition='right'
-                            content='Salvar'
-                        />
-                    </Modal.Actions>
-                </Segment>
             </Container>
         </Form >
     )
