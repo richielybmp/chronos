@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { configureStore } from "core";
+import { configureStore, saveState } from "core";
 // import createIndexRoutes from './routes';
 import CronogramaList from './app/pages/Main';
 import * as serviceWorker from './serviceWorker';

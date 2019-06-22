@@ -22,7 +22,7 @@ function CronogramaCard(props: CronogramaCardProps) {
             <Card.Content>
                 <Card.Header content={descricao} />
                 <Card.Meta content={disciplinas.length + ' Disciplinas'} />
-                <Card.Description content={dataInicio.toDateString()} />
+                <Card.Description content={dataInicio} />
             </Card.Content>
         </Card >
     )

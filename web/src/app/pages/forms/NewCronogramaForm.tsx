@@ -41,7 +41,7 @@ export const NewCronogramaForm = (props: Props) => {
 
     const addCronograma = (e: any, dispatch: any) => {
         e.preventDefault();
-        const c = new Cronograma(uuid(), cronogramaTitulo, new Date(cronogramaDataInicio), new Date(cronogramaDataFim), []);
+        const c = new Cronograma(uuid(), cronogramaTitulo, cronogramaDataInicio, cronogramaDataFim, []);
 
         if (!ehEdicao) {
             props.createCronograma(c, sessionStorage.getItem('AuthToken'))
@@ -63,8 +63,10 @@ export const NewCronogramaForm = (props: Props) => {
         if (props.cronogramaOnDetail.cronograma != null) {
             const { cronograma, error, loading } = props.cronogramaOnDetail
             setNovoCronogramaTitulo(cronograma.descricao)
-            setNovoCronogramaDataInicio(cronograma.dataInicio.toISOString().slice(0, 10))
-            setNovoCronogramaDataFim(cronograma.dataFim.toISOString().slice(0, 10))
+            const dateI = cronograma.dataInicio.split('/')
+            const dateF = cronograma.dataFim.split('/')
+            setNovoCronogramaDataInicio(dateI[2] + "-" + dateI[1] + "-" + dateI[0])
+            setNovoCronogramaDataFim(dateF[2] + "-" + dateF[1] + "-" + dateF[0])
             setEhEdicao(true)
         }
     }, [props.cronogramaOnDetail])

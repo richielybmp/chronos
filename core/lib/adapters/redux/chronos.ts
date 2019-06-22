@@ -1,13 +1,7 @@
 import { Cronograma, EnumCronogramaActions } from "../../domain";
 import { CronogramaActionsType } from "../actions/cronogramaActions";
-import { CronogramasState, CronogramaState } from "../../frameworks";
+import { ChronosStateType } from "../../frameworks";
 import mock from "../../mock_data";
-
-type ChronosStateType = {
-    cronogramasList: CronogramasState,
-    novoCronograma: CronogramaState,
-    cronogramaOnDetail: CronogramaState,
-}
 
 const INITIAL_STATE = {
     cronogramasList: { cronogramas: [], error: null, loading: false },
@@ -68,7 +62,7 @@ export const chronosReducer = (
             };
         case EnumCronogramaActions.CREATE_CRONOGRAMA_SUCCESS:
             console.log(action.payload);
-            const novo = new Cronograma('123', 'Novo Cronograma 123', new Date(), new Date(), [])
+            const novo = new Cronograma('123', 'Novo Cronograma 123', "22/06/2019", "01/12/2019", [])
             mock.push(novo)
             return {
                 ...state,

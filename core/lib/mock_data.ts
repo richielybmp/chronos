@@ -74,16 +74,16 @@ var mock_discicplinas_enem: Disciplina[] = [
 ]
 
 var mock: Cronograma[] = [
-    new Cronograma('1', "Enem", new Date(), new Date(), mock_discicplinas_enem),
-    new Cronograma('2', "Cronograma 2", new Date(), new Date(), mock_discicplinas),
-    new Cronograma('3', "Cronograma 3", new Date(), new Date(), mock_discicplinas),
-    new Cronograma('4', "Cronograma 4", new Date(), new Date(), mock_discicplinas),
-    new Cronograma('5', "Cronograma 5", new Date(), new Date(), mock_discicplinas),
-    new Cronograma('6', "Cronograma 6", new Date(), new Date(), mock_discicplinas),
-    new Cronograma('7', "Cronograma 7", new Date(), new Date(), mock_discicplinas),
-    new Cronograma('8', "Cronograma 8", new Date(), new Date(), mock_discicplinas),
-    new Cronograma('9', "Cronograma 9", new Date(), new Date(), mock_discicplinas),
-    new Cronograma('10', "Cronograma 10", new Date(), new Date(), mock_discicplinas),
+    new Cronograma('1', "Enem", "22/06/2019", "22/06/2019", mock_discicplinas_enem),
+    new Cronograma('2', "Cronograma 2", "22/06/2019", "22/06/2019", mock_discicplinas),
+    new Cronograma('3', "Cronograma 3", "22/06/2019", "22/06/2019", mock_discicplinas),
+    new Cronograma('4', "Cronograma 4", "22/06/2019", "22/06/2019", mock_discicplinas),
+    new Cronograma('5', "Cronograma 5", "22/06/2019", "22/06/2019", mock_discicplinas),
+    new Cronograma('6', "Cronograma 6", "22/06/2019", "22/06/2019", mock_discicplinas),
+    new Cronograma('7', "Cronograma 7", "22/06/2019", "22/06/2019", mock_discicplinas),
+    new Cronograma('8', "Cronograma 8", "22/06/2019", "22/06/2019", mock_discicplinas),
+    new Cronograma('9', "Cronograma 9", "22/06/2019", "22/06/2019", mock_discicplinas),
+    new Cronograma('10', "Cronograma 10", "22/06/2019", "22/06/2019", mock_discicplinas),
 ]
 //#endregion
 
