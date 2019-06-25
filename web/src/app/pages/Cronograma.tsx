@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Header, Label, Segment, Icon, Grid, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
-import { CronogramaState } from 'core';
+import { CronogramaState } from 'chronos-core';
 import LoaderComponent from '../shared/components/loader/LoaderComponent';
 import DisciplinaListContainer from '../containers/DisciplinaListContainer';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';

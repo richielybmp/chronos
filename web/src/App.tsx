@@ -1,14 +1,10 @@
 import React from 'react';
-import Footer from './app/shared/components/footer/Footer';
-import Home from './app/home/Home';
+import ChronosRoutes from './routes';
 
-const App: React.FC = () => {
+const App = () => {
   return (
-    <>
-      <Home />
-      <Footer />
-    </>
-  );
+    <ChronosRoutes />
+  )
 }
 
 export default App;

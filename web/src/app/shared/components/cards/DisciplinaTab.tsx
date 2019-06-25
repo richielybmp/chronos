@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Menu, Segment, Icon, List, Button, Accordion } from 'semantic-ui-react'
-import { Disciplina, Assunto } from 'core';
-import { Link } from 'react-router-dom';
+import { Accordion, List } from 'semantic-ui-react'
+import { Disciplina, Assunto } from 'chronos-core';
 
 interface DisciplinaTabProps {
     disciplinas: Disciplina[],

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Button, Container, Grid } from 'semantic-ui-react';
 import CronogramaCard from '../shared/components/cards/CronogramaCard';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
-import { Cronograma, CronogramasState } from 'core';
+import { Cronograma, CronogramasState } from 'chronos-core';
 import LoaderComponent from '../shared/components/loader/LoaderComponent';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
 

@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import Header from '../shared/components/nav/MainNav';
 import CronogramaList from '../containers/CronogramaListContainer';
 import CronogramaContainer from '../containers/CronogramaContainer';
-import NewCronogramaFormContainer from '../containers/NewCronogramaFormContainer';
 import NewDisciplinaForm from './forms/NewDisciplinaForm';
 
 const Main = ({ match }: any) => {

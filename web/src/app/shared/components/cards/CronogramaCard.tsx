@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Cronograma } from 'core';
+import { Cronograma } from 'chronos-core';
 
 interface CronogramaCardProps {
     cronograma: Cronograma,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
-import { Cronograma, CronogramaState } from 'core';
+import { Cronograma, CronogramaState } from 'chronos-core';
 import uuid from 'uuid';
 import LoaderComponent from '../../shared/components/loader/LoaderComponent';
 

@@ -6,7 +6,7 @@ import {
     fetchCronograma,
     fetchCronogramaFailure,
     fetchCronogramaSuccess,
-} from "core";
+} from "chronos-core";
 import CronogramaList from "../pages/CronogramaList";
 
 const mapStateToProps = (state: any) => {
