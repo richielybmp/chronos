@@ -8,7 +8,7 @@ interface DisciplinaTabProps {
     // setOnDetail: () => void
 }
 
-function DisciplinaTab(props: DisciplinaTabProps) {
+export function DisciplinaTab(props: DisciplinaTabProps) {
 
     const { disciplinas, matchUrl } = props
 
@@ -59,30 +59,3 @@ function DisciplinaTab(props: DisciplinaTabProps) {
         </div>
     )
 }
-
-export default DisciplinaTab
-
-
-    // < Menu attached = 'top' tabular >
-
-    //     {
-    //         disciplinas.map((item: Disciplina, index) => {
-    //             return (
-    //                 <Menu.Item
-    //                     key={index}
-    //                     name={item.descricao}
-    //                     active={activeItem === item.descricao}
-    //                     onClick={() => handleItemClick(item.descricao)} />
-    //             )
-    //         })
-    //     }
-
-    //     < Menu.Menu position = 'right' >
-    //         <Menu.Item
-    //             name='nova-disciplina'
-    //             active={activeItem === 'nova-disciplina'}
-    //         >
-    //             <Button inverted color='green' floated='right' content='Nova disciplina' icon='add' labelPosition='right' as={Link} to={`${matchUrl.url}/nova-disciplina`} />
-    //         </Menu.Item>
-    //             </Menu.Menu >
-    //         </Menu >

@@ -2,8 +2,7 @@ import React from 'react'
 import { ReactNodeLike } from 'prop-types'
 import DesktopContainer from './DesktopContainer';
 import MobileContainer from './MobileContainer';
-import SegmentMock from '../shared/components/mock/SegmentMock';
-
+import { SegmentMock } from '..';
 
 interface ResponsiveContainerProps {
     children: ReactNodeLike,
@@ -16,9 +15,7 @@ const ResponsiveContainer = ({ children }: ResponsiveContainerProps) => (
     </div>
 )
 
-
-
-function Home() {
+export function Home() {
     return (
         <ResponsiveContainer>
             <SegmentMock />
@@ -28,4 +25,3 @@ function Home() {
     )
 }
 
-export default Home

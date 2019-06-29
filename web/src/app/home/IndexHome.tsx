@@ -1,6 +1,5 @@
 import React from 'react'
-import Home from "./Home";
-import Footer from "../shared/components/footer/Footer";
+import { Home, Footer } from '../shared/components/';
 
 const IndexHome = () => {
     return (

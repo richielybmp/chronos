@@ -22,36 +22,4 @@ export class Assunto extends DtoCodigoDescricao {
         this.exercicios = exercicios
         this.anotacao = anotacao
     }
-
-    // public get anotacao(): string {
-    //     return this._anotacao;
-    // }
-
-    // public set anotacao(v: string) {
-    //     this._anotacao = v;
-    // }
-
-    // public get revisoes(): Revisao[] {
-    //     return this._revisoes;
-    // }
-
-    // public set revisoes(v: Revisao[]) {
-    //     this._revisoes = v;
-    // }
-
-    // public get exercicios(): Exercicio[] {
-    //     return this._exercicios;
-    // }
-
-    // public set exercicios(v: Exercicio[]) {
-    //     this._exercicios = v;
-    // }
-
-    // public get materiais(): Material[] {
-    //     return this._materiais;
-    // }
-
-    // public set materiais(v: Material[]) {
-    //     this._materiais = v;
-    // }
 }

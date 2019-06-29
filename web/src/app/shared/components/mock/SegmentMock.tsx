@@ -1,7 +1,7 @@
 import React from 'react'
 import { Segment, Grid, Header } from 'semantic-ui-react';
 
-function SegmentMock() {
+export function SegmentMock() {
     return (
         <div>
             <Segment style={{ padding: '0em' }} vertical>
@@ -27,5 +27,3 @@ function SegmentMock() {
         </div>
     )
 }
-
-export default SegmentMock

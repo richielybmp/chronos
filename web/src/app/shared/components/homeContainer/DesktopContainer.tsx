@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import { Responsive, Visibility, Segment, Menu, Container, Button } from 'semantic-ui-react';
 import HomePageHeading from './HomePageHeading';
 import { Link } from 'react-router-dom';
-import Utils from '../utils/utils'
+import Utils from '../../../utils/utils'
+
+const background_image = {
+    backgroundImage: '-webkit-radial-gradient(50% top, circle, rgba(84,90,182,0.6) 0%, rgba(84,90,182,0) 75%),-webkit-radial-gradient(right top, circle, #794aa2 0%, rgba(121,74,162,0) 57%)',
+    minHeight: 700,
+    padding: '1em 0em'
+}
 
 const larguraTablet = Responsive.onlyTablet.minWidth
 
@@ -26,13 +32,12 @@ class DesktopContainer extends Component {
                     <Segment
                         inverted
                         textAlign='center'
-                        style={{ minHeight: 700, padding: '1em 0em' }}
                         vertical
+                        style={background_image}
                     >
                         <Menu
                             fixed={fixed ? 'top' : undefined}
                             inverted={!fixed}
-                            pointing={!fixed}
                             secondary={!fixed}
                             size='large'
                         >

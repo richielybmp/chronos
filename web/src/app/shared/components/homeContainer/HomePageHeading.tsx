@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Header, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 const HomePageHeading = ({ mobile }: any) => (
     <Container text>
@@ -24,7 +25,7 @@ const HomePageHeading = ({ mobile }: any) => (
                 marginTop: mobile ? '0.5em' : '1.5em',
             }}
         />
-        <Button primary size='huge'>
+        <Button primary size='huge' as={Link} to={`${process.env.PUBLIC_URL}/entrar`}>
             Começar
         </Button>
     </Container>

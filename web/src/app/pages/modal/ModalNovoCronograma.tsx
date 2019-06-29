@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import ModalContainer from '../../shared/components/modal/ModalContainer';
+import React from 'react'
 import NewCronogramaFormContainer from '../../containers/NewCronogramaFormContainer';
+import { ModalContainer } from '../../shared/components';
 
 interface ModalNovoCronogramaProps {
     history: any

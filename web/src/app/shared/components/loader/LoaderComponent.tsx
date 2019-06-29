@@ -6,7 +6,7 @@ interface LoaderProps {
     titulo: string,
 }
 
-export default function LoaderComponent(props: LoaderProps) {
+export function LoaderComponent(props: LoaderProps) {
 
     const { tamanho, titulo } = props
 

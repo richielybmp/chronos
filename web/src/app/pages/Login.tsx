@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../../assets/images/logo.png'
-import LoginForm from '../shared/components/login/LoginForm';
+import { LoginForm } from '../shared/components';
 
 const Login = () => (
     <LoginForm

@@ -8,7 +8,7 @@ interface CronogramaCardProps {
     setOnDetail: () => void
 }
 
-function CronogramaCard(props: CronogramaCardProps) {
+export function CronogramaCard(props: CronogramaCardProps) {
 
     const { disciplinas, codigo, descricao, dataInicio } = props.cronograma
     return (
@@ -27,5 +27,3 @@ function CronogramaCard(props: CronogramaCardProps) {
         </Card >
     )
 }
-
-export default CronogramaCard

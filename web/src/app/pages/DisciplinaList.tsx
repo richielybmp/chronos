@@ -1,7 +1,7 @@
 import React from 'react'
 import { Disciplina } from 'chronos-core';
 import { EmptyHeader } from '../shared/components/header/EmptyHeader';
-import DisciplinaTab from '../shared/components/cards/DisciplinaTab';
+import { DisciplinaTab } from '../shared/components';
 
 interface Props {
     disciplinas: Disciplina[],

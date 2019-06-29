@@ -1,5 +1,5 @@
 import React from 'react';
-import ChronosRoutes from './routes';
+import ChronosRoutes from './ChronosRoutes';
 
 const App = () => {
   return (

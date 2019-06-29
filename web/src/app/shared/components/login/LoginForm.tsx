@@ -11,7 +11,7 @@ interface LoginFormProps {
     labelConvite: string,
 }
 
-const LoginForm = ({ logo, title, labelBtnEntrar, labelConvite, url }: LoginFormProps) => (
+export const LoginForm = ({ logo, title, labelBtnEntrar, labelConvite, url }: LoginFormProps) => (
     <Grid textAlign='center' verticalAlign='middle' style={{
         backgroundImage: "url(" + bgimage + ")",
         backgroundPosition: 'center',
@@ -50,5 +50,3 @@ const LoginForm = ({ logo, title, labelBtnEntrar, labelConvite, url }: LoginForm
         </Grid.Column>
     </Grid>
 )
-
-export default LoginForm

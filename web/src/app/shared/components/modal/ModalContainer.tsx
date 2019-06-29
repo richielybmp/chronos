@@ -8,7 +8,7 @@ interface ModalProps {
     toggle: () => void
 }
 
-function ModalContainer(props: ModalProps) {
+export function ModalContainer(props: ModalProps) {
 
     const { show, children, toggle } = props
     const [modalShow, setmodalShowToggle] = useState(show)
@@ -39,5 +39,3 @@ function ModalContainer(props: ModalProps) {
 
     return null
 }
-
-export default ModalContainer

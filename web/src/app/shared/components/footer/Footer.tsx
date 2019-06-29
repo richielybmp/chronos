@@ -1,9 +1,15 @@
 import React from 'react'
 import { Segment, Container, Grid, Header, List, Divider } from 'semantic-ui-react'
 
-const Footer = () => {
+const background_image = {
+    backgroundImage: '-webkit-radial-gradient(50% top, circle, rgba(84,90,182,0.6) 0%, rgba(84,90,182,0) 75%),-webkit-radial-gradient(right top, circle, #794aa2 0%, rgba(121,74,162,0) 57%)',
+    margin: '5em 0em 0em',
+    padding: '5em 0em'
+}
+
+export const Footer = () => {
     return (
-        <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
+        <Segment inverted vertical style={background_image}>
             <Container textAlign='center'>
                 <Grid divided inverted stackable>
                     <Grid.Column width={7}>
@@ -42,5 +48,3 @@ const Footer = () => {
         </Segment>
     )
 }
-
-export default Footer
