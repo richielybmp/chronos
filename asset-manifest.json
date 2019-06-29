@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/chronos/static/js/main.66776236.chunk.js",
-    "main.js.map": "/chronos/static/js/main.66776236.chunk.js.map",
+    "main.js": "/chronos/static/js/main.1d6704d1.chunk.js",
+    "main.js.map": "/chronos/static/js/main.1d6704d1.chunk.js.map",
     "runtime~main.js": "/chronos/static/js/runtime~main.c5cea8de.js",
     "runtime~main.js.map": "/chronos/static/js/runtime~main.c5cea8de.js.map",
-    "static/js/2.b16a0e8d.chunk.js": "/chronos/static/js/2.b16a0e8d.chunk.js",
-    "static/js/2.b16a0e8d.chunk.js.map": "/chronos/static/js/2.b16a0e8d.chunk.js.map",
+    "static/js/2.d4875c9c.chunk.js": "/chronos/static/js/2.d4875c9c.chunk.js",
+    "static/js/2.d4875c9c.chunk.js.map": "/chronos/static/js/2.d4875c9c.chunk.js.map",
     "index.html": "/chronos/index.html",
-    "precache-manifest.3e1efb9c5d978103311bc8db4ca3f358.js": "/chronos/precache-manifest.3e1efb9c5d978103311bc8db4ca3f358.js",
+    "precache-manifest.3fafee21e4fda520dfabe2e4e3719b9b.js": "/chronos/precache-manifest.3fafee21e4fda520dfabe2e4e3719b9b.js",
     "service-worker.js": "/chronos/service-worker.js",
     "static/media/study-login-bg.png": "/chronos/static/media/study-login-bg.fccd89ff.png"
   }
