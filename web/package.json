@@ -6,7 +6,7 @@
   "dependencies": {
     "@types/uuid": "^3.4.4",
     "axios": "^0.19.0",
-    "chronos-core": "file:../chronos-core",
+    "chronos-core": "^0.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "5.0.7",
