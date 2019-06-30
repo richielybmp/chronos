@@ -61,12 +61,13 @@ export const NewCronogramaForm = (props: Props) => {
 
     useEffect(() => {
         if (props.cronogramaOnDetail.cronograma != null) {
-            const { cronograma, error, loading } = props.cronogramaOnDetail
-            setNovoCronogramaTitulo(cronograma.descricao)
+            const { cronograma } = props.cronogramaOnDetail
             const dateI = cronograma.dataInicio.split('/')
             const dateF = cronograma.dataFim.split('/')
+
             setNovoCronogramaDataInicio(dateI[2] + "-" + dateI[1] + "-" + dateI[0])
             setNovoCronogramaDataFim(dateF[2] + "-" + dateF[1] + "-" + dateF[0])
+            setNovoCronogramaTitulo(cronograma.descricao)
             setEhEdicao(true)
         }
     }, [props.cronogramaOnDetail])

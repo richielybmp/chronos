@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ReactNodeLike } from 'prop-types';
-import { Responsive, Segment, Menu, Sidebar, Icon, Image, Header } from 'semantic-ui-react';
+import { Responsive, Segment, Menu, Sidebar, Icon } from 'semantic-ui-react';
 import Utils from '../../../utils/utils';
 import { Link } from 'react-router-dom';
 
@@ -93,7 +93,7 @@ export const MobileNav = ({ children }: ResponsiveContainerProps) => {
                 <Segment inverted style={background_image}>
                     <Menu secondary inverted size='large'>
                         <Menu.Item>
-                            <img src='https://react.semantic-ui.com/logo.png' />
+                            <img src='https://react.semantic-ui.com/logo.png' alt='logo' />
                         </Menu.Item>
                         <Menu.Item position='right' onClick={() => handleToggle()}>
                             <Icon name='sidebar' />

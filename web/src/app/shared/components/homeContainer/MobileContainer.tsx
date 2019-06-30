@@ -21,7 +21,6 @@ class MobileContainer extends Component {
 
     render() {
         const { children } = this.props
-        const { sidebarOpened } = this.state
 
         return (
             <Responsive
@@ -29,31 +28,14 @@ class MobileContainer extends Component {
                 getWidth={() => Utils.getScreenWidth(larguraTablet)}
                 maxWidth={larguraTablet}
             >
-                {/* <Sidebar
-                    as={Menu}
-                    animation='push'
-                    inverted
-                    onHide={this.handleSidebarHide}
-                    vertical
-                    visible={sidebarOpened}
-                >
-                    <Menu.Item as='a' active>
-                        CHRONOS
-                    </Menu.Item>
-                </Sidebar> */}
-
-                {/* <Sidebar.Pusher dimmed={sidebarOpened}> */}
                 <Segment
                     inverted
+                    vertical
                     textAlign='center'
                     style={background_image}
-                    vertical
                 >
                     <Container>
                         <Menu inverted secondary size='large'>
-                            {/* <Menu.Item onClick={this.handleToggle}>
-                                <Icon name='sidebar' />
-                            </Menu.Item> */}
                             <Menu.Item position='left'>
                                 <Button
                                     as={Link}
@@ -73,9 +55,7 @@ class MobileContainer extends Component {
                     </Container>
                     <HomePageHeading mobile />
                 </Segment>
-
                 {children}
-                {/* </Sidebar.Pusher> */}
             </Responsive >
         )
     }
