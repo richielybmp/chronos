@@ -30,7 +30,8 @@ const CronogramaDetail = (props: Props) => {
     }
 
     return (
-        <div style={{ height: '-webkit-fill-available' }}>
+        // <div style={{ height: '-webkit-fill-available' }}>
+        <div>
             {/* Modal 'Editar" */}
             <ModalNovoCronograma
                 history={props.history}
@@ -38,23 +39,24 @@ const CronogramaDetail = (props: Props) => {
                 toggle={() => handlePopModal()}
                 close={() => handleCloseModal()} />
 
-            {cronograma != null ? (
-                <>
-                    <CronogramaSubHeader descricao={cronograma.descricao} handlePopModal={handlePopModal} />
+            {
+                cronograma != null ? (
+                    <>
+                        <CronogramaSubHeader descricao={cronograma.descricao} handlePopModal={handlePopModal} />
 
-                    <CronogramaContent cronograma={cronograma}>
-                        <DisciplinaListContainer disciplinas={cronograma.disciplinas} matchUrl={props.match} />
-                    </CronogramaContent>
-                </>
-            ) :
-                <EmptyHeader
-                    icon='warning'
-                    title='Algo de estranho aconteceu'
-                    subtitle='Tente voltar para sua lista de cronogramas'
-                    btnTitle='Voltar'
-                    linkTo={`/cronogramas`} />
+                        <CronogramaContent cronograma={cronograma}>
+                            <DisciplinaListContainer disciplinas={cronograma.disciplinas} matchUrl={props.match} />
+                        </CronogramaContent>
+                    </>
+                ) :
+                    <EmptyHeader
+                        icon='warning'
+                        title='Algo de estranho aconteceu'
+                        subtitle='Tente voltar para sua lista de cronogramas'
+                        btnTitle='Voltar'
+                        linkTo={`/cronogramas`} />
             }
-        </div>
+        </div >
     )
 }
 
