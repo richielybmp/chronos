@@ -3,7 +3,7 @@ import { getToken, logout, TOKEN_KEY } from './auth';
 
 
 const api = axios.create({
-    baseURL: "http://localhost:8000"
+    baseURL: "http://cronos.vizzarconsultoria.com/api"
     // baseURL: "http://api.vizzarconsultoria.com"
 });
 
