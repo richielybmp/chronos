@@ -1,0 +1,9 @@
+export enum EnumAuthActions {
+    SIGN_IN = 'SIGN_IN',
+    SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS',
+    SIGN_IN_FAILURE = 'SIGN_IN_FAILURE',
+
+    SIGN_UP = 'SIGN_UP',
+    SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS',
+    SIGN_UP_FAILURE = 'SIGN_UP_FAILURE',
+}

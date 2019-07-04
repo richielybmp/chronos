@@ -5,6 +5,7 @@ import Login from './app/pages/Login';
 import { Provider } from 'react-redux';
 import { configureStore } from 'chronos-core';
 import IndexHome from './app/home/IndexHome';
+import SignInContainer from './app/containers/login/SignInContainer';
 
 const ChronosRoutes = () => {
     return (
@@ -13,7 +14,7 @@ const ChronosRoutes = () => {
                 <Switch>
                     <Route path={`${process.env.PUBLIC_URL}/`} exact component={IndexHome} />
                     <Route path={`${process.env.PUBLIC_URL}/cronogramas`} component={CronogramaList} />
-                    <Route path={`${process.env.PUBLIC_URL}/entrar`} component={Login} />
+                    <Route path={`${process.env.PUBLIC_URL}/entrar`} component={SignInContainer} />
                 </Switch>
             </BrowserRouter>
         </Provider>

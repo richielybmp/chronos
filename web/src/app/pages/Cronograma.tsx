@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Button, Header, Label, Segment, Icon, Grid, Divider, Breadcrumb, Container, Dropdown, Menu } from 'semantic-ui-react';
 import { CronogramaState } from 'chronos-core';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
 import { LoaderComponent, EmptyHeader, CronogramaSubHeader, CronogramaContent } from '../shared/components';

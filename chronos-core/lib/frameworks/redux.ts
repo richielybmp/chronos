@@ -4,6 +4,7 @@ import { Cronograma } from "../domain";
 import { chronosReducer } from "../adapters/redux/chronos";
 import { loadState, saveState } from './localStorage'
 import { throttle } from "lodash";
+import { authReducer } from "..";
 
 export type ChronosStateType = {
     cronogramasList: CronogramasState,
@@ -31,6 +32,7 @@ export type CronogramaStateType = {
 
 const reducers = {
     cronogramas: chronosReducer,
+    auth: authReducer
 };
 
 export const configureStore = () => {

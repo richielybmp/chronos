@@ -1,6 +1,6 @@
 import React from 'react'
 import { ReactNodeLike } from 'prop-types';
-import { Container, Header, Segment, Grid, Button } from 'semantic-ui-react';
+import { Container, Header, Segment, Grid, Button, Label } from 'semantic-ui-react';
 import DisciplinaListContainer from '../../../containers/DisciplinaListContainer';
 import { Cronograma } from 'chronos-core';
 
@@ -13,7 +13,7 @@ export function CronogramaContent({ children, cronograma }: CronogramaContentPro
     return (
         <Container style={{ padding: '2em 0em' }}>
             <Header as='h1' dividing>
-                <Header.Content>
+                <Header.Content  >
                     {cronograma.descricao}
                     <Header.Subheader>
                         {cronograma.dataInicio} - {cronograma.dataFim}

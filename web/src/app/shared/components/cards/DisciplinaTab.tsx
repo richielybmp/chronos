@@ -29,20 +29,32 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                         return (
                             < div key={index}>
                                 <Accordion.Title
-                                    style={{ backgroundColor: 'lightgrey' }}
+                                    style={{ backgroundColor: 'white' }}
                                     active={activeItem === item.descricao}
-                                    onClick={() => handleItemClick(item.descricao)}>
-                                    <Label as='a' color='violet' ribbon size='large'>{item.descricao}</Label>
+                                >
+                                    <Label
+                                        onClick={() => handleItemClick(item.descricao)}
+                                        as='a' color='violet' ribbon size='large' style={{ minWidth: '0' }}>
+                                        {item.descricao}
+                                    </Label>
+
+                                    <Button.Group floated='right'>
+                                        <Button color='yellow' icon='edit' onClick={() => alert('teste')}></Button>
+                                        <Button color='red' icon='trash'></Button>
+                                        <Button onClick={() => alert('Not implemented yet')}
+                                            color='green' content='Assunto' icon='plus' size='tiny'
+                                            labelPosition='right' />
+                                    </Button.Group>
                                 </Accordion.Title>
                                 <Accordion.Content active={activeItem === item.descricao}>
 
-                                    <Grid columns={1}>
+                                    {/* <Grid columns={1}>
                                         <Grid.Column mobile={16} tablet={6} computer={3} floated='right'>
                                             <Button fluid onClick={() => alert('Not implemented yet')}
                                                 color='green' content='Assunto' icon='plus' size='tiny'
                                                 labelPosition='right' />
                                         </Grid.Column>
-                                    </Grid>
+                                    </Grid> */}
                                     <List divided relaxed>
 
                                         {activeAssuntos.map((item: Assunto, idx: number) => {

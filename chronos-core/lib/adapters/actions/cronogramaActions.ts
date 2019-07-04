@@ -1,7 +1,6 @@
 import { Cronograma, EnumCronogramaActions } from "../../domain";
 import { CronogramaInteractor } from '../../interactors';
 
-//const API_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:3000/api' : '/api';
 const interactor = new CronogramaInteractor();
 
 type FetchCronogramasType = {

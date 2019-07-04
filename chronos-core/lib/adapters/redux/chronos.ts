@@ -19,10 +19,10 @@ export const chronosReducer = (
         case EnumCronogramaActions.FETCH_CRONOGRAMAS:
             return {
                 ...state,
-                cronogramasList: { cronogramas: [], error: null, loading: true },
-                cronogramaOnDetail: { cronograma: null, error: null, loading: false }
+                cronogramasList: { cronogramas: [], error: null, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_SUCCESS:
+            console.log(action.payload)
             return {
                 ...state,
                 cronogramasList: { cronogramas: mock, error: null, loading: false }

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container, Grid } from 'semantic-ui-react';
-import { EmptyHeader } from '../shared/components/header/EmptyHeader';
-import { Cronograma, CronogramasState } from 'chronos-core';
+import { CronogramasState } from 'chronos-core';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
-import { CronogramaCard, LoaderComponent, CronogramaListComponent } from '../shared/components';
+import { LoaderComponent, CronogramaListComponent } from '../shared/components';
 
 interface Props {
     cronogramaList: CronogramasState;
@@ -54,7 +52,7 @@ function CronogramaList(props: Props) {
                 cronogramas={cronogramas}
                 handleCronogramaOnDetail={handleCronogramaOnDetail}
                 handlePopModal={handlePopModal} />
-            }
+
 
         </div>
     )

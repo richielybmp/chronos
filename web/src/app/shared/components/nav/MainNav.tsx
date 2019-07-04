@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { ReactNodeLike } from 'prop-types';
 import { Responsive, Segment, Menu, Sidebar, Icon } from 'semantic-ui-react';
 import Utils from '../../../utils/utils';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { logout } from 'chronos-core';
 
 const background_image = {
     backgroundImage: '-webkit-radial-gradient(50% top, circle, rgba(84,90,182,0.6) 0%, rgba(84,90,182,0) 75%),-webkit-radial-gradient(right top, circle, #794aa2 0%, rgba(121,74,162,0) 57%)',
@@ -10,10 +11,14 @@ const background_image = {
 }
 
 interface ResponsiveContainerProps {
-    children: ReactNodeLike,
+    children: ReactNodeLike
 }
 
 const larguraTablet = Responsive.onlyTablet.minWidth
+
+const handleSair = () => {
+    logout()
+}
 
 export const DesktopNav = ({ children }: ResponsiveContainerProps) => {
 
@@ -37,8 +42,7 @@ export const DesktopNav = ({ children }: ResponsiveContainerProps) => {
                     <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} onClick={() => handleItemClick('relatorios')} />
                     <Menu.Menu position='right'>
                         <Menu.Item content="Minha conta" active={activeItem === 'profile'} onClick={() => handleItemClick('profile')} />
-                        <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => handleItemClick('sair')}
-                            as={Link} to={`/`}
+                        <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => handleSair()} as={Link} to={'/'}
                         />
                     </Menu.Menu>
                 </Menu>
@@ -86,7 +90,7 @@ export const MobileNav = ({ children }: ResponsiveContainerProps) => {
                     as={Link} to={`/cronogramas`} />
                 <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} onClick={() => handleItemClick('relatorios')} />
                 <Menu.Item content="Minha conta" active={activeItem === 'profile'} onClick={() => handleItemClick('profile')} />
-                <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => handleItemClick('sair')} as={Link} to={`/`} />
+                <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => handleSair()} as={Link} to={'/'} />
             </Sidebar>
 
             <Sidebar.Pusher dimmed={sideBarOpened}>

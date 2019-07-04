@@ -1,35 +1,42 @@
 import axios from 'axios';
-import { getToken, logout, TOKEN_KEY } from './auth';
+import { getToken, logout, TOKEN_KEY } from './localStorageAuth';
 
+let isRefreshing = false;
+
+let refreshSubscribers: any = [];
 
 const api = axios.create({
     baseURL: "http://cronos.vizzarconsultoria.com/api"
-    // baseURL: "http://api.vizzarconsultoria.com"
 });
 
 api.interceptors.request.use(async config => {
 
-    if(getToken()){
+    if (getToken()) {
         config.headers.Accept = 'application/json';
         config.headers.Authorization = getToken();
         config.headers.contentType = 'application/json';
         //console.log(jwt.decode(token))
     }
+
     return config;
+
 });
 
-let isRefreshing = false;
-let refreshSubscribers = [];
-
 api.interceptors.response.use(async response => {
+
     const newToken = response.headers.authorization;
-    if(newToken){
+
+    if (newToken) {
         // refreshToken(newToken);
         await localStorage.setItem(TOKEN_KEY, newToken);
     }
+
     return response;
+
 }, async error => {
+
     const { config, response: { status } } = error;
+
     const originalRequest = config;
 
     switch (status) {
@@ -39,11 +46,14 @@ api.interceptors.response.use(async response => {
             break;
         case 401:
             if (!isRefreshing) {
+
                 console.log('veio aqui no 401');
+
                 isRefreshing = true;
+
                 // Se retornar 401 é porque o usuário nao está autenticado. Então é feito uma requisição para o refresh token com o ultimo token utilizado
                 await api.post('/api/app/refresh', {})
-                    .then(newToken => {
+                    .then((newToken: any) => {
                         isRefreshing = false;
                         localStorage.setItem(TOKEN_KEY, `Bearer ${newToken.data.token}`);
                         onRrefreshed(newToken);
@@ -52,7 +62,7 @@ api.interceptors.response.use(async response => {
 
             // Criando uma nova promise para tentativa de refresh token
             return await new Promise((resolve, reject) => {
-                subscribeTokenRefresh(token => {
+                subscribeTokenRefresh(() => {
                     // replace the expired token and retry
                     originalRequest.headers.Authorization = getToken();
                     resolve(api(originalRequest));
@@ -70,12 +80,12 @@ api.interceptors.response.use(async response => {
     }
 });
 
-const subscribeTokenRefresh = (cb) => {
+const subscribeTokenRefresh = (cb: any) => {
     refreshSubscribers.push(cb);
 }
 
-const onRrefreshed = (token) => {
-    refreshSubscribers.map(cb => cb(token));
+const onRrefreshed = (token: string) => {
+    refreshSubscribers.map((cb: any) => cb(token));
 }
 
 export default api;

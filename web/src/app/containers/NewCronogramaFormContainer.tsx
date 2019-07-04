@@ -1,6 +1,14 @@
 import { connect } from "react-redux";
 import { NewCronogramaForm } from "../pages/forms/NewCronogramaForm";
-import { createCronograma, createCronogramaSuccess, createCronogramaFailure, resetNovoCronograma, updateCronograma, updateCronogramaFailure, updateCronogramaSuccess } from "chronos-core"
+import {
+    createCronograma,
+    createCronogramaSuccess,
+    createCronogramaFailure,
+    resetNovoCronograma,
+    updateCronograma,
+    updateCronogramaFailure,
+    updateCronogramaSuccess
+} from "chronos-core"
 
 const mapStateToProps = (state: any) => ({
     novoCronograma: state.cronogramas.novoCronograma,

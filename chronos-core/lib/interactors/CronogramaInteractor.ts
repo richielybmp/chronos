@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios';
 import { Cronograma } from "../domain";
-//import { CronogramaRepository } from "../storage/CronogramaRepository";
+import api from '../services/api';
 
 const API_URL = 'https://jsonplaceholder.typicode.com'
 
@@ -16,12 +16,10 @@ export class CronogramaInteractor {
         //return this.cronogramaRepository.insert(cronograma);
     }
 
+    // GET
+    // '/cronogramas'
     getAll(): AxiosPromise<any> {
-        return axios({
-            method: 'GET',
-            url: `${API_URL}/todos`,
-            headers: []
-        });
+        return api.get("/cronogramas");
     }
 
     getCronogramaById(id: string): AxiosPromise<any> {
