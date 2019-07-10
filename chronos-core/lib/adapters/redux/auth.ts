@@ -1,5 +1,5 @@
-import { EnumAuthActions, AuthActionsType } from "../..";
-import { login } from "../../services/localStorageAuth";
+import { EnumAuthActions, AuthActionsType, clearChronosState } from "../..";
+import { login, logout } from "../../services/localStorageAuth";
 
 type AuthStateType = {
     user: any
@@ -20,15 +20,13 @@ export const authReducer = (
     let error;
 
     switch (action.type) {
-        //#region 'signin cronogramas'
+        //#region 'signin'
         case EnumAuthActions.SIGN_IN:
             return {
                 ...state,
                 user: null, error: null, loading: true
             };
         case EnumAuthActions.SIGN_IN_SUCCESS:
-            console.log(action.payload);
-            // {token: ...}
             login(action.payload.token)
             return {
                 ...state,
@@ -42,7 +40,7 @@ export const authReducer = (
             };
         //#endregion
 
-        //#region 'signup cronograma'
+        //#region 'signup'
         case EnumAuthActions.SIGN_UP:
             return {
                 ...state,
@@ -51,9 +49,28 @@ export const authReducer = (
         case EnumAuthActions.SIGN_UP_SUCCESS:
             return {
                 ...state,
-                user: action.payload, error: null, loading: false
+                error: null, loading: false
             };
         case EnumAuthActions.SIGN_UP_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                user: null, error: error, loading: false
+            };
+        //#endregion
+
+        //#region 'logout'
+        case EnumAuthActions.LOG_OUT:
+            return state
+        case EnumAuthActions.LOG_OUT_SUCCESS:
+            // clears localStorageAuth
+            state = {
+                ...state,
+                error: null, loading: false
+            };
+            logout()
+            return state
+        case EnumAuthActions.LOG_OUT_FAILURE:
             error = action.payload || { message: action.payload.message };
             return {
                 ...state,

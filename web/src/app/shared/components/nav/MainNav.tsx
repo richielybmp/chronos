@@ -2,25 +2,22 @@ import React, { useState } from 'react'
 import { ReactNodeLike } from 'prop-types';
 import { Responsive, Segment, Menu, Sidebar, Icon } from 'semantic-ui-react';
 import Utils from '../../../utils/utils';
-import { Link, Redirect } from 'react-router-dom';
-import { logout } from 'chronos-core';
+import { Link } from 'react-router-dom';
+import { LoaderComponent } from '..';
 
 const background_image = {
-    backgroundImage: '-webkit-radial-gradient(50% top, circle, rgba(84,90,182,0.6) 0%, rgba(84,90,182,0) 75%),-webkit-radial-gradient(right top, circle, #794aa2 0%, rgba(121,74,162,0) 57%)',
-    borderRadius: '0'
+    backgroundImage: '-webkit-radial-gradient(50% top, circle, rgba(84,90,182,0.6) 0%, rgba(84,90,182,0) 75%),-webkit-radial-gradient(right top, circle, #794aa2 0%, rgba(121,74,162,0) 57%)'
+    , borderRadius: '0'
 }
 
 interface ResponsiveContainerProps {
     children: ReactNodeLike
+    , onSairClick: () => void
 }
 
 const larguraTablet = Responsive.onlyTablet.minWidth
 
-const handleSair = () => {
-    logout()
-}
-
-export const DesktopNav = ({ children }: ResponsiveContainerProps) => {
+export const DesktopNav = ({ children, onSairClick }: ResponsiveContainerProps) => {
 
     const [activeItem, setactiveItem] = useState('meus-cronogramas')
     const handleItemClick = (name: string) => setactiveItem(name)
@@ -42,8 +39,8 @@ export const DesktopNav = ({ children }: ResponsiveContainerProps) => {
                     <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} onClick={() => handleItemClick('relatorios')} />
                     <Menu.Menu position='right'>
                         <Menu.Item content="Minha conta" active={activeItem === 'profile'} onClick={() => handleItemClick('profile')} />
-                        <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => handleSair()} as={Link} to={'/'}
-                        />
+                        <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => onSairClick()} />
+
                     </Menu.Menu>
                 </Menu>
             </Segment>
@@ -52,7 +49,7 @@ export const DesktopNav = ({ children }: ResponsiveContainerProps) => {
     )
 }
 
-export const MobileNav = ({ children }: ResponsiveContainerProps) => {
+export const MobileNav = ({ children, onSairClick }: ResponsiveContainerProps) => {
 
     const [sideBarOpened, setsideBarOpened] = useState(false)
 
@@ -90,7 +87,7 @@ export const MobileNav = ({ children }: ResponsiveContainerProps) => {
                     as={Link} to={`/cronogramas`} />
                 <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} onClick={() => handleItemClick('relatorios')} />
                 <Menu.Item content="Minha conta" active={activeItem === 'profile'} onClick={() => handleItemClick('profile')} />
-                <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => handleSair()} as={Link} to={'/'} />
+                <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => onSairClick()} />
             </Sidebar>
 
             <Sidebar.Pusher dimmed={sideBarOpened}>
@@ -115,11 +112,37 @@ export const MobileNav = ({ children }: ResponsiveContainerProps) => {
     )
 }
 
-export const MainNav = ({ children }: ResponsiveContainerProps) => {
+interface MainNavProps {
+    logOut: (callback: Function) => void,
+    children: ReactNodeLike
+}
+
+export function MainNav({ logOut, children }: MainNavProps) {
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleLogOut = () => {
+        setIsLoading(true)
+
+        logOut(() => {
+            window.location.href = '/'
+            // setIsLoading(false)
+        })
+
+        // setTimeout(() => {
+        // }, 2000);
+    }
+
+
     return (
-        <div>
-            <DesktopNav>{children}</DesktopNav>
-            <MobileNav>{children}</MobileNav>
-        </div>
+        <>
+            {isLoading ? (
+                <LoaderComponent tamanho='big' titulo="Carregando" />
+            ) : null}
+            <div>
+                <DesktopNav onSairClick={handleLogOut}>{children}</DesktopNav>
+                <MobileNav onSairClick={handleLogOut}>{children}</MobileNav>
+            </div>
+        </>
     )
 }

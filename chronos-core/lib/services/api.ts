@@ -11,12 +11,13 @@ const api = axios.create({
 
 api.interceptors.request.use(async config => {
 
-    if (getToken()) {
+    if (getToken) {
         config.headers.Accept = 'application/json';
         config.headers.Authorization = getToken();
         config.headers.contentType = 'application/json';
         //console.log(jwt.decode(token))
     }
+    console.log(config);
 
     return config;
 
@@ -24,7 +25,7 @@ api.interceptors.request.use(async config => {
 
 api.interceptors.response.use(async response => {
 
-    const newToken = response.headers.authorization;
+    const newToken = response.headers.authorization
 
     if (newToken) {
         // refreshToken(newToken);
@@ -36,7 +37,6 @@ api.interceptors.response.use(async response => {
 }, async error => {
 
     const { config, response: { status } } = error;
-
     const originalRequest = config;
 
     switch (status) {
@@ -51,12 +51,15 @@ api.interceptors.response.use(async response => {
 
                 isRefreshing = true;
 
-                // Se retornar 401 é porque o usuário nao está autenticado. Então é feito uma requisição para o refresh token com o ultimo token utilizado
-                await api.post('/api/app/refresh', {})
+                // Se retornar 401 é porque o usuário nao está autenticado. 
+                // Então é feito uma requisição para o refresh token com o ultimo token utilizado
+                await api.post('/refresh')
                     .then((newToken: any) => {
-                        isRefreshing = false;
-                        localStorage.setItem(TOKEN_KEY, `Bearer ${newToken.data.token}`);
-                        onRrefreshed(newToken);
+                        if (newToken != undefined || newToken != null) {
+                            isRefreshing = false;
+                            localStorage.setItem(TOKEN_KEY, `Bearer ${newToken.data.token}`);
+                            onRrefreshed(newToken);
+                        }
                     });
             }
 

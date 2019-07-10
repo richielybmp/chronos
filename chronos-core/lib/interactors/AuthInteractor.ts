@@ -23,13 +23,21 @@ export class AuthInteractor {
     // '/user'
     // user: User
     signUp(user: User): AxiosPromise<any> {
-        return api.post('/user', {
-            params: {
-                name: user.name,
-                email: user.email,
-                password: user.password
+        return api.post('/user',
+            {
+                "name": user.name,
+                "email": user.email,
+                "password": user.password
             }
-        })
+        )
     }
+
+    // POST
+    // '/logout'
+    // -
+    logOut() {
+        return api.post('/logout')
+    }
+
 
 }

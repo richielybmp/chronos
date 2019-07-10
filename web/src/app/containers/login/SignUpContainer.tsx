@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
-import { signInUser, signInUserSuccess, signInUserFailure } from "chronos-core";
+import { signUpUser, signUpUserFailure, signUpUserSuccess } from "chronos-core";
 import { User } from "chronos-core/dist/domain/User";
-import Login from "../../pages/SignIn";
+import SignUp from "../../pages/SignUp";
 
 const mapStateToProps = (state: any) => {
     return {
@@ -11,17 +11,17 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        // Realizar login.
-        signIn: (user: User) => {
-            var promisse = dispatch(signInUser(user))
+        // Cadastrar novo usuário.
+        signUp: (user: User) => {
+            var promisse = dispatch(signUpUser(user))
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
                 if (!response.error) {
-                    dispatch(signInUserSuccess(data));
+                    dispatch(signUpUserSuccess(data));
                 }
                 else {
-                    dispatch(signInUserFailure(data));
+                    dispatch(signUpUserFailure(data));
                 }
             });
         }
@@ -31,4 +31,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Login);
+)(SignUp);

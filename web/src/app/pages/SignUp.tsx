@@ -8,15 +8,15 @@ interface Props {
     auth: any;
     match: any,
     history: any,
-    signIn: (user: User) => void,
+    signUp: (user: User) => void,
 }
 
-function Login(props: Props) {
+function SignUp(props: Props) {
 
-    const { error, loading } = props.auth
-    debugger
-    const handleLogin = () => {
-        props.signIn(new User('', "devfilsk@gmail.com", "secret"))
+    const { loading } = props.auth
+
+    const handleLogin = (name: string, email: string, password: string) => {
+        props.signUp(new User(name, email, password))
     }
 
     const listenForAuthUser = () => {
@@ -37,14 +37,14 @@ function Login(props: Props) {
 
     return (
         <LoginForm
+            isSignIn={false}
             logo={logo}
-            title={'Entrar na sua conta'}
-            labelBtnEntrar={'Entrar'}
-            url={`${process.env.PUBLIC_URL}/cronogramas`}
-            labelConvite={'Novo por aqui?'}
-            actionLogin={handleLogin}
+            title={'Cadastre-se'}
+            labelBtnEntrar={'Cadastrar'}
+            labelConvite={'Já possui conta? Entrar!'}
+            actionButton={handleLogin}
         />
     )
 }
 
-export default Login
+export default SignUp

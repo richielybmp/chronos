@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container, Grid, Button } from 'semantic-ui-react';
-import cronogramas from '../../../utils/mock-disciplinas';
 import { Cronograma } from 'chronos-core';
 import { CronogramaCard, EmptyHeader } from '..';
 

@@ -46,7 +46,7 @@ class MobileContainer extends Component {
                             </Menu.Item>
                             <Menu.Item position='right'>
                                 <Button as={Link}
-                                    to={`${process.env.PUBLIC_URL}/entrar`}
+                                    to={`${process.env.PUBLIC_URL}/cadastrar`}
                                     inverted style={{ marginLeft: '0.5em' }}>
                                     Cadastrar
                                     </Button>

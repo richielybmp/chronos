@@ -1,7 +1,6 @@
 import React from 'react'
 import { ReactNodeLike } from 'prop-types';
-import { Container, Header, Segment, Grid, Button, Label } from 'semantic-ui-react';
-import DisciplinaListContainer from '../../../containers/DisciplinaListContainer';
+import { Container, Header, Segment, Grid, Button } from 'semantic-ui-react';
 import { Cronograma } from 'chronos-core';
 
 interface CronogramaContentProps {

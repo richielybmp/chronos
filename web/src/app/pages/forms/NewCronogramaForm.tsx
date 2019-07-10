@@ -39,9 +39,16 @@ export const NewCronogramaForm = (props: Props) => {
     }
     //#endregion
 
+    const validaCampos = () => {
+        return false;
+    }
+
     const addCronograma = (e: any, dispatch: any) => {
         e.preventDefault();
-        const c = new Cronograma(uuid(), cronogramaTitulo, cronogramaDataInicio, cronogramaDataFim, []);
+
+        validaCampos();
+
+        const c = new Cronograma(uuid(), cronogramaTitulo, cronogramaTitulo, cronogramaDataInicio, cronogramaDataFim, []);
 
         if (!ehEdicao) {
             props.createCronograma(c, sessionStorage.getItem('AuthToken'))

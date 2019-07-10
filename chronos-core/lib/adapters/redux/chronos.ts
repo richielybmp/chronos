@@ -2,6 +2,9 @@ import { Cronograma, EnumCronogramaActions } from "../../domain";
 import { CronogramaActionsType } from "../actions/cronogramaActions";
 import { ChronosStateType } from "../../frameworks";
 import mock from "../../mock_data";
+import { CronogramaRepository } from "../../storage";
+
+const repository = new CronogramaRepository();
 
 const INITIAL_STATE = {
     cronogramasList: { cronogramas: [], error: null, loading: false },
@@ -22,10 +25,10 @@ export const chronosReducer = (
                 cronogramasList: { cronogramas: [], error: null, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_SUCCESS:
-            console.log(action.payload)
+            const cronogramas = repository.cronogramasToDomain(action.payload)
             return {
                 ...state,
-                cronogramasList: { cronogramas: mock, error: null, loading: false }
+                cronogramasList: { cronogramas: cronogramas, error: null, loading: false }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -62,7 +65,7 @@ export const chronosReducer = (
             };
         case EnumCronogramaActions.CREATE_CRONOGRAMA_SUCCESS:
             console.log(action.payload);
-            const novo = new Cronograma('123', 'Novo Cronograma 123', "22/06/2019", "01/12/2019", [])
+            const novo = new Cronograma('123', 'Novo Cronograma 123', 'Novo Cronograma 123', "22/06/2019", "01/12/2019", [])
             mock.push(novo)
             return {
                 ...state,
@@ -101,6 +104,9 @@ export const chronosReducer = (
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
             };
+
+        case EnumCronogramaActions.CLEAR_STATE:
+            return INITIAL_STATE;
         //#endregion
         default:
             return state;

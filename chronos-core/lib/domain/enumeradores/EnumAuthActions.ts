@@ -6,4 +6,8 @@ export enum EnumAuthActions {
     SIGN_UP = 'SIGN_UP',
     SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS',
     SIGN_UP_FAILURE = 'SIGN_UP_FAILURE',
+
+    LOG_OUT = 'LOG_OUT',
+    LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS',
+    LOG_OUT_FAILURE = 'LOG_OUT_FAILURE',
 }

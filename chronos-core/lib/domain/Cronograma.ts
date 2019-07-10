@@ -4,15 +4,18 @@ import { Disciplina } from "./Disciplina";
 export class Cronograma extends DtoCodigoDescricao {
     public dataInicio: string;
     public dataFim: string;
+    public titulo: string;
     public disciplinas: Disciplina[] = [];
 
     constructor(
         codigo: string,
         descricao: string,
+        titulo: string,
         dataInicio: string,
         dataFim: string,
         disciplinas: Disciplina[]) {
         super(codigo, descricao)
+        this.titulo = titulo
         this.dataInicio = dataInicio
         this.dataFim = dataFim
         this.disciplinas = disciplinas

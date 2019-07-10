@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Accordion, List, Label, Segment, Grid, Button } from 'semantic-ui-react'
+import { Accordion, List, Label, Button } from 'semantic-ui-react'
 import { Disciplina, Assunto } from 'chronos-core';
 
 interface DisciplinaTabProps {

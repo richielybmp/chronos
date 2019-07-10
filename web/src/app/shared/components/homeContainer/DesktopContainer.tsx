@@ -52,7 +52,10 @@ class DesktopContainer extends Component {
                                         inverted={!fixed}>
                                         Entrar
                                     </Button>
-                                    <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                                    <Button
+                                        as={Link}
+                                        to={`${process.env.PUBLIC_URL}/cadastrar`}
+                                        inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
                                         Cadastrar
                                      </Button>
                                 </Menu.Item>

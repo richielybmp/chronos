@@ -10,6 +10,12 @@ type FetchCronogramasType = {
 
 export type CronogramaActionsType = FetchCronogramasType;
 
+export function clearChronosState() {
+    return {
+        type: EnumCronogramaActions.CLEAR_STATE,
+    };
+}
+
 //#region "Actions para FETCH CRONOGRAMAS"
 export function fetchCronogramas() {
     return {

@@ -56,3 +56,26 @@ export function signUpUserFailure(error: any) {
     };
 }
 //#endregion
+
+//#region Log out
+export function logOutUser() {
+    return {
+        type: EnumAuthActions.LOG_OUT,
+        payload: interactor.logOut()
+    };
+}
+
+export function logOutUserSuccess() {
+    return {
+        type: EnumAuthActions.LOG_OUT_SUCCESS,
+        payload: null
+    };
+}
+
+export function logOutUserFailure(error: any) {
+    return {
+        type: EnumAuthActions.LOG_OUT_FAILURE,
+        payload: error
+    };
+}
+//#endregion

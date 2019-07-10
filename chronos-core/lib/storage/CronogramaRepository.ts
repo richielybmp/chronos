@@ -2,23 +2,22 @@ import { Cronograma } from "../domain";
 
 export class CronogramaRepository {
 
-    cronogramas: Cronograma[] = new Array<Cronograma>();
-
     constructor() {
     }
 
-    get(id: number) { }
+    cronogramasToDomain(payload: any): any {
 
-    insert(cronograma: Cronograma) {
-        //mock
-        this.cronogramas.push(cronograma);
+        let cronogramas: Cronograma[] = []
+
+        if (payload != null) {
+            payload.forEach((el: any) => {
+                cronogramas.push(
+                    new Cronograma(el.uuid, el.descricao, el.titulo, el.inicio, el.fim, [])
+                )
+            });
+        }
+
+        return cronogramas;
     }
 
-    update(cronograma: Cronograma) { }
-
-    delete(id: number) { }
-
-    getAll(): Cronograma[] {
-        return this.cronogramas;
-    }
 }

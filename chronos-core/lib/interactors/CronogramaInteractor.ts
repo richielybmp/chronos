@@ -23,7 +23,8 @@ export class CronogramaInteractor {
     }
 
     getCronogramaById(id: string): AxiosPromise<any> {
-        return axios.get(`${API_URL}/todos/${id}`);
+        // ao obter o cronograma, trazer a lista de disciplinas e assuntos.
+        return api.get(`/cronograma/${id}`);
     }
 
     createCronograma(props: any, tokenFromStorage: any) {
@@ -39,9 +40,6 @@ export class CronogramaInteractor {
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
-            // headers: {
-            //     'Authorization':`Bearer ${tokenFromStorage}`
-            // }
         })
     }
 
