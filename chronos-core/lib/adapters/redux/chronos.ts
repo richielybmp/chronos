@@ -88,10 +88,16 @@ export const chronosReducer = (
 
         //#region 'UPDATE cronograma'
         case EnumCronogramaActions.UPDATE_CRONOGRAMA:
+            var cronograma_antigo = state.cronogramaOnDetail.cronograma
+            var cronograma_update = action.payload.cronograma
+
+            if (cronograma_antigo)
+                cronograma_update.disciplinas = cronograma_antigo.disciplinas
+
             return {
                 ...state,
                 cronogramaOnDetail: {
-                    old: state.cronogramaOnDetail.cronograma,
+                    old: cronograma_antigo,
                     cronograma: action.payload.cronograma,
                     loading: true,
                     error: false

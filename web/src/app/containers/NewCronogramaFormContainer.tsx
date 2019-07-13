@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch: any) => {
             });
         },
 
-        editCronograma: (data: any, jwtToken: any) => {
+        editCronograma: (data: any, ) => {
             var promisse = dispatch(updateCronograma(data))
 
             promisse.payload.update.then((response: any) => {
