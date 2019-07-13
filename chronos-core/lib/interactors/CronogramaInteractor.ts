@@ -2,18 +2,9 @@ import axios, { AxiosPromise } from 'axios';
 import { Cronograma } from "../domain";
 import api from '../services/api';
 
-const API_URL = 'https://jsonplaceholder.typicode.com'
-
 export class CronogramaInteractor {
 
-    //cronogramaRepository: CronogramaRepository;
-
     constructor() {
-        //this.cronogramaRepository = new CronogramaRepository();
-    }
-
-    insert(cronograma: Cronograma) {
-        //return this.cronogramaRepository.insert(cronograma);
     }
 
     // GET
@@ -22,41 +13,46 @@ export class CronogramaInteractor {
         return api.get("/cronogramas");
     }
 
+    // GET
+    // '/cronogramas/<id>
+    // id: Identificador do cronograma
     getCronogramaById(id: string): AxiosPromise<any> {
         // ao obter o cronograma, trazer a lista de disciplinas e assuntos.
-        return api.get(`/cronograma/${id}`);
+        return api.get(`/cronograma-completo/${id}`);
     }
 
-    createCronograma(props: any, tokenFromStorage: any) {
-        console.table('createCronograma:', props, tokenFromStorage)
-        return axios({
-            method: 'POST',
-            data: JSON.stringify({
-                title: 'foo',
-                body: 'bar',
-                userId: 1
-            }),
-            url: `${API_URL}/todos`,
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
+    // POST
+    // '/cronogramas'
+    // cronograma: Cronograma
+    createCronograma(cronograma: Cronograma) {
+        return api.post("/cronogramas",
+            {
+                "titulo": cronograma.titulo,
+                "descricao": cronograma.descricao,
+                "inicio": cronograma.dataInicio,
+                "fim": cronograma.dataFim
             }
-        })
+        )
     }
 
-    updateCronograma(c: Cronograma) {
-        return axios.get(`${API_URL}/todos`);
-        // return axios({
-        //     method: 'PUT',
-        //     data: JSON.stringify({
-        //         title: 'foo',
-        //         body: 'bar',
-        //         userId: 1
-        //     }),
-        //     url: `${API_URL}/todos`,
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8"
-        //     }
-        // })
+    // PUT
+    // '/cronogramas/<id>'
+    // cronograma: Cronograma
+    updateCronograma(cronograma: Cronograma) {
+        return api.put(`/cronogramas/${cronograma.codigo}`,
+            {
+                "titulo": cronograma.titulo,
+                "descricao": cronograma.descricao,
+                "inicio": cronograma.dataInicio,
+                "fim": cronograma.dataFim
+            }
+        );
     }
 
+    // DELETE
+    // '/cronogramas/id'
+    // id: Identificador do cronograma
+    deleteCronogramaById(id: string) {
+        return api.delete(`/cronogramas/${id}`)
+    }
 }

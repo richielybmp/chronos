@@ -17,7 +17,7 @@ api.interceptors.request.use(async config => {
         config.headers.contentType = 'application/json';
         //console.log(jwt.decode(token))
     }
-    console.log(config);
+    //console.log(config);
 
     return config;
 
@@ -43,11 +43,17 @@ api.interceptors.response.use(async response => {
         case 400:
             // TODO Mesangem de erro de requisição inválida
             // Toastr('error', '', 'A sintaxe da requisição é inválida.');
-            break;
+            //console.log('erro 400', error)
+            // Criando uma nova promise para tentativa de refresh token
+            return await new Promise((resolve, reject) => {
+                resolve(error.response)
+                reject(error.response)
+            });
+        // break;
         case 401:
             if (!isRefreshing) {
 
-                console.log('veio aqui no 401');
+                //console.log('veio aqui no 401');
 
                 isRefreshing = true;
 
@@ -74,6 +80,10 @@ api.interceptors.response.use(async response => {
         case 500:
             // TODO inserir link para redirecionamento de pagina com erro 500
             // window.location = '/500';
+            return await new Promise((resolve, reject) => {
+                resolve(error.response)
+                reject(error.response)
+            });
             break;
         default:
             // TODO Mensagem de falha interna seguida de logout

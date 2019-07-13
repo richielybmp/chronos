@@ -10,4 +10,6 @@ export enum EnumAuthActions {
     LOG_OUT = 'LOG_OUT',
     LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS',
     LOG_OUT_FAILURE = 'LOG_OUT_FAILURE',
+
+    CLEAR_STATE = 'CLEAR_STATE',
 }

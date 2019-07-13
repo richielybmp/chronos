@@ -11,6 +11,12 @@ type AuthCronogramasType = {
 
 export type AuthActionsType = AuthCronogramasType;
 
+export function clearAuthState() {
+    return {
+        type: EnumAuthActions.CLEAR_STATE,
+    };
+}
+
 //#region Sign in
 export function signInUser(user: User) {
     return {

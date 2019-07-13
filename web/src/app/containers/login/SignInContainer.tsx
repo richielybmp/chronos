@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { signInUser, signInUserSuccess, signInUserFailure } from "chronos-core";
+import { signInUser, signInUserSuccess, signInUserFailure, clearAuthState } from "chronos-core";
 import { User } from "chronos-core/dist/domain/User";
 import Login from "../../pages/SignIn";
 
@@ -17,13 +17,18 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error) {
+                if (!data.error) {
                     dispatch(signInUserSuccess(data));
                 }
                 else {
-                    dispatch(signInUserFailure(data));
+                    dispatch(signInUserFailure(data.error));
                 }
+
             });
+        },
+
+        clearState: () => {
+            dispatch(clearAuthState());
         }
     }
 };

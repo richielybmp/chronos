@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { logOutUser, logOutUserSuccess, logOutUserFailure, clearChronosState } from "chronos-core";
+import { logOutUser, logOutUserSuccess, logOutUserFailure, clearChronosState, clearAuthState } from "chronos-core";
 import { MainNav } from "../shared/components";
 
 const mapStateToProps = (state: any) => {
@@ -18,8 +18,9 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 if (!response.error) {
-                    dispatch(logOutUserSuccess());
+                    dispatch(clearAuthState());
                     dispatch(clearChronosState());
+                    dispatch(logOutUserSuccess());
                     if (callback)
                         callback()
                 }

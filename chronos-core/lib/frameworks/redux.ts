@@ -19,6 +19,7 @@ export interface CronogramasState {
 }
 
 export interface CronogramaState {
+    old: Cronograma | null | undefined;
     cronograma: Cronograma | null | undefined;
     error: any;
     loading: boolean;

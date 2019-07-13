@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
 import { Cronograma, CronogramaState } from 'chronos-core';
-import uuid from 'uuid';
 import { LoaderComponent } from '../../shared/components';
 
 interface Props {
     novoCronograma: CronogramaState,
     cronogramaOnDetail: CronogramaState,
     history: any,
-    createCronograma: (data: any, jwtToken: any) => void,
-    editCronograma: (data: any, jwtToken: any) => void,
+    createCronograma: (cronograma: Cronograma) => void,
+    editCronograma: (cronograma: Cronograma) => void,
     resetMe: () => void,
     close: () => void,
 }
@@ -20,42 +19,86 @@ export const NewCronogramaForm = (props: Props) => {
 
     //#region 'States'
     const [cronogramaTitulo, setNovoCronogramaTitulo] = useState('')
+    const [cronogramaTituloErro, setNovoCronogramaTituloErro] = useState('')
+
+    const [cronogramaDescricao, setNovoCronogramaDescricao] = useState('')
+    const [cronogramaDescricaoErro, setNovoCronogramaDescricaoErro] = useState('')
+
     const [cronogramaDataInicio, setNovoCronogramaDataInicio] = useState('')
+    const [cronogramaDataInicioErro, setNovoCronogramaDataInicioErro] = useState('')
+
     const [cronogramaDataFim, setNovoCronogramaDataFim] = useState('')
+    const [cronogramaDataFimErro, setNovoCronogramaDataFimErro] = useState('')
+
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
 
     //#region 'Handles'
     const handleTituloChange = (e: any) => {
+        setNovoCronogramaTituloErro('')
         setNovoCronogramaTitulo(e.target.value)
     }
 
+    const handleDescricaoChange = (e: any) => {
+        setNovoCronogramaDescricaoErro('')
+        setNovoCronogramaDescricao(e.target.value)
+    }
+
     const handleDataInicioChange = (e: any) => {
+        setNovoCronogramaDataInicioErro('')
+        console.log(e.target.value)
         setNovoCronogramaDataInicio(e.target.value)
     }
 
     const handleDataFimChange = (e: any) => {
+        setNovoCronogramaDataFimErro('')
+        console.log(e.target.value)
         setNovoCronogramaDataFim(e.target.value)
     }
     //#endregion
 
     const validaCampos = () => {
-        return false;
+        let inconsistente = false;
+        setNovoCronogramaTituloErro('')
+        setNovoCronogramaDescricaoErro('')
+        setNovoCronogramaDataInicioErro('')
+        setNovoCronogramaDataFimErro('')
+
+        if (cronogramaTitulo == '') {
+            setNovoCronogramaTituloErro("Título do cronograma obrigatório.")
+            inconsistente = true
+        }
+        if (cronogramaDescricao == '') {
+            setNovoCronogramaDescricaoErro("Descrição do cronograma obrigatório.")
+            inconsistente = true
+        }
+        if (cronogramaDataInicio == '') {
+            setNovoCronogramaDataInicioErro('Data início do cronograma obrigatório.')
+            inconsistente = true
+        }
+        if (cronogramaDataFim == '') {
+            setNovoCronogramaDataFimErro('Data fim do cronograma obrigatório.')
+            inconsistente = true
+        }
+        return inconsistente;
     }
 
     const addCronograma = (e: any, dispatch: any) => {
         e.preventDefault();
 
-        validaCampos();
-
-        const c = new Cronograma(uuid(), cronogramaTitulo, cronogramaTitulo, cronogramaDataInicio, cronogramaDataFim, []);
-
-        if (!ehEdicao) {
-            props.createCronograma(c, sessionStorage.getItem('AuthToken'))
-        }
-        else {
-            props.editCronograma(c, sessionStorage.getItem('AuthToken'))
-            props.close()
+        if (!validaCampos()) {
+            if (!ehEdicao) {
+                var obj = new Cronograma('', cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
+                props.createCronograma(obj)
+            }
+            else {
+                if (props.cronogramaOnDetail.cronograma != null) {
+                    const id = props.cronogramaOnDetail.cronograma.codigo
+                    var obj = new Cronograma(id, cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
+                    props.editCronograma(obj)
+                    props.close()
+                }
+            }
         }
     }
 
@@ -69,12 +112,13 @@ export const NewCronogramaForm = (props: Props) => {
     useEffect(() => {
         if (props.cronogramaOnDetail.cronograma != null) {
             const { cronograma } = props.cronogramaOnDetail
-            const dateI = cronograma.dataInicio.split('/')
-            const dateF = cronograma.dataFim.split('/')
+            const dateI = cronograma.dataInicio.split(' ')[0].split('-')
+            const dateF = cronograma.dataFim.split(' ')[0].split('-')
 
-            setNovoCronogramaDataInicio(dateI[2] + "-" + dateI[1] + "-" + dateI[0])
-            setNovoCronogramaDataFim(dateF[2] + "-" + dateF[1] + "-" + dateF[0])
-            setNovoCronogramaTitulo(cronograma.descricao)
+            setNovoCronogramaDataInicio(dateI[0] + "-" + dateI[1] + "-" + dateI[2])
+            setNovoCronogramaDataFim(dateF[0] + "-" + dateF[1] + "-" + dateF[2])
+            setNovoCronogramaTitulo(cronograma.titulo)
+            setNovoCronogramaDescricao(cronograma.descricao)
             setEhEdicao(true)
         }
     }, [props.cronogramaOnDetail])
@@ -97,7 +141,7 @@ export const NewCronogramaForm = (props: Props) => {
             <Container text style={{ padding: '2em 2em' }}>
                 <Grid columns={1} container stackable>
                     <Grid.Column>
-                        <Form.Field>
+                        <Form.Field className={cronogramaTituloErro.length > 0 ? "error" : ""}>
                             <label>Título do cronograma</label>
                             <input
                                 placeholder='Meu cronograma'
@@ -105,8 +149,17 @@ export const NewCronogramaForm = (props: Props) => {
                                 onChange={(e) => handleTituloChange(e)} />
                         </Form.Field>
                     </Grid.Column>
+                    <Grid.Column>
+                        <Form.Field className={cronogramaDescricaoErro.length > 0 ? "error" : ""}>
+                            <label>Descrição</label>
+                            <input
+                                placeholder='Breve descrição do cronograma'
+                                value={cronogramaDescricao}
+                                onChange={(e) => handleDescricaoChange(e)} />
+                        </Form.Field>
+                    </Grid.Column>
                     <Grid.Column width={8}>
-                        <Form.Field>
+                        <Form.Field className={cronogramaDataInicioErro.length > 0 ? "error" : ""}>
                             <label>Data de início</label>
                             <Input
                                 type="date"
@@ -119,7 +172,7 @@ export const NewCronogramaForm = (props: Props) => {
                         </Form.Field>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                        <Form.Field>
+                        <Form.Field className={cronogramaDataFimErro.length > 0 ? "error" : ""}>
                             <label>Data estimada do término</label>
                             <Input
                                 type="date"

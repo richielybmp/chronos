@@ -3,17 +3,19 @@ import logo from '../../assets/images/logo.png'
 import { LoginForm, LoaderComponent } from '../shared/components';
 import { User } from 'chronos-core/dist/domain/User';
 import { isAuthenticated } from 'chronos-core';
+import { Message, Icon } from 'semantic-ui-react';
 
 interface Props {
     auth: any;
     match: any,
     history: any,
     signIn: (user: User) => void,
+    clearState: () => void
 }
 
 function SignIn(props: Props) {
 
-    const { loading } = props.auth
+    const { loading, error } = props.auth
 
     const handleLogin = (name: string, email: string, password: string) => {
         props.signIn(new User(name, email, password))
@@ -31,6 +33,11 @@ function SignIn(props: Props) {
         return listenForAuthUser;
     }, [props.auth.user])
 
+
+    useEffect(() => {
+        props.clearState()
+    }, [])
+
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
@@ -43,6 +50,7 @@ function SignIn(props: Props) {
             labelBtnEntrar={'Entrar'}
             labelConvite={'Novo por aqui? Cadastre-se'}
             actionButton={handleLogin}
+            error={error}
         />
     )
 }

@@ -9,7 +9,7 @@ type AuthStateType = {
 
 const INITIAL_STATE = {
     user: null
-    , error: null
+    , error: undefined
     , loading: false
 };
 
@@ -24,13 +24,13 @@ export const authReducer = (
         case EnumAuthActions.SIGN_IN:
             return {
                 ...state,
-                user: null, error: null, loading: true
+                user: null, error: undefined, loading: true
             };
         case EnumAuthActions.SIGN_IN_SUCCESS:
             login(action.payload.token)
             return {
                 ...state,
-                user: action.payload, error: null, loading: false
+                user: action.payload, error: undefined, loading: false
             };
         case EnumAuthActions.SIGN_IN_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -44,12 +44,12 @@ export const authReducer = (
         case EnumAuthActions.SIGN_UP:
             return {
                 ...state,
-                user: null, error: null, loading: true
+                user: null, error: undefined, loading: true
             };
         case EnumAuthActions.SIGN_UP_SUCCESS:
             return {
                 ...state,
-                error: null, loading: false
+                user: action.payload, error: undefined, loading: false
             };
         case EnumAuthActions.SIGN_UP_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -66,7 +66,7 @@ export const authReducer = (
             // clears localStorageAuth
             state = {
                 ...state,
-                error: null, loading: false
+                error: undefined, loading: false
             };
             logout()
             return state
@@ -77,6 +77,9 @@ export const authReducer = (
                 user: null, error: error, loading: false
             };
         //#endregion
+
+        case EnumAuthActions.CLEAR_STATE:
+            return INITIAL_STATE;
 
         default:
             return state;

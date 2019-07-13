@@ -10,28 +10,17 @@ interface CronogramaCardProps {
 
 export function CronogramaCard(props: CronogramaCardProps) {
 
-    const { disciplinas, codigo, descricao, dataInicio } = props.cronograma
+    const { disciplinas, codigo, descricao, titulo, dataInicio } = props.cronograma
     return (
-        // <Card
-        //     fluid
-        //     as={Link}
-        //     to={`cronogramas/${codigo}`}
-        //     onClick={props.setOnDetail}
-        //     color='black'
-        // >
-        //     <Card.Content>
-        //         <Card.Header content={descricao} />
-        //         <Card.Description content={disciplinas.length + ' Disciplinas'} />
-        //         <Card.Content extra content={dataInicio} />
-        //     </Card.Content>
-        // </Card >
-
         <Card fluid
             as={Link}
             to={`cronogramas/${codigo}`}
             onClick={props.setOnDetail}
             color='black'>
-            <Card.Content header={descricao} />
+            <Card.Content>
+                <Card.Header>{titulo}</Card.Header>
+                <Card.Meta>{descricao}</Card.Meta>
+            </Card.Content>
             <Card.Content extra>
                 <Icon name='book' />
                 {disciplinas.length} Disciplinas

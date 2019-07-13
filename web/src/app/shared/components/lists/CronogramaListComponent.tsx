@@ -51,7 +51,7 @@ export const CronogramaListComponent = (props: CronogramaListComponentProps) => 
                 </Container>)
                 :
                 <EmptyHeader
-                    icon='table'
+                    icon='book'
                     title='Você ainda não possui nenhum cronograma'
                     subtitle='Comece criando seu primeiro plano de estudos.'
                     btnTitle="Novo cronograma"

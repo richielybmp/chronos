@@ -18,7 +18,7 @@ const DisciplinaList = (props: Props) => {
             <EmptyHeader
                 icon='table'
                 title='Você ainda não possui nenhuma Disciplina criada'
-                subtitle='Adicione disciplinas para poder acompanhar.'
+                subtitle='Adicione disciplinas para podermos começar!.'
                 btnTitle="Nova disicplina"
                 linkTo={`/nova-disciplina`}
             />

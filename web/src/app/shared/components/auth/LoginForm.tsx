@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment, Label } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Image, Message, Segment, Label, Icon } from 'semantic-ui-react'
 import bgimage from '../../../../assets/images/study-login-bg.png'
 import { Link } from 'react-router-dom';
 
 interface LoginFormProps {
+    error: string | undefined,
     isSignIn: boolean,
     logo: string,
     title: string,
@@ -12,12 +13,14 @@ interface LoginFormProps {
     actionButton: (name: string, email: string, password: string) => void,
 }
 
-export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite, actionButton }: LoginFormProps) {
+export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite, actionButton, error }: LoginFormProps) {
 
     const [name, setName] = useState('')
     const [nameError, setNameError] = useState('')
+
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
+
     const [password, setPassword] = useState('')
     const [passwordError, setPasswordError] = useState('')
 
@@ -73,7 +76,7 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
     }
 
     return (
-        < Grid textAlign='center' verticalAlign='middle' style={{
+        <Grid textAlign='center' verticalAlign='middle' style={{
             backgroundImage: "url(" + bgimage + ")",
             backgroundPosition: 'center',
             backgroundSize: 'cover',
@@ -81,18 +84,24 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
             height: '100vh'
         }}>
             <Grid.Column style={{ maxWidth: 450 }}>
-                <Header as='h2' color='teal' textAlign='center'>
-                    <Image src={logo} /> {title}
+                <Header as='h2' style={{ color: "#483d8b" }} textAlign='center'>
+                    {title}
                 </Header>
+                {error != undefined ?
+                    <Message attached='top' warning>
+                        <Icon name='user x' />
+                        {error}
+                    </Message>
+                    : null}
                 <Form size='large'>
-                    <Segment stacked>
+                    <Segment stacked style={{ backgroundColor: "#483d8b" }}>
                         {!isSignIn ?
                             (<>
 
                                 {nameError.length > 0 ?
-                                    <div color='red' className="ui pointing below prompt label">{nameError}</div> : null
+                                    <div className="label" style={{ color: "white" }}>{nameError}</div> : null
                                 }
-                                <Form.Input fluid icon='user' iconPosition='left' placeholder='Nome'
+                                <Form.Input className={nameError.length > 0 ? "error" : ""} fluid icon='user' iconPosition='left' placeholder='Nome'
                                     value={name}
                                     onChange={(e) => handleNameChange(e)}
                                 />
@@ -101,19 +110,19 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
                             ) : null
                         }
 
-
                         {emailError ?
-                            <div color='red' className="ui pointing below prompt label">{emailError}</div> : null
+                            <div className="label" style={{ color: "white" }}>{emailError}</div> : null
                         }
-                        <Form.Input fluid icon='mail' iconPosition='left' placeholder='E-mail'
+                        <Form.Input className={emailError.length > 0 ? "error" : ""} fluid icon='mail' iconPosition='left' placeholder='E-mail'
                             value={email}
                             onChange={(e) => handleEmailChange(e)}
                         />
 
                         {passwordError ?
-                            <div color='red' className="ui pointing below prompt label">{passwordError}</div> : null
+                            <div className="label" style={{ color: "white" }}>{passwordError}</div> : null
                         }
                         <Form.Input
+                            className={passwordError.length > 0 ? "error" : ""}
                             fluid
                             icon='lock'
                             iconPosition='left'
@@ -124,7 +133,7 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
                         />
 
                         <Button
-                            color='teal'
+                            color='purple'
                             fluid
                             size='large'
                             onClick={() => validadeAndLogin()}
@@ -134,8 +143,8 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
                         </Button>
                     </Segment>
                 </Form>
-                <Message>
-                    <Header color='grey' as={Link} to={`${process.env.PUBLIC_URL}/${url}`}>
+                <Message style={{ backgroundColor: "#322b5a" }}>
+                    <Header style={{ color: "#ffffff" }} as={Link} to={`${process.env.PUBLIC_URL}/${url}`}>
                         {labelConvite}
                     </Header>
                 </Message>

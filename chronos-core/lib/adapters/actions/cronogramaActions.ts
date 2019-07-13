@@ -63,10 +63,10 @@ export function fetchCronogramaFailure(error: any) {
 //#endregion
 
 //#region "Actions para CREATE CRONOGRAMA"
-export function createCronograma(props: any, tokenFromStorage: any) {
+export function createCronograma(cronograma: Cronograma) {
     return {
         type: EnumCronogramaActions.CREATE_CRONOGRAMA,
-        payload: interactor.createCronograma(props, tokenFromStorage)
+        payload: interactor.createCronograma(cronograma)
     };
 }
 
@@ -95,7 +95,7 @@ export function createCronogramaFailure(error: any) {
 export function updateCronograma(c: Cronograma) {
     return {
         type: EnumCronogramaActions.UPDATE_CRONOGRAMA,
-        payload: interactor.updateCronograma(c)
+        payload: { update: interactor.updateCronograma(c), cronograma: c }
     };
 }
 
@@ -113,3 +113,32 @@ export function updateCronogramaFailure(error: any) {
     };
 }
 //#endregion
+
+//#region "Actions para DELETE CRONOGRAMA POR ID"
+export function deleteCronograma(id: string) {
+    return {
+        type: EnumCronogramaActions.DELETE_CRONOGRAMA,
+        payload: interactor.deleteCronogramaById(id)
+    };
+}
+
+export function deleteCronogramaSuccess(data: any) {
+    return {
+        type: EnumCronogramaActions.DELETE_CRONOGRAMA_SUCCESS,
+        payload: data
+    };
+}
+
+export function deleteCronogramaFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.DELETE_CRONOGRAMA_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
+export function clearError() {
+    return {
+        type: EnumCronogramaActions.CLEAR_ERROR
+    };
+}

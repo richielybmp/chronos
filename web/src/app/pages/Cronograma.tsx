@@ -1,51 +1,108 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CronogramaState } from 'chronos-core';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
-import { LoaderComponent, EmptyHeader, CronogramaSubHeader, CronogramaContent } from '../shared/components';
+import { LoaderComponent, EmptyHeader, CronogramaSubHeader, CronogramaContent, ConfirmDeleteCronograma } from '../shared/components';
 import DisciplinaListContainer from '../containers/DisciplinaListContainer';
+import { Portal, Button, Segment, Header } from 'semantic-ui-react';
 
 interface Props {
     match: any,
     history: any,
     cronogramaOnDetail: CronogramaState,
+    delete: (id: string) => void,
+    clearError: () => void
 }
 
 const CronogramaDetail = (props: Props) => {
 
-    const { cronograma, loading } = props.cronogramaOnDetail
+    const { cronograma, loading, error } = props.cronogramaOnDetail
 
     const [modalShowToggle, setmodalShowToggle] = useState(false)
+    const [confirmationDelete, setConfirmationDelete] = useState(false)
 
     const handlePopModal = () => {
         setmodalShowToggle(!modalShowToggle)
+    }
+
+    const handlePopModalDelete = () => {
+        setConfirmationDelete(!confirmationDelete)
     }
 
     const handleCloseModal = () => {
         setmodalShowToggle(false)
     }
 
+    const handleDeleteAction = () => {
+        setConfirmationDelete(true)
+    }
+
+    const deleteCronograma = () => {
+        if (cronograma != null) {
+            props.delete(cronograma.codigo)
+            setConfirmationDelete(false)
+        }
+    }
+
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
 
+    if (error) {
+
+    }
+
+    const handleErrorClose = () => {
+        props.clearError()
+        //setPortalError(false)
+    }
+
     return (
-        // <div style={{ height: '-webkit-fill-available' }}>
         <div>
             {/* Modal 'Editar" */}
             <ModalNovoCronograma
                 history={props.history}
                 show={modalShowToggle}
-                toggle={() => handlePopModal()}
-                close={() => handleCloseModal()} />
+                toggle={handlePopModal}
+                close={handleCloseModal} />
+
+            {/* Modal 'Excluir" */}
+            <ConfirmDeleteCronograma
+                show={confirmationDelete}
+                toggle={handlePopModalDelete}
+                confirmDelete={deleteCronograma} />
 
             {
                 cronograma != null ? (
                     <>
-                        <CronogramaSubHeader descricao={cronograma.descricao} handlePopModal={handlePopModal} />
+                        <CronogramaSubHeader titulo={cronograma.titulo} handlePopModal={handlePopModal} deleteAction={handleDeleteAction} />
 
                         <CronogramaContent cronograma={cronograma}>
                             <DisciplinaListContainer disciplinas={cronograma.disciplinas} matchUrl={props.match} />
+
+                            {error ?
+                                <Portal onClose={() => handleErrorClose()} open={error != null}>
+                                    <Segment color='red'
+                                        style={{
+                                            position: " fixed",
+                                            top: " 50%",
+                                            left: "50%",
+                                            transform: "translate(-50%, -50%)",
+                                            zIndex: 1000,
+                                        }}
+                                    >
+                                        <Header>Erro</Header>
+                                        <p>{error.message}</p>
+
+                                        <Button
+                                            content='Close Portal'
+                                            negative
+                                            onClick={() => handleErrorClose()}
+                                        />
+                                    </Segment>
+                                </Portal>
+                                : null}
                         </CronogramaContent>
+
                     </>
                 ) :
                     <EmptyHeader
@@ -60,53 +117,3 @@ const CronogramaDetail = (props: Props) => {
 }
 
 export default CronogramaDetail;
-
-
-  // <>
-                //     {/* Botão voltar */}
-                //     <Grid columns={4}>
-                //         <Grid.Column mobile={16} tablet={6} computer={3}>
-                //             <Button fluid inverted color='blue' content='Cronogramas' icon='left arrow'
-                //                 labelPosition='left' as={Link} to={`../cronogramas`} />
-                //         </Grid.Column>
-                //     </Grid>
-                //     {/* Botões 'Editar' e 'Excluir' */}
-                //     <Grid columns={2}>
-                //         <Grid.Column mobile={8} tablet={6} computer={3}>
-                //             <Button fluid onClick={() => handlePopModal()}
-                //                 color='yellow' floated='right' content='Editar' icon='edit'
-                //                 labelPosition='right' />
-                //         </Grid.Column>
-                //         <Grid.Column floated="right" mobile={8} tablet={6} computer={3}>
-                //             <Button fluid onClick={() => alert('Not implemented yet')}
-                //                 color='red' floated='right' content='Excluir' icon='trash'
-                //                 labelPosition='right' />
-                //         </Grid.Column>
-                //     </Grid>
-
-                //     <Segment>
-                //         <Label size='big' attached='top' color='black'>{cronograma.descricao}</Label>
-                //         <Grid>
-                //             <Grid.Column mobile={16} computer={8}>
-                //                 <Header as='h3'>
-                //                     <Icon name='calendar' />
-                //                     <Header.Content>
-                //                         Data início:
-                //                 <Header.Subheader>{cronograma.dataInicio.toString()}</Header.Subheader>
-                //                     </Header.Content>
-                //                 </Header>
-                //             </Grid.Column>
-                //             <Grid.Column mobile={16} computer={8}>
-                //                 <Header as='h3'>
-                //                     <Icon name='calendar' />
-                //                     <Header.Content>
-                //                         Data prevista para término:
-                //                 <Header.Subheader>{cronograma.dataFim.toString()}</Header.Subheader>
-                //                     </Header.Content>
-                //                 </Header>
-                //             </Grid.Column>
-                //         </Grid>
-                //         <Divider />
-                //         <DisciplinaListContainer disciplinas={cronograma.disciplinas} matchUrl={props.match} />
-                //     </Segment>
-                // </>)

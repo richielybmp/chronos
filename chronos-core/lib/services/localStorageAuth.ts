@@ -4,7 +4,7 @@ export const isAuthenticated = () => getToken();
 
 export const getToken = () => {
   try {
-    console.log(localStorage.getItem(TOKEN_KEY));
+    //console.log(localStorage.getItem(TOKEN_KEY));
 
     return localStorage.getItem(TOKEN_KEY);
   } catch (err) {

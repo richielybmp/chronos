@@ -17,8 +17,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        createCronograma: (data: any, jwtToken: any) => {
-            var promisse = dispatch(createCronograma(data, jwtToken))
+        createCronograma: (data: any) => {
+            var promisse = dispatch(createCronograma(data))
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
@@ -34,8 +34,9 @@ const mapDispatchToProps = (dispatch: any) => {
         editCronograma: (data: any, jwtToken: any) => {
             var promisse = dispatch(updateCronograma(data))
 
-            promisse.payload.then((response: any) => {
+            promisse.payload.update.then((response: any) => {
                 const data = response.data;
+                debugger
                 if (!response.error) {
                     dispatch(updateCronogramaSuccess(data));
                 }
