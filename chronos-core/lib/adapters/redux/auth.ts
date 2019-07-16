@@ -1,5 +1,6 @@
-import { EnumAuthActions, AuthActionsType, clearChronosState } from "../..";
+import { EnumAuthActions, AuthActionsType } from "../..";
 import { login, logout } from "../../services/localStorageAuth";
+import { chronosReducer } from "./chronos";
 
 type AuthStateType = {
     user: any

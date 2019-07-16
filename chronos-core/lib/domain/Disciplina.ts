@@ -2,11 +2,13 @@ import { DtoCodigoDescricao } from "./DtoCodigoDescricao";
 import { Assunto } from "./Assunto";
 
 export class Disciplina extends DtoCodigoDescricao {
-    public assuntos: Assunto[]
+    public assuntos: Assunto[];
+    public titulo: string
 
-    constructor(codigo: string, descricao: string, assuntos: Assunto[]) {
+    constructor(codigo: string, titulo: string, descricao: string, assuntos: Assunto[]) {
         super(codigo, descricao)
         this.assuntos = assuntos
+        this.titulo = titulo
     }
 
     // public get assuntos(): Assunto[] {

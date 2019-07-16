@@ -138,7 +138,8 @@ export const chronosReducer = (
         case EnumCronogramaActions.CLEAR_ERROR:
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null }
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null },
+                novoCronograma: { ...state.novoCronograma, error: null }
             }
 
         case EnumCronogramaActions.CLEAR_STATE:

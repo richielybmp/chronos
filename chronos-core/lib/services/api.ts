@@ -15,9 +15,7 @@ api.interceptors.request.use(async config => {
         config.headers.Accept = 'application/json';
         config.headers.Authorization = getToken();
         config.headers.contentType = 'application/json';
-        //console.log(jwt.decode(token))
     }
-    //console.log(config);
 
     return config;
 
@@ -28,7 +26,6 @@ api.interceptors.response.use(async response => {
     const newToken = response.headers.authorization
 
     if (newToken) {
-        // refreshToken(newToken);
         await localStorage.setItem(TOKEN_KEY, newToken);
     }
 
@@ -42,18 +39,14 @@ api.interceptors.response.use(async response => {
     switch (status) {
         case 400:
             // TODO Mesangem de erro de requisição inválida
-            // Toastr('error', '', 'A sintaxe da requisição é inválida.');
-            //console.log('erro 400', error)
+
             // Criando uma nova promise para tentativa de refresh token
             return await new Promise((resolve, reject) => {
                 resolve(error.response)
                 reject(error.response)
             });
-        // break;
         case 401:
             if (!isRefreshing) {
-
-                //console.log('veio aqui no 401');
 
                 isRefreshing = true;
 
@@ -61,10 +54,15 @@ api.interceptors.response.use(async response => {
                 // Então é feito uma requisição para o refresh token com o ultimo token utilizado
                 await api.post('/refresh')
                     .then((newToken: any) => {
-                        if (newToken != undefined || newToken != null) {
+                        if ((newToken != undefined || newToken != null) &&
+                            (newToken.data.token != null || newToken.data.token != undefined)) {
                             isRefreshing = false;
                             localStorage.setItem(TOKEN_KEY, `Bearer ${newToken.data.token}`);
                             onRrefreshed(newToken);
+                        }
+                        else {
+                            window.location.href = '/unauthorized';
+                            logout();
                         }
                     });
             }
@@ -77,6 +75,11 @@ api.interceptors.response.use(async response => {
                     resolve(api(originalRequest));
                 });
             });
+        case 404:
+            return await new Promise((resolve, reject) => {
+                resolve(error.response)
+                reject(error.response)
+            });
         case 500:
             // TODO inserir link para redirecionamento de pagina com erro 500
             // window.location = '/500';
@@ -84,7 +87,6 @@ api.interceptors.response.use(async response => {
                 resolve(error.response)
                 reject(error.response)
             });
-            break;
         default:
             // TODO Mensagem de falha interna seguida de logout
             // Toastr('error', 'Falha interna', 'Acesso negado devido à um erro interno.')

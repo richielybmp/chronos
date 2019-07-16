@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { ReactNodeLike } from 'prop-types';
 import { Responsive, Segment, Menu, Sidebar, Icon } from 'semantic-ui-react';
 import Utils from '../../../utils/utils';
 import { Link } from 'react-router-dom';
 import { LoaderComponent } from '..';
+import { ChronosContext } from '../../../../ChronosRoutes';
 
 const background_image = {
     backgroundImage: '-webkit-radial-gradient(50% top, circle, rgba(84,90,182,0.6) 0%, rgba(84,90,182,0) 75%),-webkit-radial-gradient(right top, circle, #794aa2 0%, rgba(121,74,162,0) 57%)'
@@ -22,6 +23,12 @@ export const DesktopNav = ({ children, onSairClick }: ResponsiveContainerProps) 
     const [activeItem, setactiveItem] = useState('meus-cronogramas')
     const handleItemClick = (name: string) => setactiveItem(name)
 
+    //Contexto para obter o userName
+    const context = useContext(ChronosContext);
+    var userName = ''
+    if (context.getState().auth.user != null)
+        userName = context.getState().auth.user.user.name;
+
     return (
         <Responsive getWidth={() => Utils.getScreenWidth(larguraTablet)} minWidth={larguraTablet}>
             <Segment inverted style={background_image}>
@@ -38,6 +45,10 @@ export const DesktopNav = ({ children, onSairClick }: ResponsiveContainerProps) 
                         as={Link} to={`/cronogramas`} />
                     <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} onClick={() => handleItemClick('relatorios')} />
                     <Menu.Menu position='right'>
+
+                        <Menu.Item content={`Bem vindo, ${userName}`} active={false} />
+
+
                         <Menu.Item content="Minha conta" active={activeItem === 'profile'} onClick={() => handleItemClick('profile')} />
                         <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => onSairClick()} />
 
@@ -126,13 +137,8 @@ export function MainNav({ logOut, children }: MainNavProps) {
 
         logOut(() => {
             window.location.href = '/'
-            // setIsLoading(false)
         })
-
-        // setTimeout(() => {
-        // }, 2000);
     }
-
 
     return (
         <>

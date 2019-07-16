@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import logo from '../../assets/images/logo.png'
 import { LoginForm, LoaderComponent } from '../shared/components';
 import { User } from 'chronos-core/dist/domain/User';
 import { isAuthenticated } from 'chronos-core';
-import { Message, Icon } from 'semantic-ui-react';
+import { ChronosContext } from '../../ChronosRoutes';
 
 interface Props {
     auth: any;
@@ -17,12 +17,14 @@ function SignIn(props: Props) {
 
     const { loading, error } = props.auth
 
+    const context = useContext(ChronosContext)
+
     const handleLogin = (name: string, email: string, password: string) => {
         props.signIn(new User(name, email, password))
     }
 
     const listenForAuthUser = () => {
-        if (isAuthenticated()) {
+        if (isAuthenticated() && context.getState().auth.user) {
             props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
             return;
         }

@@ -75,7 +75,6 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                     })
                 }
             </Accordion>
-
         </div>
     )
 }

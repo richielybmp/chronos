@@ -18,11 +18,11 @@ const mapDispatchToProps = (dispatch: any) => {
                 const data = response.data;
                 console.log(response);
 
-                if (!response.error && !data.exception) {
+                if (!response.error && !data.exception || response.status != "404") {
                     dispatch(deleteCronogramaSuccess(data));
                 }
                 else {
-                    dispatch(deleteCronogramaFailure(data));
+                    dispatch(deleteCronogramaFailure(data.message));
                 }
             });
         },

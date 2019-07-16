@@ -21,7 +21,7 @@ export function EmptyHeader(props: Props) {
             {title}
             <Header.Subheader>{subtitle}</Header.Subheader>
             <br />
-            {linkTo == null && onClick ?
+            {linkTo === undefined && onClick != undefined ?
                 <Button onClick={onClick} size='large' color='blue'>
                     {btnTitle}
                 </Button>

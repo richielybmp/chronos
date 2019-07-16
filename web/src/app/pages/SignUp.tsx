@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import logo from '../../assets/images/logo.png'
 import { LoginForm, LoaderComponent } from '../shared/components';
 import { User } from 'chronos-core/dist/domain/User';
-import { isAuthenticated } from 'chronos-core';
 import { Confirm } from 'semantic-ui-react';
 
 interface Props {

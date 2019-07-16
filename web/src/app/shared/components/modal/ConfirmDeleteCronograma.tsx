@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Confirm } from 'semantic-ui-react';
+import { Modal, Confirm, Header, Button, Icon } from 'semantic-ui-react';
 
 interface ModalProps {
     show: boolean,
@@ -23,14 +23,24 @@ export function ConfirmDeleteCronograma(props: ModalProps) {
 
     if (modalShow) {
         return (
-            <Confirm
+            <Modal
                 open={modalShow}
-                content='Deseja realmente excluir o cronograma?'
-                cancelButton='Cancelar'
-                confirmButton="Excluir"
-                onCancel={() => close()}
-                onConfirm={() => confirmDelete()}
-            />
+                onClose={() => close()}
+                size='small'
+            >
+                <Header icon='browser' content='Excluir cronograma' />
+                <Modal.Content>
+                    <h3>Deseja realmente excluir o cronograma?</h3>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button color='black' onClick={() => close()} >
+                        <Icon name='x' /> Cancelar
+                    </Button>
+                    <Button color='red' onClick={() => confirmDelete()} >
+                        <Icon name='trash' /> EXCLUIR
+                    </Button>
+                </Modal.Actions>
+            </Modal>
         )
     }
 

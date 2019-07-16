@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { CronogramaState } from 'chronos-core';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
-import { LoaderComponent, EmptyHeader, CronogramaSubHeader, CronogramaContent, ConfirmDeleteCronograma } from '../shared/components';
+import { LoaderComponent, EmptyHeader, CronogramaSubHeader, CronogramaContent, ConfirmDeleteCronograma, PortalError } from '../shared/components';
 import DisciplinaListContainer from '../containers/DisciplinaListContainer';
-import { Portal, Button, Segment, Header } from 'semantic-ui-react';
 
 interface Props {
     match: any,
@@ -40,6 +39,7 @@ const CronogramaDetail = (props: Props) => {
         if (cronograma != null) {
             props.delete(cronograma.codigo)
             setConfirmationDelete(false)
+            props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
         }
     }
 
@@ -47,13 +47,8 @@ const CronogramaDetail = (props: Props) => {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
 
-    if (error) {
-
-    }
-
     const handleErrorClose = () => {
         props.clearError()
-        //setPortalError(false)
     }
 
     return (
@@ -77,32 +72,9 @@ const CronogramaDetail = (props: Props) => {
                         <CronogramaSubHeader titulo={cronograma.titulo} handlePopModal={handlePopModal} deleteAction={handleDeleteAction} />
 
                         <CronogramaContent cronograma={cronograma}>
-                            <DisciplinaListContainer disciplinas={cronograma.disciplinas} matchUrl={props.match} />
-
-                            {error ?
-                                <Portal onClose={() => handleErrorClose()} open={error != null}>
-                                    <Segment color='red'
-                                        style={{
-                                            position: " fixed",
-                                            top: " 50%",
-                                            left: "50%",
-                                            transform: "translate(-50%, -50%)",
-                                            zIndex: 1000,
-                                        }}
-                                    >
-                                        <Header>Erro</Header>
-                                        <p>{error.message}</p>
-
-                                        <Button
-                                            content='Close Portal'
-                                            negative
-                                            onClick={() => handleErrorClose()}
-                                        />
-                                    </Segment>
-                                </Portal>
-                                : null}
+                            <DisciplinaListContainer history={props.history} disciplinas={cronograma.disciplinas} matchUrl={props.match} />
+                            <PortalError error={error} handleErrorClose={handleErrorClose} />
                         </CronogramaContent>
-
                     </>
                 ) :
                     <EmptyHeader
@@ -112,7 +84,7 @@ const CronogramaDetail = (props: Props) => {
                         btnTitle='Voltar'
                         linkTo={`/cronogramas`} />
             }
-        </div >
+        </div>
     )
 }
 

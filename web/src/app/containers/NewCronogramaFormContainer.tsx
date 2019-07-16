@@ -7,7 +7,8 @@ import {
     resetNovoCronograma,
     updateCronograma,
     updateCronogramaFailure,
-    updateCronogramaSuccess
+    updateCronogramaSuccess,
+    clearError
 } from "chronos-core"
 
 const mapStateToProps = (state: any) => ({
@@ -22,11 +23,11 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error) {
+                if (!response.error && !data.exception) {
                     dispatch(createCronogramaSuccess(data));
                 }
                 else {
-                    dispatch(createCronogramaFailure(data));
+                    dispatch(createCronogramaFailure(data.message));
                 }
             });
         },
@@ -36,18 +37,21 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.update.then((response: any) => {
                 const data = response.data;
-                debugger
-                if (!response.error) {
+                if (!response.error && !data.exception) {
                     dispatch(updateCronogramaSuccess(data));
                 }
                 else {
-                    dispatch(updateCronogramaFailure(data));
+                    dispatch(updateCronogramaFailure(data.message));
                 }
             });
         },
 
         resetMe: () => {
             dispatch(resetNovoCronograma())
+        },
+
+        clearError: () => {
+            dispatch(clearError())
         }
     }
 };

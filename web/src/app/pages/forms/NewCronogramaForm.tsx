@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
+import { Form, Button, Grid, Container, Input, Portal, Segment, Header } from 'semantic-ui-react';
 import { Cronograma, CronogramaState } from 'chronos-core';
-import { LoaderComponent } from '../../shared/components';
+import { LoaderComponent, PortalError } from '../../shared/components';
 
 interface Props {
     novoCronograma: CronogramaState,
@@ -11,6 +11,7 @@ interface Props {
     editCronograma: (cronograma: Cronograma) => void,
     resetMe: () => void,
     close: () => void,
+    clearError: () => void,
 }
 
 export const NewCronogramaForm = (props: Props) => {
@@ -136,8 +137,15 @@ export const NewCronogramaForm = (props: Props) => {
         </Container>)
     }
 
+    const handleErrorClose = () => {
+        props.clearError()
+    }
+
     return (
         <Form onSubmit={(e: any, dispatch: any) => addCronograma(e, dispatch)}>
+
+            <PortalError error={error} handleErrorClose={handleErrorClose} />
+
             <Container text style={{ padding: '2em 2em' }}>
                 <Grid columns={1} container stackable>
                     <Grid.Column>
