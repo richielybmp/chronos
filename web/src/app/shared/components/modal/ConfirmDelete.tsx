@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Confirm, Header, Button, Icon } from 'semantic-ui-react';
+import { Modal, Header, Button, Icon } from 'semantic-ui-react';
 
 interface ModalProps {
     show: boolean,
+    pergunta: string
     toggle: () => void,
     confirmDelete: () => void
 }
 
-export function ConfirmDeleteCronograma(props: ModalProps) {
+export function ConfirmDelete(props: ModalProps) {
 
-    const { show, toggle, confirmDelete } = props;
+    const { show, toggle, confirmDelete, pergunta } = props;
     const [modalShow, setmodalShowToggle] = useState(show)
 
     useEffect(() => {
@@ -30,7 +31,7 @@ export function ConfirmDeleteCronograma(props: ModalProps) {
             >
                 <Header icon='browser' content='Excluir cronograma' />
                 <Modal.Content>
-                    <h3>Deseja realmente excluir o cronograma?</h3>
+                    <h3>{pergunta}</h3>
                 </Modal.Content>
                 <Modal.Actions>
                     <Button color='black' onClick={() => close()} >

@@ -1,6 +1,11 @@
 import { connect } from "react-redux";
 import CronogramaDetail from "../pages/Cronograma";
-import { deleteCronograma, deleteCronogramaSuccess, deleteCronogramaFailure, clearError } from "chronos-core";
+import {
+    deleteCronograma,
+    deleteCronogramaSuccess,
+    deleteCronogramaFailure,
+    clearError
+} from "chronos-core";
 
 const mapStateToProps = (state: any) => {
     return {
@@ -11,15 +16,17 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         // Obter todos os cronogramas.
-        delete: (id: string) => {
+        delete: (id: string, callback: Function) => {
             var promisse = dispatch(deleteCronograma(id))
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
                 console.log(response);
 
-                if (!response.error && !data.exception || response.status != "404") {
+                if (!response.error && (!data.exception || response.status !== "404")) {
                     dispatch(deleteCronogramaSuccess(data));
+                    if (callback)
+                        callback()
                 }
                 else {
                     dispatch(deleteCronogramaFailure(data.message));

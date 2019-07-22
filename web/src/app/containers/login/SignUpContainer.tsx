@@ -1,7 +1,12 @@
 import { connect } from "react-redux";
-import { signUpUser, signUpUserFailure, signUpUserSuccess, clearAuthState } from "chronos-core";
 import { User } from "chronos-core/dist/domain/User";
 import SignUp from "../../pages/SignUp";
+import {
+    signUpUser,
+    signUpUserFailure,
+    signUpUserSuccess,
+    clearAuthState
+} from "chronos-core";
 
 const mapStateToProps = (state: any) => {
     return {
@@ -26,7 +31,6 @@ const mapDispatchToProps = (dispatch: any) => {
                         dispatch(signUpUserFailure(data.message));
                     }
                     else {
-
                         dispatch(signUpUserFailure(data));
                     }
                 }

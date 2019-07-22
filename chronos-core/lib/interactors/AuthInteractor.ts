@@ -39,5 +39,4 @@ export class AuthInteractor {
         return api.post('/logout')
     }
 
-
 }

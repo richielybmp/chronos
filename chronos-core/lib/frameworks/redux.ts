@@ -6,31 +6,6 @@ import { loadState, saveState } from './localStorage'
 import { throttle } from "lodash";
 import { authReducer } from "..";
 
-export type ChronosStateType = {
-    cronogramasList: CronogramasState,
-    novoCronograma: CronogramaState,
-    cronogramaOnDetail: CronogramaState,
-}
-
-export interface CronogramasState {
-    cronogramas: Cronograma[];
-    error: any;
-    loading: boolean;
-}
-
-export interface CronogramaState {
-    old: Cronograma | null | undefined;
-    cronograma: Cronograma | null | undefined;
-    error: any;
-    loading: boolean;
-}
-
-export type CronogramaStateType = {
-    cronogramasList: CronogramasState,
-    novoCronograma: CronogramaState,
-    cronogramaOnDetail: CronogramaState,
-}
-
 const reducers = {
     cronogramas: chronosReducer,
     auth: authReducer
@@ -44,7 +19,7 @@ export const configureStore = () => {
     }
 
     const store = createStore(combineReducers(reducers), loadState(), applyMiddleware(...middleware));
-    // const store = createStore(combineReducers(reducers), applyMiddleware(...middleware));
+
     store.subscribe(throttle(() => {
         cronogramas: saveState(store.getState());
     }, 1000))

@@ -16,12 +16,13 @@ export function EmptyHeader(props: Props) {
     const { icon, title, subtitle, linkTo, btnTitle, onClick } = props;
 
     return (
-        <Header as='h2' icon textAlign='center' style={{ height: '-webkit-fill-available' }}>
+        // style = {{ height: '-webkit-fill-available' }
+        <Header as='h2' icon textAlign='center'>
             <Icon name={icon} />
             {title}
             <Header.Subheader>{subtitle}</Header.Subheader>
             <br />
-            {linkTo === undefined && onClick != undefined ?
+            {linkTo === undefined && onClick !== undefined ?
                 <Button onClick={onClick} size='large' color='blue'>
                     {btnTitle}
                 </Button>

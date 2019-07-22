@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken, logout, TOKEN_KEY } from './localStorageAuth';
+import { getToken, logout, TOKEN_KEY, login } from './localStorageAuth';
 
 let isRefreshing = false;
 
@@ -57,7 +57,7 @@ api.interceptors.response.use(async response => {
                         if ((newToken != undefined || newToken != null) &&
                             (newToken.data.token != null || newToken.data.token != undefined)) {
                             isRefreshing = false;
-                            localStorage.setItem(TOKEN_KEY, `Bearer ${newToken.data.token}`);
+                            login(newToken.data.token)
                             onRrefreshed(newToken);
                         }
                         else {
@@ -65,8 +65,8 @@ api.interceptors.response.use(async response => {
                             logout();
                         }
                     });
-            }
 
+            }
             // Criando uma nova promise para tentativa de refresh token
             return await new Promise((resolve, reject) => {
                 subscribeTokenRefresh(() => {

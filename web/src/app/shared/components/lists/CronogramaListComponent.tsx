@@ -41,7 +41,7 @@ export const CronogramaListComponent = (props: CronogramaListComponentProps) => 
                                     <CronogramaCard
                                         cronograma={item}
                                         setOnDetail={() => {
-                                            return handleCronogramaOnDetail(item.codigo);
+                                            return handleCronogramaOnDetail(item.uuid);
                                         }}
                                     />
                                 </Grid.Column>

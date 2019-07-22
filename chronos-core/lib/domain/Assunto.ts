@@ -8,18 +8,21 @@ export class Assunto extends DtoCodigoDescricao {
     public revisoes: Revisao[]
     public exercicios: Exercicio[]
     public anotacao: string
+    public disciplina_uuid: string = ''
 
     constructor(
-        codigo: string,
+        uuid: string,
+        disciplina_uuid: string,
         descricao: string,
         materiais: Material[],
         revisoes: Revisao[],
         exercicios: Exercicio[],
         anotacao: string) {
-        super(codigo, descricao)
+        super(uuid, descricao)
         this.materiais = materiais
         this.revisoes = revisoes
         this.exercicios = exercicios
         this.anotacao = anotacao
+        this.disciplina_uuid = disciplina_uuid
     }
 }

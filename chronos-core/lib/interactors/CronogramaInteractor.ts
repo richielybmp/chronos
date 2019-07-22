@@ -1,5 +1,5 @@
-import axios, { AxiosPromise } from 'axios';
-import { Cronograma } from "../domain";
+import { AxiosPromise } from 'axios';
+import { Cronograma, Disciplina } from "../domain";
 import api from '../services/api';
 
 export class CronogramaInteractor {
@@ -29,8 +29,8 @@ export class CronogramaInteractor {
             {
                 "titulo": cronograma.titulo,
                 "descricao": cronograma.descricao,
-                "inicio": cronograma.dataInicio,
-                "fim": cronograma.dataFim
+                "inicio": cronograma.inicio,
+                "fim": cronograma.fim
             }
         )
     }
@@ -39,12 +39,12 @@ export class CronogramaInteractor {
     // '/cronogramas/<id>'
     // cronograma: Cronograma
     updateCronograma(cronograma: Cronograma) {
-        return api.put(`/cronogramas/${cronograma.codigo}`,
+        return api.put(`/cronogramas/${cronograma.uuid}`,
             {
                 "titulo": cronograma.titulo,
                 "descricao": cronograma.descricao,
-                "inicio": cronograma.dataInicio,
-                "fim": cronograma.dataFim
+                "inicio": cronograma.inicio,
+                "fim": cronograma.fim
             }
         );
     }

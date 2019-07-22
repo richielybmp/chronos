@@ -13,10 +13,10 @@ export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
     const { titulo, handlePopModal, deleteAction } = props
 
     return (
-        <div style={{ backgroundColor: 'lightgrey' }}>
+        <div style={{ backgroundImage: '-webkit-radial-gradient(50% top, circle cover, rgb(15, 180, 164) 0%, rgba(27, 28, 39, 0) 15%), -webkit-radial-gradient(right top, circle cover, #27918c 30%, rgba(121, 74, 162, 0) 100%)' }}>
             <Container>
                 <Grid columns={3}>
-                    <Grid.Column mobile={16} tablet={10} computer={10}>
+                    <Grid.Column mobile={14} tablet={10} computer={10}>
                         <Breadcrumb size='large'>
                             <Breadcrumb.Section as={Link} to={'/cronogramas'} link>Cronogramas</Breadcrumb.Section>
                             <Breadcrumb.Divider icon='right chevron' />
@@ -37,9 +37,8 @@ export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
                     </Grid.Column>
 
                     {/* Mobile */}
-                    <Grid.Column mobile={16} only='mobile'>
-                        <Dropdown text="Ações" icon='cogs' fluid floating labeled button className='icon'
-                            style={{ textAlign: 'center', backgroundColor: '#b69bf1' }} >
+                    <Grid.Column mobile={2} only='mobile'>
+                        <Dropdown direction='left' icon='caret square down outline'>
                             <Dropdown.Menu>
                                 <Dropdown.Item style={{ backgroundColor: '#fbbd08', margin: '4px' }} onClick={() => handlePopModal()}>
                                     <Icon name='edit' className='floated' />

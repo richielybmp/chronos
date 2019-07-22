@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import CronogramaList from "../pages/CronogramaList";
 import {
     fetchCronogramas,
     fetchCronogramasSuccess,
@@ -7,7 +8,6 @@ import {
     fetchCronogramaFailure,
     fetchCronogramaSuccess,
 } from "chronos-core";
-import CronogramaList from "../pages/CronogramaList";
 
 const mapStateToProps = (state: any) => {
     return {

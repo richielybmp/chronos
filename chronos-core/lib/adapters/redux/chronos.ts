@@ -24,7 +24,7 @@ export const chronosReducer = (
                 cronogramasList: { cronogramas: [], error: null, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_SUCCESS:
-            const cronogramas = repository.cronogramasToDomain(action.payload)
+            const cronogramas = repository.cronogramasToDomain(action.payload.cronogramas)
             return {
                 ...state,
                 cronogramasList: { cronogramas: cronogramas, error: null, loading: false },
@@ -45,10 +45,10 @@ export const chronosReducer = (
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_SUCCESS:
-            var payload = repository.cronogramasToDomain(action.payload)[0]
+            var cronograma = repository.cronogramasToDomain(action.payload.cronograma)[0]
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: payload, error: null, loading: false }
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: cronograma, error: null, loading: false }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -66,11 +66,11 @@ export const chronosReducer = (
             };
         case EnumCronogramaActions.CREATE_CRONOGRAMA_SUCCESS:
             var cronogramas_temp = state.cronogramasList.cronogramas;
-            var payload = repository.cronogramasToDomain([action.payload])[0]
+            var novo_cronograma = repository.cronogramasToDomain([action.payload.cronograma])[0]
 
             return {
                 ...state,
-                cronogramasList: { cronogramas: [...cronogramas_temp, payload], error: null, loading: false },
+                cronogramasList: { cronogramas: [...cronogramas_temp, novo_cronograma], error: null, loading: false },
                 novoCronograma: { old: null, cronograma: action.payload, error: null, loading: false }
             };
         case EnumCronogramaActions.CREATE_CRONOGRAMA_FAILURE:
@@ -89,7 +89,7 @@ export const chronosReducer = (
         //#region 'UPDATE cronograma'
         case EnumCronogramaActions.UPDATE_CRONOGRAMA:
             var cronograma_antigo = state.cronogramaOnDetail.cronograma
-            var cronograma_update = action.payload.cronograma
+            var cronograma_update = repository.cronogramasToDomain([action.payload.cronograma])[0]
 
             if (cronograma_antigo)
                 cronograma_update.disciplinas = cronograma_antigo.disciplinas
@@ -98,7 +98,7 @@ export const chronosReducer = (
                 ...state,
                 cronogramaOnDetail: {
                     old: cronograma_antigo,
-                    cronograma: action.payload.cronograma,
+                    cronograma: cronograma_update,
                     loading: true,
                     error: false
                 }
@@ -134,6 +134,122 @@ export const chronosReducer = (
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
             }
+        //#endregion
+
+        // #region 'CREATE disciplina'
+        case EnumCronogramaActions.CREATE_DISCIPLINA:
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.CREATE_DISCIPLINA_SUCCESS:
+            var cronograma_atual = state.cronogramaOnDetail.cronograma
+            var cronograma_atualizado = null
+
+            if (cronograma_atual)
+                cronograma_atualizado = repository.convertaNovaDisciplina(cronograma_atual, action.payload.disciplina)
+
+            return {
+                ...state,
+                cronogramaOnDetail: { cronograma: cronograma_atualizado, old: null, error: null, loading: false }
+            }
+        case EnumCronogramaActions.CREATE_DISCIPLINA_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
+            }
+        //#endregion
+
+        // #region 'DELETE disciplina'
+        case EnumCronogramaActions.DELETE_DISCIPLINA:
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.DELETE_DISCIPLINA_SUCCESS:
+            //{disciplina, message, success}
+            var uuid_delete = action.payload.disciplina.uuid
+            var cronograma = state.cronogramaOnDetail.cronograma;
+
+            if (cronograma) {
+                var listaDeDisciplinas = cronograma.disciplinas;
+
+                listaDeDisciplinas.forEach((d, i) => {
+                    if (d.uuid == uuid_delete) {
+                        listaDeDisciplinas.splice(i, 1);
+                    }
+                })
+                cronograma.disciplinas = listaDeDisciplinas;
+            }
+
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: cronograma, error: null, loading: false }
+            }
+        case EnumCronogramaActions.DELETE_DISCIPLINA_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
+            }
+        //#endregion
+
+        // #region 'UPDATE disciplina'
+        case EnumCronogramaActions.UPDATE_DISCIPLINA:
+            var cronograma_antigo = state.cronogramaOnDetail.cronograma
+            var disciplina_atualizada = action.payload.disciplina
+
+            var cronograma_novo = cronograma_antigo
+            if (cronograma_novo)
+                repository.convertDisciplina(cronograma_novo, disciplina_atualizada)
+
+            return {
+                ...state,
+                cronogramaOnDetail: {
+                    ...state.cronogramaOnDetail,
+                    cronograma: cronograma_novo,
+                    old: cronograma_antigo,
+                    error: null,
+                    loading: true
+                }
+            }
+        case EnumCronogramaActions.UPDATE_DISCIPLINA_SUCCESS:
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: false }
+            }
+        case EnumCronogramaActions.UPDATE_DISCIPLINA_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: old, error: error, loading: false }
+            }
+        //#endregion
+
+        // #region 'CREATE assunto'
+        case EnumCronogramaActions.CREATE_ASSUNTO:
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.CREATE_ASSUNTO_SUCCESS:
+            var cronograma_atual = state.cronogramaOnDetail.cronograma
+
+            if (cronograma_atual) {
+                var novo_assunto = repository.convertaNovoAssunto(action.payload.assunto)
+                var vinculo = cronograma_atual.disciplinas.find(d => d.uuid == novo_assunto.disciplina_uuid)
+
+                if (vinculo) {
+                    vinculo.assuntos.push(novo_assunto)
+                }
+            }
+            return {
+                ...state,
+                cronogramaOnDetail: { cronograma: cronograma_atual, old: null, error: null, loading: false }
+            }
+        case EnumCronogramaActions.CREATE_ASSUNTO_FAILURE:
+        //#endregion
 
         case EnumCronogramaActions.CLEAR_ERROR:
             return {

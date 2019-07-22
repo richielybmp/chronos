@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Grid, Container, Input, Portal, Segment, Header } from 'semantic-ui-react';
+import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
 import { Cronograma, CronogramaState } from 'chronos-core';
 import { LoaderComponent, PortalError } from '../../shared/components';
 
@@ -56,6 +56,11 @@ export const NewCronogramaForm = (props: Props) => {
         console.log(e.target.value)
         setNovoCronogramaDataFim(e.target.value)
     }
+
+    const handleErrorClose = () => {
+        props.clearError()
+    }
+
     //#endregion
 
     const validaCampos = () => {
@@ -84,7 +89,7 @@ export const NewCronogramaForm = (props: Props) => {
         return inconsistente;
     }
 
-    const addCronograma = (e: any, dispatch: any) => {
+    const addCronograma = (e: any) => {
         e.preventDefault();
 
         if (!validaCampos()) {
@@ -94,7 +99,7 @@ export const NewCronogramaForm = (props: Props) => {
             }
             else {
                 if (props.cronogramaOnDetail.cronograma != null) {
-                    const id = props.cronogramaOnDetail.cronograma.codigo
+                    const id = props.cronogramaOnDetail.cronograma.uuid
                     var obj = new Cronograma(id, cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
                     props.editCronograma(obj)
                     props.close()
@@ -113,8 +118,8 @@ export const NewCronogramaForm = (props: Props) => {
     useEffect(() => {
         if (props.cronogramaOnDetail.cronograma != null) {
             const { cronograma } = props.cronogramaOnDetail
-            const dateI = cronograma.dataInicio.split(' ')[0].split('-')
-            const dateF = cronograma.dataFim.split(' ')[0].split('-')
+            const dateI = cronograma.inicio.split(' ')[0].split('-')
+            const dateF = cronograma.fim.split(' ')[0].split('-')
 
             setNovoCronogramaDataInicio(dateI[0] + "-" + dateI[1] + "-" + dateI[2])
             setNovoCronogramaDataFim(dateF[0] + "-" + dateF[1] + "-" + dateF[2])
@@ -137,12 +142,8 @@ export const NewCronogramaForm = (props: Props) => {
         </Container>)
     }
 
-    const handleErrorClose = () => {
-        props.clearError()
-    }
-
     return (
-        <Form onSubmit={(e: any, dispatch: any) => addCronograma(e, dispatch)}>
+        <Form onSubmit={(e: any, dispatch: any) => addCronograma(e)}>
 
             <PortalError error={error} handleErrorClose={handleErrorClose} />
 

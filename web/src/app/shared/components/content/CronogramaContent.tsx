@@ -3,6 +3,7 @@ import { ReactNodeLike } from 'prop-types';
 import { Container, Header, Segment, Grid, Button } from 'semantic-ui-react';
 import { Cronograma } from 'chronos-core';
 import NewDisciplinaFormContainer from '../../../containers/NewDisciplinaFormContainer';
+import { ModalContainer } from '..';
 
 interface CronogramaContentProps {
     children: ReactNodeLike,
@@ -22,11 +23,11 @@ export function CronogramaContent({ children, cronograma }: CronogramaContentPro
                 <Header.Content>
                     {cronograma.titulo.toUpperCase()}
                     <Header.Subheader>
-                        {cronograma.dataInicio} - {cronograma.dataFim}
+                        {cronograma.inicio} - {cronograma.fim}
                     </Header.Subheader>
                 </Header.Content>
             </Header>
-            {cronograma.disciplinas.length > 0 && !novaDisciplina ?
+            {cronograma.disciplinas.length > 0 ?
                 <Segment basic>
                     <Grid columns={1}>
                         <Grid.Column mobile={16} tablet={6} computer={3} floated='right'>
@@ -39,14 +40,22 @@ export function CronogramaContent({ children, cronograma }: CronogramaContentPro
                 :
                 null
             }
-            {novaDisciplina ? <>
-                <NewDisciplinaFormContainer close={handleClose} />
-                <br />
-            </>
-                :
-                null}
+
+            {novaDisciplina ?
+                showDisciplinaForm("novadisciplina", handleClose) : null
+            }
 
             {children}
         </Container>
     )
+}
+
+function showDisciplinaForm(idOnDetail: string, handleClose: () => void) {
+    if (idOnDetail == "novadisciplina") {
+        return (
+            <ModalContainer show={true} toggle={handleClose}>
+                <NewDisciplinaFormContainer close={handleClose} idOnDetail="" />
+            </ModalContainer>
+        )
+    }
 }

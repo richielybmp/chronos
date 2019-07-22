@@ -1,3 +1,3 @@
 export * from './ModalContainer'
-export * from './ConfirmDeleteCronograma'
+export * from './ConfirmDelete'
 export * from './PortalError'

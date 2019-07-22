@@ -1,6 +1,12 @@
 import { connect } from "react-redux";
-import { logOutUser, logOutUserSuccess, logOutUserFailure, clearChronosState, clearAuthState } from "chronos-core";
 import { MainNav } from "../shared/components";
+import {
+    logOutUser,
+    logOutUserSuccess,
+    logOutUserFailure,
+    clearChronosState,
+    clearAuthState
+} from "chronos-core";
 
 const mapStateToProps = (state: any) => {
     return {

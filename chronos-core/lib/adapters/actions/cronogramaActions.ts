@@ -1,7 +1,11 @@
-import { Cronograma, EnumCronogramaActions } from "../../domain";
-import { CronogramaInteractor } from '../../interactors';
+import { Assunto } from './../../domain/Assunto';
+import { Cronograma, EnumCronogramaActions, Disciplina } from "../../domain";
+import { CronogramaInteractor, DisciplinaInteractor } from '../../interactors';
+import { AssuntoInteractor } from '../../interactors/AssuntoInteractor';
 
-const interactor = new CronogramaInteractor();
+const interactorCronograma = new CronogramaInteractor();
+const interactorDisciplina = new DisciplinaInteractor();
+const interactorAssunto = new AssuntoInteractor();
 
 type FetchCronogramasType = {
     type: EnumCronogramaActions,
@@ -20,7 +24,7 @@ export function clearChronosState() {
 export function fetchCronogramas() {
     return {
         type: EnumCronogramaActions.FETCH_CRONOGRAMAS,
-        payload: interactor.getAll()
+        payload: interactorCronograma.getAll()
     };
 }
 
@@ -43,7 +47,7 @@ export function fetchCronogramasFailure(error: any) {
 export function fetchCronograma(id: string) {
     return {
         type: EnumCronogramaActions.FETCH_CRONOGRAMA,
-        payload: interactor.getCronogramaById(id)
+        payload: interactorCronograma.getCronogramaById(id)
     };
 }
 
@@ -66,7 +70,7 @@ export function fetchCronogramaFailure(error: any) {
 export function createCronograma(cronograma: Cronograma) {
     return {
         type: EnumCronogramaActions.CREATE_CRONOGRAMA,
-        payload: interactor.createCronograma(cronograma)
+        payload: interactorCronograma.createCronograma(cronograma)
     };
 }
 
@@ -95,7 +99,7 @@ export function createCronogramaFailure(error: any) {
 export function updateCronograma(c: Cronograma) {
     return {
         type: EnumCronogramaActions.UPDATE_CRONOGRAMA,
-        payload: { update: interactor.updateCronograma(c), cronograma: c }
+        payload: { update: interactorCronograma.updateCronograma(c), cronograma: c }
     };
 }
 
@@ -118,7 +122,7 @@ export function updateCronogramaFailure(error: any) {
 export function deleteCronograma(id: string) {
     return {
         type: EnumCronogramaActions.DELETE_CRONOGRAMA,
-        payload: interactor.deleteCronogramaById(id)
+        payload: interactorCronograma.deleteCronogramaById(id)
     };
 }
 
@@ -137,6 +141,97 @@ export function deleteCronogramaFailure(error: any) {
 }
 //#endregion
 
+//#region "Actions para CREATE DISCIPLINA"
+export function createDisciplina(idCronograma: string, disciplina: Disciplina) {
+    return {
+        type: EnumCronogramaActions.CREATE_DISCIPLINA,
+        payload: interactorDisciplina.createDisciplina(idCronograma, disciplina)
+    };
+}
+
+export function createDisciplinaSuccess(data: any) {
+    return {
+        type: EnumCronogramaActions.CREATE_DISCIPLINA_SUCCESS,
+        payload: data
+    };
+}
+
+export function createDisciplinaFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.CREATE_DISCIPLINA_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
+//#region "Actions para DELETE DISCIPLINA POR ID"
+export function deleteDisciplina(id: string) {
+    return {
+        type: EnumCronogramaActions.DELETE_DISCIPLINA,
+        payload: interactorDisciplina.deleteDisciplinaById(id)
+    };
+}
+
+export function deleteDisciplinaSuccess(data: any) {
+    return {
+        type: EnumCronogramaActions.DELETE_DISCIPLINA_SUCCESS,
+        payload: data
+    };
+}
+
+export function deleteDisciplinaFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.DELETE_DISCIPLINA_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
+//#region "Actions para UPDATE DISCIPLINA POR ID"
+export function updateDisciplina(idCronograma: string, d: Disciplina) {
+    return {
+        type: EnumCronogramaActions.UPDATE_DISCIPLINA,
+        payload: { update: interactorDisciplina.updateDisciplina(idCronograma, d), disciplina: d }
+    };
+}
+
+export function updateDisciplinaSuccess(d: Disciplina) {
+    return {
+        type: EnumCronogramaActions.UPDATE_DISCIPLINA_SUCCESS,
+        payload: d
+    };
+}
+
+export function updateDisciplinaFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.UPDATE_DISCIPLINA_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
+//#region "Actions para CREATE ASSUNTO"
+export function createAssunto(assunto: Assunto) {
+    return {
+        type: EnumCronogramaActions.CREATE_ASSUNTO,
+        payload: interactorAssunto.createAssunto(assunto)
+    };
+}
+
+export function createAssuntoSuccess(data: any) {
+    return {
+        type: EnumCronogramaActions.CREATE_ASSUNTO_SUCCESS,
+        payload: data
+    };
+}
+
+export function createAssuntoFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.CREATE_ASSUNTO_FAILURE,
+        payload: error
+    };
+}
+//#endregion
 export function clearError() {
     return {
         type: EnumCronogramaActions.CLEAR_ERROR

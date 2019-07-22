@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { CronogramaState } from 'chronos-core';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
-import { LoaderComponent, EmptyHeader, CronogramaSubHeader, CronogramaContent, ConfirmDeleteCronograma, PortalError } from '../shared/components';
+import { LoaderComponent, EmptyHeader, CronogramaSubHeader, CronogramaContent, ConfirmDelete, PortalError } from '../shared/components';
 import DisciplinaListContainer from '../containers/DisciplinaListContainer';
 
 interface Props {
     match: any,
     history: any,
     cronogramaOnDetail: CronogramaState,
-    delete: (id: string) => void,
+    delete: (id: string, callback: Function) => void,
     clearError: () => void
 }
 
@@ -37,9 +37,10 @@ const CronogramaDetail = (props: Props) => {
 
     const deleteCronograma = () => {
         if (cronograma != null) {
-            props.delete(cronograma.codigo)
             setConfirmationDelete(false)
-            props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
+            props.delete(cronograma.uuid, () => {
+                props.history.push(`${process.env.PUBLIC_URL}/cronogramas`);
+            })
         }
     }
 
@@ -61,8 +62,9 @@ const CronogramaDetail = (props: Props) => {
                 close={handleCloseModal} />
 
             {/* Modal 'Excluir" */}
-            <ConfirmDeleteCronograma
+            <ConfirmDelete
                 show={confirmationDelete}
+                pergunta="Deseja realmente excluir o cronograma?"
                 toggle={handlePopModalDelete}
                 confirmDelete={deleteCronograma} />
 
