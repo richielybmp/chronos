@@ -50,7 +50,7 @@ function SignUp(props: Props) {
 
     return (
         <LoginForm
-            isSignIn={false}
+            keyIsSignIn={"signUp"}
             logo={logo}
             title={'Cadastre-se'}
             labelBtnEntrar={'Cadastrar'}

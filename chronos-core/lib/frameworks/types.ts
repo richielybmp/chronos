@@ -1,9 +1,10 @@
-import { Cronograma } from "..";
+import { Cronograma, Assunto } from "..";
 
 export type ChronosStateType = {
     cronogramasList: CronogramasState,
     novoCronograma: CronogramaState,
     cronogramaOnDetail: CronogramaState,
+    assuntoOnDetail: AssuntoState,
 }
 
 export interface CronogramasState {
@@ -19,8 +20,16 @@ export interface CronogramaState {
     loading: boolean;
 }
 
+export interface AssuntoState {
+    old: Assunto | null | undefined;
+    assunto: Assunto | null | undefined;
+    error: any;
+    loading: boolean;
+}
+
 export type CronogramaStateType = {
     cronogramasList: CronogramasState,
     novoCronograma: CronogramaState,
     cronogramaOnDetail: CronogramaState,
+    assuntoOnDetail: AssuntoState,
 }

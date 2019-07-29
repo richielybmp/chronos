@@ -2566,10 +2566,8 @@ chrome-trace-event@^1.0.0:
   dependencies:
     tslib "^1.9.0"
 
-chronos-core@0.1.5:
+"chronos-core@file:../chronos-core":
   version "0.1.5"
-  resolved "https://registry.yarnpkg.com/chronos-core/-/chronos-core-0.1.5.tgz#7ae768318ffa0084dd7598f739ca99cfe26066b8"
-  integrity sha512-L+gjIDDcNINZzVN3W/CQtZ1TQIin4tE/IYwUJZdvPormkkbgioOpCWp5Nl4BgNpGw5jIn5eYTZrCCINVqMIRUQ==
   dependencies:
     "@types/node" "12.0.2"
     "@types/react" "^16.8.22"

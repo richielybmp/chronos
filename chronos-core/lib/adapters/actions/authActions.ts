@@ -85,3 +85,27 @@ export function logOutUserFailure(error: any) {
     };
 }
 //#endregion
+
+
+//#region Recover Password
+export function recoverPassword(email: string, novaSenha: string) {
+    return {
+        type: EnumAuthActions.RECOVER_PASSWORD,
+        payload: interactor.recoverPassword(email, novaSenha)
+    };
+}
+
+export function recoverPasswordSuccess() {
+    return {
+        type: EnumAuthActions.RECOVER_PASSWORD_SUCCESS,
+        payload: null
+    };
+}
+
+export function recoverPasswordFailure(error: any) {
+    return {
+        type: EnumAuthActions.RECOVER_PASSWORD_FAILURE,
+        payload: error
+    };
+}
+//#endregion

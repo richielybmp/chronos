@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 interface LoginFormProps {
     error: string | undefined,
-    isSignIn: boolean,
+    keyIsSignIn: string,
     logo: string,
     title: string,
     labelBtnEntrar: string,
@@ -13,7 +13,7 @@ interface LoginFormProps {
     actionButton: (name: string, email: string, password: string) => void,
 }
 
-export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite, actionButton, error }: LoginFormProps) {
+export function LoginForm({ keyIsSignIn, logo, title, labelBtnEntrar, labelConvite, actionButton, error }: LoginFormProps) {
 
     const [name, setName] = useState('')
     const [nameError, setNameError] = useState('')
@@ -23,6 +23,13 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
 
     const [password, setPassword] = useState('')
     const [passwordError, setPasswordError] = useState('')
+
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [confirmPasswordError, setConfirmPasswordError] = useState('')
+
+    const isSignIn = keyIsSignIn == "signIn"
+    const isSignUp = keyIsSignIn == "signUp"
+    const isRecover = keyIsSignIn == "recover"
 
     const url = isSignIn ? 'cadastrar' : 'entrar'
 
@@ -41,6 +48,11 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
         setPasswordError('')
         setPassword(e.target.value)
     }
+
+    const handleConfirmPasswordChange = (e: any) => {
+        setConfirmPasswordError('')
+        setConfirmPassword(e.target.value)
+    }
     //#endregion
 
     const validaCampos = () => {
@@ -48,8 +60,9 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
         setNameError('')
         setEmailError('')
         setPasswordError('')
+        setConfirmPasswordError('')
 
-        if (!isSignIn) {
+        if (isSignUp) {
             if (name.length <= 2) {
                 setNameError('O nome deve possuir 2 ou mais caracteres.');
                 inconsistente = true
@@ -65,6 +78,17 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
         if (password.length <= 5) {
             setPasswordError('A senha deve possuir 6 ou mais caracteres.');
             inconsistente = true
+        }
+
+        if (isRecover) {
+            if (confirmPassword.length <= 5) {
+                setConfirmPasswordError('A senha deve possuir 6 ou mais caracteres.');
+                inconsistente = true
+            }
+            else if (confirmPassword != password) {
+                setConfirmPasswordError('As senhas não são iguais.');
+                inconsistente = true
+            }
         }
 
         return inconsistente;
@@ -93,9 +117,9 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
                         {error}
                     </Message>
                     : null}
-                <Form size='large'>
+                <Form size='large' style={{ autoComplete: "off" }}>
                     <Segment stacked style={{ backgroundColor: "#483d8b" }}>
-                        {!isSignIn ?
+                        {!isSignIn && !isRecover ?
                             (<>
 
                                 {nameError.length > 0 ?
@@ -106,7 +130,6 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
                                     onChange={(e) => handleNameChange(e)}
                                 />
                             </>
-
                             ) : null
                         }
 
@@ -131,6 +154,21 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
                             value={password}
                             onChange={(e) => handlePasswordChange(e)}
                         />
+                        {confirmPasswordError ?
+                            <div className="label" style={{ color: "white" }}>{confirmPasswordError}</div> : null
+                        }
+                        {isRecover ?
+                            <Form.Input
+                                className={confirmPasswordError.length > 0 ? "error" : ""}
+                                fluid
+                                icon='lock'
+                                iconPosition='left'
+                                placeholder='Confirmar senha'
+                                type='password'
+                                value={confirmPassword}
+                                onChange={(e) => handleConfirmPasswordChange(e)}
+                            />
+                            : null}
 
                         <Button
                             color='purple'
@@ -138,16 +176,24 @@ export function LoginForm({ isSignIn, logo, title, labelBtnEntrar, labelConvite,
                             size='large'
                             onClick={() => validadeAndLogin()}
                         >
-
                             {labelBtnEntrar}
                         </Button>
                     </Segment>
                 </Form>
-                <Message style={{ backgroundColor: "#322b5a" }}>
-                    <Header style={{ color: "#ffffff" }} as={Link} to={`${process.env.PUBLIC_URL}/${url}`}>
-                        {labelConvite}
-                    </Header>
-                </Message>
+                {labelConvite != "" ?
+                    <Message style={{ backgroundColor: "#322b5a" }}>
+                        <Header style={{ color: "#ffffff" }} as={Link} to={`${process.env.PUBLIC_URL}/${url}`}>
+                            {labelConvite}
+                        </Header>
+                    </Message>
+                    : null}
+                <Header
+                    color='blue'
+                    textAlign='center'
+                    style={{ display: 'block', textDecoration: 'underline' }}
+                    as={Link}
+                    to={`${process.env.PUBLIC_URL}/recuperar-senha`}>
+                    Esqueci minha senha</Header>
                 <Header
                     color='blue'
                     textAlign='center'

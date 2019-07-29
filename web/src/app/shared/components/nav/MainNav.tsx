@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { ReactNodeLike } from 'prop-types';
-import { Responsive, Segment, Menu, Sidebar, Icon } from 'semantic-ui-react';
+import { Responsive, Segment, Menu, Sidebar, Icon, Dropdown } from 'semantic-ui-react';
 import Utils from '../../../utils/utils';
 import { Link } from 'react-router-dom';
 import { LoaderComponent } from '..';
 import { ChronosContext } from '../../../../ChronosRoutes';
+import { Cronograma } from 'chronos-core';
 
 const background_image = {
     backgroundImage: '-webkit-radial-gradient(50% top, circle, rgba(84,90,182,0.6) 0%, rgba(84,90,182,0) 75%),-webkit-radial-gradient(right top, circle, #794aa2 0%, rgba(121,74,162,0) 57%)'
@@ -13,19 +14,22 @@ const background_image = {
 
 interface ResponsiveContainerProps {
     children: ReactNodeLike
+    , cronogramas: Cronograma[]
     , onSairClick: () => void
+    , setOnDetail: (id: string) => void
 }
 
 const larguraTablet = Responsive.onlyTablet.minWidth
 
-export const DesktopNav = ({ children, onSairClick }: ResponsiveContainerProps) => {
+export const DesktopNav = ({ children, onSairClick, setOnDetail, cronogramas }: ResponsiveContainerProps) => {
 
-    const [activeItem, setactiveItem] = useState('meus-cronogramas')
+    const [activeItem, setactiveItem] = useState('chronos')
     const handleItemClick = (name: string) => setactiveItem(name)
 
     //Contexto para obter o userName
     const context = useContext(ChronosContext);
     var userName = ''
+
     if (context.getState().auth.user != null)
         userName = context.getState().auth.user.user.name;
 
@@ -33,25 +37,33 @@ export const DesktopNav = ({ children, onSairClick }: ResponsiveContainerProps) 
         <Responsive getWidth={() => Utils.getScreenWidth(larguraTablet)} minWidth={larguraTablet}>
             <Segment inverted style={background_image}>
                 <Menu size='large' inverted secondary>
-                    {/* <Menu.Menu>
-                        <Menu.Item>
-                            <img src='https://react.semantic-ui.com/logo.png' />
-                        </Menu.Item>
-                    </Menu.Menu> */}
                     <Menu.Item
-                        content="Meus cronogramas"
-                        active={activeItem === 'meus-cronogramas'}
-                        onClick={() => handleItemClick('meus-cronogramas')}
+                        content="Chronos"
+                        active={activeItem === 'chronos'}
+                        onClick={() => handleItemClick('chronos')}
                         as={Link} to={`/cronogramas`} />
+
+                    <Dropdown item text='Meus cronogramas'>
+                        <Dropdown.Menu>
+                            {cronogramas.length > 0 &&
+                                cronogramas.map((c: Cronograma, index: number) => {
+                                    return (
+                                        <Dropdown.Item
+                                            as={Link}
+                                            to={`${process.env.PUBLIC_URL}/cronogramas/${c.uuid}`}
+                                            onClick={() => setOnDetail(c.uuid)}
+                                        >{c.titulo}</Dropdown.Item>
+                                    )
+                                })
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
+
                     <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} onClick={() => handleItemClick('relatorios')} />
                     <Menu.Menu position='right'>
-
                         <Menu.Item content={`Bem vindo, ${userName}`} active={false} />
-
-
                         <Menu.Item content="Minha conta" active={activeItem === 'profile'} onClick={() => handleItemClick('profile')} />
                         <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => onSairClick()} />
-
                     </Menu.Menu>
                 </Menu>
             </Segment>
@@ -124,11 +136,13 @@ export const MobileNav = ({ children, onSairClick }: ResponsiveContainerProps) =
 }
 
 interface MainNavProps {
-    logOut: (callback: Function) => void,
     children: ReactNodeLike
+    , cronogramaList: Cronograma[]
+    , logOut: (callback: Function) => void
+    , fetchCronograma: (id: string) => void
 }
 
-export function MainNav({ logOut, children }: MainNavProps) {
+export function MainNav({ logOut, children, fetchCronograma, cronogramaList }: MainNavProps) {
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -140,14 +154,28 @@ export function MainNav({ logOut, children }: MainNavProps) {
         })
     }
 
+    const handleSetOnDetail = (id: string) => {
+        fetchCronograma(id)
+    }
+
     return (
         <>
-            {isLoading ? (
+            {isLoading && (
                 <LoaderComponent tamanho='big' titulo="Carregando" />
-            ) : null}
+            )}
             <div>
-                <DesktopNav onSairClick={handleLogOut}>{children}</DesktopNav>
-                <MobileNav onSairClick={handleLogOut}>{children}</MobileNav>
+                <DesktopNav
+                    cronogramas={cronogramaList}
+                    onSairClick={handleLogOut}
+                    setOnDetail={handleSetOnDetail}>
+                    {children}
+                </DesktopNav>
+                <MobileNav
+                    cronogramas={cronogramaList}
+                    onSairClick={handleLogOut}
+                    setOnDetail={handleSetOnDetail}>
+                    {children}
+                </MobileNav>
             </div>
         </>
     )

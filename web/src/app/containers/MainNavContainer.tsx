@@ -5,12 +5,15 @@ import {
     logOutUserSuccess,
     logOutUserFailure,
     clearChronosState,
-    clearAuthState
+    clearAuthState,
+    fetchCronograma,
+    fetchCronogramaSuccess,
+    fetchCronogramaFailure
 } from "chronos-core";
 
 const mapStateToProps = (state: any) => {
     return {
-        auth: state.auth
+        cronogramaList: state.cronogramas.cronogramasList.cronogramas
     }
 };
 
@@ -32,6 +35,21 @@ const mapDispatchToProps = (dispatch: any) => {
                 }
                 else {
                     dispatch(logOutUserFailure(response.error));
+                }
+            });
+        },
+
+        // Obter um cronograma específico.
+        fetchCronograma: (id: string) => {
+            var promisse = dispatch(fetchCronograma(id))
+
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!response.error) {
+                    dispatch(fetchCronogramaSuccess(data));
+                }
+                else {
+                    dispatch(fetchCronogramaFailure(data));
                 }
             });
         }

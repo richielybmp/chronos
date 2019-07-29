@@ -4,6 +4,9 @@ import {
     deleteDisciplina,
     deleteDisciplinaSuccess,
     deleteDisciplinaFailure,
+    fetchAssunto,
+    fetchAssuntoFailure,
+    fetchAssuntoSuccess,
 } from "chronos-core";
 
 const mapStateToProps = (state: any) => ({
@@ -23,6 +26,16 @@ const mapDispatchToProps = (dispatch: any) => {
                     dispatch(deleteDisciplinaFailure(data.message));
                 }
             });
+        },
+
+        fetchAssunto: (idDisciplina: string, idAssunto: string) => {
+            try {
+                dispatch(fetchAssunto(idDisciplina, idAssunto))
+                dispatch(fetchAssuntoSuccess({}));
+            }
+            catch (e) {
+                dispatch(fetchAssuntoFailure(e.message));
+            }
         },
     }
 };

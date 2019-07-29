@@ -7,6 +7,7 @@ import Unauthorized from './app/pages/httpStatus/Unauthorized';
 import SignUpContainer from './app/containers/login/SignUpContainer';
 import { Provider } from 'react-redux';
 import { configureStore } from 'chronos-core';
+import RecoverPasswordContainer from './app/containers/login/RecoverPasswordContainer';
 
 export const ChronosContext = React.createContext<any>({})
 const store = configureStore() as any;
@@ -21,6 +22,7 @@ const ChronosRoutes = () => {
                         <Route path={`${process.env.PUBLIC_URL}/cronogramas`} component={Main} />
                         <Route path={`${process.env.PUBLIC_URL}/entrar`} component={SignInContainer} />
                         <Route path={`${process.env.PUBLIC_URL}/cadastrar`} component={SignUpContainer} />
+                        <Route path={`${process.env.PUBLIC_URL}/recuperar-senha`} component={RecoverPasswordContainer} />
                         <Route path={`${process.env.PUBLIC_URL}/unauthorized`} component={Unauthorized} />
                     </Switch>
                 </BrowserRouter>

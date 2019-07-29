@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Container, Grid, Breadcrumb, Button, Dropdown, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { ChronosContext } from '../../../../ChronosRoutes';
+import { Cronograma } from 'chronos-core';
 
 interface CronogramaSubHeaderProps {
     titulo: string,
+    complement: any,
     handlePopModal: () => void,
     deleteAction: () => void
 }
@@ -11,16 +14,35 @@ interface CronogramaSubHeaderProps {
 export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
 
     const { titulo, handlePopModal, deleteAction } = props
+    const context = useContext(ChronosContext);
+
+    var cronograma = context.getState().cronogramas != null && context.getState().cronogramas.cronogramaOnDetail.cronograma;
 
     return (
-        <div style={{ backgroundImage: '-webkit-radial-gradient(50% top, circle cover, rgb(15, 180, 164) 0%, rgba(27, 28, 39, 0) 15%), -webkit-radial-gradient(right top, circle cover, #27918c 30%, rgba(121, 74, 162, 0) 100%)' }}>
+        // style={{ backgroundImage: '-webkit-radial-gradient(50% top, circle cover, rgb(15, 180, 164) 0%, rgba(27, 28, 39, 0) 15%), -webkit-radial-gradient(right top, circle cover, #27918c 30%, rgba(121, 74, 162, 0) 100%)' }}
+        <div>
             <Container>
                 <Grid columns={3}>
                     <Grid.Column mobile={14} tablet={10} computer={10}>
                         <Breadcrumb size='large'>
                             <Breadcrumb.Section as={Link} to={'/cronogramas'} link>Cronogramas</Breadcrumb.Section>
                             <Breadcrumb.Divider icon='right chevron' />
-                            <Breadcrumb.Section active>{titulo.toUpperCase()}</Breadcrumb.Section>
+
+                            {props.complement != null && props.complement.assunto && cronograma != null ?
+                                (
+                                    <>
+                                        <Breadcrumb.Section
+                                            as={Link} to={`/cronogramas/${cronograma.uuid}`}
+                                            active>{cronograma.titulo}</Breadcrumb.Section>
+                                        <Breadcrumb.Divider icon='right chevron' />
+                                        <Breadcrumb.Section active>{props.complement.disciplina.nome}</Breadcrumb.Section>
+                                        <Breadcrumb.Divider icon='right chevron' />
+                                        <Breadcrumb.Section active>{titulo}</Breadcrumb.Section>
+                                    </>
+                                )
+                                :
+                                <Breadcrumb.Section active>{titulo}</Breadcrumb.Section>
+                            }
                         </Breadcrumb>
                     </Grid.Column>
 

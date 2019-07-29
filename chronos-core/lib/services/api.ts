@@ -56,6 +56,7 @@ api.interceptors.response.use(async response => {
                     .then((newToken: any) => {
                         if ((newToken != undefined || newToken != null) &&
                             (newToken.data.token != null || newToken.data.token != undefined)) {
+                            debugger
                             isRefreshing = false;
                             login(newToken.data.token)
                             onRrefreshed(newToken);
@@ -71,6 +72,7 @@ api.interceptors.response.use(async response => {
             return await new Promise((resolve, reject) => {
                 subscribeTokenRefresh(() => {
                     // replace the expired token and retry
+                    debugger
                     originalRequest.headers.Authorization = getToken();
                     resolve(api(originalRequest));
                 });

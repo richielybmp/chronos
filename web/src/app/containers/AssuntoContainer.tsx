@@ -3,7 +3,8 @@ import AssuntoDetail from "../pages/Assunto";
 
 const mapStateToProps = (state: any) => {
     return {
-        // assuntoOnDetail: state.cronogramas.cronogramaOnDetail
+        assuntoOnDetail: state.cronogramas.assuntoOnDetail,
+        cronogramaOnDetail: state.cronogramas.cronogramaOnDetail,
     }
 };
 

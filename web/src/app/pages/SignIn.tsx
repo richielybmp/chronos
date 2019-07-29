@@ -46,7 +46,7 @@ function SignIn(props: Props) {
 
     return (
         <LoginForm
-            isSignIn={true}
+            keyIsSignIn={"signIn"}
             logo={logo}
             title={'Entrar na sua conta'}
             labelBtnEntrar={'Entrar'}

@@ -4,6 +4,7 @@ import api from "../services/api";
 
 export class AuthInteractor {
 
+
     constructor() {
     }
 
@@ -37,6 +38,18 @@ export class AuthInteractor {
     // -
     logOut() {
         return api.post('/logout')
+    }
+
+    // POST
+    // '/recuperar-senha'
+    // email: string, novaSenha: string
+    recoverPassword(email: string, novaSenha: string) {
+        return api.post('/password/reset',
+            {
+                'email': email,
+                'novaSenha': novaSenha
+            }
+        )
     }
 
 }

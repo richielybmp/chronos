@@ -232,6 +232,30 @@ export function createAssuntoFailure(error: any) {
     };
 }
 //#endregion
+
+//#region "Actions para FETCH ASSUNTO POR ID"
+export function fetchAssunto(idDisciplina: string, idAssunto: string) {
+    return {
+        type: EnumCronogramaActions.FETCH_ASSUNTO,
+        payload: { idDisciplina: idDisciplina, idAssunto: idAssunto }
+    };
+}
+
+export function fetchAssuntoSuccess(a: any) {
+    return {
+        type: EnumCronogramaActions.FETCH_ASSUNTO_SUCCESS,
+        payload: a
+    };
+}
+
+export function fetchAssuntoFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.FETCH_ASSUNTO_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
 export function clearError() {
     return {
         type: EnumCronogramaActions.CLEAR_ERROR

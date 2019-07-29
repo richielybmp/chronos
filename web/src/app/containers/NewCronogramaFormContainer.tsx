@@ -37,8 +37,9 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.update.then((response: any) => {
                 const data = response.data;
+
                 if (!response.error && !data.exception) {
-                    dispatch(updateCronogramaSuccess(data));
+                    dispatch(updateCronogramaSuccess(JSON.parse(response.config.data)));
                 }
                 else {
                     dispatch(updateCronogramaFailure(data.message));

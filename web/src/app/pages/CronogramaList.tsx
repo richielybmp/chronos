@@ -52,8 +52,6 @@ function CronogramaList(props: Props) {
                 cronogramas={cronogramas}
                 handleCronogramaOnDetail={handleCronogramaOnDetail}
                 handlePopModal={handlePopModal} />
-
-
         </div>
     )
 }

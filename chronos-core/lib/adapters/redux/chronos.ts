@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     cronogramasList: { cronogramas: [], error: null, loading: false },
     novoCronograma: { old: null, cronograma: null, error: null, loading: false },
     cronogramaOnDetail: { old: null, cronograma: null, error: null, loading: false },
+    assuntoOnDetail: { old: null, assunto: null, error: null, loading: false },
 };
 
 export const chronosReducer = (
@@ -104,9 +105,24 @@ export const chronosReducer = (
                 }
             };
         case EnumCronogramaActions.UPDATE_CRONOGRAMA_SUCCESS:
+            var cronogramaDetalhe = state.cronogramaOnDetail.cronograma;
+            var atual = action.payload;
+
+            if (cronogramaDetalhe) {
+                cronogramaDetalhe.titulo = atual.titulo;
+                cronogramaDetalhe.descricao = atual.descricao;
+                cronogramaDetalhe.inicio = atual.inicio;
+                cronogramaDetalhe.fim = atual.fim;
+            }
+
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: false },
+                cronogramaOnDetail: {
+                    ...state.cronogramaOnDetail,
+                    cronograma: cronogramaDetalhe,
+                    error: null,
+                    loading: false
+                },
             };
         case EnumCronogramaActions.UPDATE_CRONOGRAMA_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -249,12 +265,50 @@ export const chronosReducer = (
                 cronogramaOnDetail: { cronograma: cronograma_atual, old: null, error: null, loading: false }
             }
         case EnumCronogramaActions.CREATE_ASSUNTO_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
+            }
+        //#endregion
+
+        // #region 'FETCH assunto'
+        case EnumCronogramaActions.FETCH_ASSUNTO:
+            var cronograma_atual = state.cronogramaOnDetail.cronograma
+
+            if (cronograma_atual) {
+                var disciplina = cronograma_atual.disciplinas.find(d => d.uuid == action.payload.idDisciplina)
+                var assunto;
+                if (disciplina) {
+                    assunto = disciplina.assuntos.find(a => a.uuid == action.payload.idAssunto)
+                }
+            }
+            return {
+                ...state,
+                assuntoOnDetail: {
+                    ...state.assuntoOnDetail,
+                    assunto: assunto,
+                    loading: true
+                }
+            }
+        case EnumCronogramaActions.FETCH_ASSUNTO_SUCCESS:
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, loading: false }
+            }
+        case EnumCronogramaActions.FETCH_ASSUNTO_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
+            }
         //#endregion
 
         case EnumCronogramaActions.CLEAR_ERROR:
             return {
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null },
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: null },
                 novoCronograma: { ...state.novoCronograma, error: null }
             }
 

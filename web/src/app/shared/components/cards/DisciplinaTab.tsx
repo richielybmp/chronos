@@ -10,12 +10,22 @@ interface DisciplinaTabProps {
     handleDeleteDisciplina: (id: string) => void,
     handleUpdateDisciplina: (id: string) => void,
     handleCreateAssunto: (id: string) => void,
+    handleAssuntoOnDetail: (idDisciplina: string, idAssunto: string) => void,
     idOnDetail: string
 }
 
 export function DisciplinaTab(props: DisciplinaTabProps) {
 
-    const { matchUrl, disciplinas, handleDeleteDisciplina, handleUpdateDisciplina, handleCreateAssunto, idOnDetail } = props
+    const {
+        matchUrl,
+        disciplinas,
+        handleDeleteDisciplina,
+        handleUpdateDisciplina,
+        handleCreateAssunto,
+        idOnDetail,
+        handleAssuntoOnDetail
+    } = props
+
     const hasDisciplinas = disciplinas.length > 0;
     const emEdicao = idOnDetail != "";
 
@@ -88,17 +98,18 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                 <Accordion.Content active={activeItem === item.descricao} style={{ backgroundColor: '#ececec' }}>
                                     <List divided relaxed animated verticalAlign='middle'>
                                         {activeAssuntos.length > 0 ?
-                                            activeAssuntos.map((item: Assunto, idx: number) => {
+                                            activeAssuntos.map((assunto: Assunto, idx: number) => {
                                                 return (
                                                     <List.Item
+                                                        onClick={() => handleAssuntoOnDetail(item.uuid, assunto.uuid)}
                                                         key={idx}
                                                         as={Link}
-                                                        to={`${matchUrl.url}/assunto/${item.uuid}`}
+                                                        to={`${matchUrl.url}/assunto/${assunto.uuid}`}
                                                     >
                                                         <List.Content>
-                                                            <List.Header>{item.descricao}</List.Header>
-                                                            <List.Description>Revisões: {item.revisoes.length}</List.Description>
-                                                            <List.Description>Exercícios: {item.exercicios.length}</List.Description>
+                                                            <List.Header>{assunto.descricao}</List.Header>
+                                                            <List.Description>Revisões: {assunto.revisoes.length}</List.Description>
+                                                            <List.Description>Exercícios: {assunto.exercicios.length}</List.Description>
                                                         </List.Content>
                                                     </List.Item>
                                                 )

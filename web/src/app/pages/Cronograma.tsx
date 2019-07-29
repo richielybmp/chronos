@@ -71,7 +71,7 @@ const CronogramaDetail = (props: Props) => {
             {
                 cronograma != null ? (
                     <>
-                        <CronogramaSubHeader titulo={cronograma.titulo} handlePopModal={handlePopModal} deleteAction={handleDeleteAction} />
+                        <CronogramaSubHeader complement={null} titulo={cronograma.titulo} handlePopModal={handlePopModal} deleteAction={handleDeleteAction} />
 
                         <CronogramaContent cronograma={cronograma}>
                             <DisciplinaListContainer history={props.history} disciplinas={cronograma.disciplinas} matchUrl={props.match} />
