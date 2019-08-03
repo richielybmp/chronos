@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { User } from "chronos-core/dist/domain/User";
-import Login from "../../pages/SignIn";
+import Login from "../../pages/auth/SignIn";
 import {
     signInUser,
     signInUserSuccess,

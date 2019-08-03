@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { ReactNodeLike } from 'prop-types';
 import { Container, Header, Segment, Grid, Button } from 'semantic-ui-react';
 import { Assunto } from 'chronos-core';
-import NewDisciplinaFormContainer from '../../../containers/NewDisciplinaFormContainer';
 import { ModalContainer } from '..';
+import NewArtefatoFormContainer from '../../../containers/NewArtefatoFormContainer';
 
 interface AssuntoContentProps {
     children: ReactNodeLike,
@@ -21,9 +21,7 @@ export function AssuntoContent({ children, assunto }: AssuntoContentProps) {
         <Container style={{ padding: '2em 0em' }}>
             <Header as='h1' dividing>
                 <Header.Content>
-                    {assunto.descricao.toUpperCase()}
-                    <Header.Subheader>
-                    </Header.Subheader>
+                    {assunto.descricao}
                 </Header.Content>
             </Header>
             {/* {assunto.disciplinas.length > 0 &&
@@ -39,7 +37,7 @@ export function AssuntoContent({ children, assunto }: AssuntoContentProps) {
             } */}
 
             {novoArtefato ?
-                showArtefatpForm("novoartefato", handleClose) : null
+                showArtefatoForm("novoartefato", handleClose) : null
             }
 
             {children}
@@ -47,11 +45,11 @@ export function AssuntoContent({ children, assunto }: AssuntoContentProps) {
     )
 }
 
-function showArtefatpForm(idOnDetail: string, handleClose: () => void) {
+function showArtefatoForm(idOnDetail: string, handleClose: () => void) {
     if (idOnDetail == "novoartefato") {
         return (
             <ModalContainer show={true} toggle={handleClose}>
-                {/* <NewDisciplinaFormContainer close={handleClose} idOnDetail="" /> */}
+                <NewArtefatoFormContainer close={handleClose} idOnDetail="" />
             </ModalContainer>
         )
     }

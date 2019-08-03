@@ -5,7 +5,7 @@ import {
     recoverPasswordFailure,
     clearAuthState
 } from "chronos-core";
-import RecoverPassword from "../../pages/RecoverPassword";
+import RecoverPassword from "../../pages/auth/RecoverPassword";
 
 const mapStateToProps = (state: any) => {
     return {

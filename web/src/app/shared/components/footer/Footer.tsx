@@ -13,18 +13,29 @@ export const Footer = () => {
             <Container textAlign='center'>
                 <Grid divided inverted stackable>
                     <Grid.Column width={7}>
-                        <Header inverted as='h4' content='Group 1' />
+                        <Header inverted as='h4' content='Group XPTO' />
                         <List link inverted>
-                            <List.Item as='a'>Link One</List.Item>
-                            <List.Item as='a'>Link Two</List.Item>
-                            <List.Item as='a'>Link Three</List.Item>
-                            <List.Item as='a'>Link Four</List.Item>
+                            <List.Item>
+                                <a href="https://github.com/devfilsk" target="_blank">
+                                    Filipe Maciel
+                                </a>
+                            </List.Item>
+                            <List.Item>
+                                <a href="https://github.com/mstedler" target="_blank">
+                                    Mateus Stedler
+                                </a>
+                            </List.Item>
+                            <List.Item>
+                                <a href="https://github.com/richielybmp" target="_blank">
+                                    Richiely Paiva
+                                </a>
+                            </List.Item>
                         </List>
                     </Grid.Column>
                     <Grid.Column width={7}>
-                        <Header inverted as='h4' content='Footer Header' />
+                        <Header inverted as='h4' content='UFG - Especialização em Desenvolvimento Web e Mobile - Full Stack' />
                         <p>
-                            Extra space for a call to action inside the footer that could help re-engage users.
+                            Trabalho final da Especialização.
                         </p>
                     </Grid.Column>
                 </Grid>

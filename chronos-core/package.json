@@ -1,6 +1,6 @@
 {
     "name": "chronos-core",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "author": "Richiely Batista, Filipe Maciel, Mateus Stedler",
     "license": "",
     "main": "dist/index.js",

@@ -21,7 +21,7 @@ export function CronogramaContent({ children, cronograma }: CronogramaContentPro
         <Container style={{ padding: '2em 0em' }}>
             <Header as='h1' dividing>
                 <Header.Content>
-                    {cronograma.titulo.toUpperCase()}
+                    {cronograma.titulo}
                     <Header.Subheader>
                         {cronograma.inicio} - {cronograma.fim}
                     </Header.Subheader>
@@ -41,8 +41,9 @@ export function CronogramaContent({ children, cronograma }: CronogramaContentPro
                 null
             }
 
-            {novaDisciplina ?
-                showDisciplinaForm("novadisciplina", handleClose) : null
+            {
+                novaDisciplina &&
+                showDisciplinaForm("novadisciplina", handleClose)
             }
 
             {children}

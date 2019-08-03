@@ -96,7 +96,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                     </Grid>
                                 </Accordion.Title>
                                 <Accordion.Content active={activeItem === item.descricao} style={{ backgroundColor: '#ececec' }}>
-                                    <List divided relaxed animated verticalAlign='middle'>
+                                    <List divided relaxed selection animated verticalAlign='middle'>
                                         {activeAssuntos.length > 0 ?
                                             activeAssuntos.map((assunto: Assunto, idx: number) => {
                                                 return (
@@ -106,11 +106,9 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                                         as={Link}
                                                         to={`${matchUrl.url}/assunto/${assunto.uuid}`}
                                                     >
-                                                        <List.Content>
-                                                            <List.Header>{assunto.descricao}</List.Header>
-                                                            <List.Description>Revisões: {assunto.revisoes.length}</List.Description>
-                                                            <List.Description>Exercícios: {assunto.exercicios.length}</List.Description>
-                                                        </List.Content>
+                                                        <List.Header>{assunto.descricao}</List.Header>
+                                                        {/* <List.Description>Artefatos: {assunto.artefatos.length}</List.Description> */}
+                                                        {/* <List.Description>Exercícios: {assunto.exercicios.length}</List.Description>  */}
                                                     </List.Item>
                                                 )
                                             })

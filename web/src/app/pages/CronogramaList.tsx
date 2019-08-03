@@ -41,7 +41,7 @@ function CronogramaList(props: Props) {
 
     return (
         // <div style={{ height: '-webkit-fill-available' }}>
-        <div>
+        <>
             <ModalNovoCronograma
                 history={props.history}
                 show={modalShowToggle}
@@ -52,7 +52,7 @@ function CronogramaList(props: Props) {
                 cronogramas={cronogramas}
                 handleCronogramaOnDetail={handleCronogramaOnDetail}
                 handlePopModal={handlePopModal} />
-        </div>
+        </>
     )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Container, Grid, Button } from 'semantic-ui-react';
 import { Cronograma } from 'chronos-core';
+import { Container, Grid, Button } from 'semantic-ui-react';
 import { CronogramaCard, EmptyHeader } from '..';
 
 interface CronogramaListComponentProps {

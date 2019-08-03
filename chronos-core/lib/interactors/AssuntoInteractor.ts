@@ -1,12 +1,10 @@
-import { Assunto } from './../domain/Assunto';
-import { AxiosPromise } from "axios";
-import api from "../services/api";
+import { Assunto } from '../domain/Assunto';
+import api from '../services/api';
 
 export class AssuntoInteractor {
 
     constructor() {
     }
-
 
     // POST
     // '/assuntos'
@@ -19,5 +17,23 @@ export class AssuntoInteractor {
                 "anotacao": "Anotação teste"
             }
         )
+    }
+
+    // DELETE
+    // '/assuntos'
+    // id: string
+    deleteAssuntoById(id: string) {
+        return api.delete(`/assuntos/${id}`)
+    }
+
+    // UPDATE
+    // '/assuntos'
+    // id: string
+    updateAssunto(assunto: Assunto) {
+        return api.put(`/assuntos/${assunto.uuid}`,
+            {
+                "titulo": assunto.descricao,
+            }
+        );
     }
 }

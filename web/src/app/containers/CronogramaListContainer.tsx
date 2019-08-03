@@ -20,7 +20,6 @@ const mapDispatchToProps = (dispatch: any) => {
         // Obter todos os cronogramas.
         fetchCronogramas: () => {
             var promisse = dispatch(fetchCronogramas())
-
             promisse.payload.then((response: any) => {
                 const data = response.data;
                 if (!response.error) {

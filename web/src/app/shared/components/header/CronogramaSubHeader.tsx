@@ -19,7 +19,6 @@ export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
     var cronograma = context.getState().cronogramas != null && context.getState().cronogramas.cronogramaOnDetail.cronograma;
 
     return (
-        // style={{ backgroundImage: '-webkit-radial-gradient(50% top, circle cover, rgb(15, 180, 164) 0%, rgba(27, 28, 39, 0) 15%), -webkit-radial-gradient(right top, circle cover, #27918c 30%, rgba(121, 74, 162, 0) 100%)' }}
         <div>
             <Container>
                 <Grid columns={3}>

@@ -1,9 +1,9 @@
-import React, { useEffect, useContext } from 'react'
-import logo from '../../assets/images/logo.png'
-import { LoginForm, LoaderComponent } from '../shared/components';
-import { User } from 'chronos-core/dist/domain/User';
-import { isAuthenticated } from 'chronos-core';
-import { ChronosContext } from '../../ChronosRoutes';
+import { User } from "chronos-core/dist/domain/User";
+import React, { useContext, useEffect } from "react";
+import { ChronosContext } from "../../../ChronosRoutes";
+import { isAuthenticated } from "chronos-core";
+import { LoaderComponent, LoginForm } from "../../shared/components";
+import logo from '../../../assets/images/logo.png'
 
 interface Props {
     auth: any;
@@ -36,9 +36,9 @@ function SignIn(props: Props) {
     }, [props.auth.user])
 
 
-    useEffect(() => {
-        props.clearState()
-    }, [])
+    // useEffect(() => {
+    //     //  props.clearState()
+    // }, [])
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />

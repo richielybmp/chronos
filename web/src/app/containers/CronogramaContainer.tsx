@@ -15,13 +15,11 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        // Obter todos os cronogramas.
         delete: (id: string, callback: Function) => {
             var promisse = dispatch(deleteCronograma(id))
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                console.log(response);
 
                 if (!response.error && (!data.exception || response.status !== "404")) {
                     dispatch(deleteCronogramaSuccess(data));

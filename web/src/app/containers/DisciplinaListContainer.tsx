@@ -7,6 +7,7 @@ import {
     fetchAssunto,
     fetchAssuntoFailure,
     fetchAssuntoSuccess,
+    clearAssuntoOnDetail,
 } from "chronos-core";
 
 const mapStateToProps = (state: any) => ({
@@ -37,6 +38,10 @@ const mapDispatchToProps = (dispatch: any) => {
                 dispatch(fetchAssuntoFailure(e.message));
             }
         },
+
+        clearAssuntoOnDetail: () => {
+            dispatch(clearAssuntoOnDetail())
+        }
     }
 };
 

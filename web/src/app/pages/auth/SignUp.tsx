@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import logo from '../../assets/images/logo.png'
-import { LoginForm, LoaderComponent } from '../shared/components';
 import { User } from 'chronos-core/dist/domain/User';
+import React, { useState, useEffect } from 'react';
+import { LoaderComponent, LoginForm } from '../../shared/components';
 import { Confirm } from 'semantic-ui-react';
+import logo from '../../../assets/images/logo.png'
 
 interface Props {
     auth: any;
@@ -31,9 +31,9 @@ function SignUp(props: Props) {
         props.history.push(`${process.env.PUBLIC_URL}/entrar`);
     };
 
-    useEffect(() => {
-        props.clearState()
-    }, [])
+    // useEffect(() => {
+    //     props.clearState()
+    // }, [])
 
     useEffect(() => {
         listenForAuthUser();

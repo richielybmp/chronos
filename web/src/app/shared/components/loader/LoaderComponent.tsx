@@ -12,7 +12,7 @@ export function LoaderComponent(props: LoaderProps) {
 
     return (
         <Dimmer active inverted>
-            <Loader size={tamanho}>{titulo}</Loader>
+            <Loader inverted size={tamanho}>{titulo}</Loader>
         </Dimmer>
     )
 }

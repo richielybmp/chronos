@@ -1,8 +1,8 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom';
-import CronogramaContainer from './containers/CronogramaContainer';
 import MainNavContainer from './containers/MainNavContainer';
+import { Switch, Route } from 'react-router';
 import CronogramaListContainer from './containers/CronogramaListContainer';
+import CronogramaContainer from './containers/CronogramaContainer';
 import AssuntoContainer from './containers/AssuntoContainer';
 
 const Main = ({ match }: any) => {

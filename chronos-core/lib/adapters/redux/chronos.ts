@@ -280,7 +280,7 @@ export const chronosReducer = (
                 var disciplina = cronograma_atual.disciplinas.find(d => d.uuid == action.payload.idDisciplina)
                 var assunto;
                 if (disciplina) {
-                    assunto = disciplina.assuntos.find(a => a.uuid == action.payload.idAssunto)
+                    assunto = repository.convertaAssunto(disciplina, action.payload.idAssunto)
                 }
             }
             return {
@@ -304,12 +304,85 @@ export const chronosReducer = (
             }
         //#endregion
 
+        // #region 'UPDATE assunto'
+        case EnumCronogramaActions.UPDATE_ASSUNTO:
+            return {
+                ...state,
+                assuntoOnDetail: {
+                    ...state.assuntoOnDetail,
+                    loading: true
+                }
+            }
+        case EnumCronogramaActions.UPDATE_ASSUNTO_SUCCESS:
+            var assuntoDetalhe = state.assuntoOnDetail.assunto;
+            var atual = action.payload.assunto;
+
+            if (assuntoDetalhe) {
+                assuntoDetalhe.descricao = atual.descricao;
+            }
+
+            return {
+                ...state,
+                assuntoOnDetail: {
+                    ...state.assuntoOnDetail,
+                    assunto: assuntoDetalhe,
+                    loading: false
+                }
+            }
+        case EnumCronogramaActions.UPDATE_ASSUNTO_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
+            }
+        //#endregion
+
+        // #region 'DELETE assunto'
+        case EnumCronogramaActions.DELETE_ASSUNTO:
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.DELETE_ASSUNTO_SUCCESS:
+            var assunto_delete = action.payload.assunto
+            var cronograma = state.cronogramaOnDetail.cronograma
+
+            if (cronograma) {
+                var disciplina = cronograma.disciplinas.find(d => d.uuid == assunto_delete.disciplina_uuid)
+                if (disciplina) {
+                    var assuntos = disciplina.assuntos;
+                    assuntos.forEach((a, i) => {
+                        if (a.uuid == assunto_delete.uuid) {
+                            assuntos.splice(i, 1);
+                        }
+                    })
+                }
+            }
+
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: false }
+            }
+        case EnumCronogramaActions.DELETE_ASSUNTO_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
+            }
+        //#endregion
+
         case EnumCronogramaActions.CLEAR_ERROR:
             return {
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null },
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: null },
                 novoCronograma: { ...state.novoCronograma, error: null }
+            }
+
+        case EnumCronogramaActions.RESET_ASSUNTO:
+            return {
+                ...state,
+                assuntoOnDetail: { old: null, assunto: null, error: null, loading: false }
             }
 
         case EnumCronogramaActions.CLEAR_STATE:

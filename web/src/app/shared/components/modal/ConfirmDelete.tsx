@@ -3,7 +3,7 @@ import { Modal, Header, Button, Icon } from 'semantic-ui-react';
 
 interface ModalProps {
     show: boolean,
-    pergunta: string
+    pergunta: string,
     toggle: () => void,
     confirmDelete: () => void
 }
@@ -29,15 +29,15 @@ export function ConfirmDelete(props: ModalProps) {
                 onClose={() => close()}
                 size='small'
             >
-                <Header icon='browser' content='Excluir cronograma' />
+                <Header content="Excluir" />
                 <Modal.Content>
                     <h3>{pergunta}</h3>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='black' onClick={() => close()} >
+                    <Button onClick={() => close()} >
                         <Icon name='x' /> Cancelar
                     </Button>
-                    <Button color='red' onClick={() => confirmDelete()} >
+                    <Button inverted color='red' onClick={() => confirmDelete()} >
                         <Icon name='trash' /> EXCLUIR
                     </Button>
                 </Modal.Actions>

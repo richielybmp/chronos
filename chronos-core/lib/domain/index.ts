@@ -1,3 +1,4 @@
+export * from './Artefato'
 export * from './Assunto'
 export * from './Cronograma'
 export * from './Disciplina'

@@ -97,13 +97,11 @@ export const NewCronogramaForm = (props: Props) => {
                 var obj = new Cronograma('', cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
                 props.createCronograma(obj)
             }
-            else {
-                if (props.cronogramaOnDetail.cronograma != null) {
-                    const id = props.cronogramaOnDetail.cronograma.uuid
-                    var obj = new Cronograma(id, cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
-                    props.editCronograma(obj)
-                    props.close()
-                }
+            else if (props.cronogramaOnDetail.cronograma) {
+                const id = props.cronogramaOnDetail.cronograma.uuid
+                var obj = new Cronograma(id, cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
+                props.editCronograma(obj)
+                props.close()
             }
         }
     }
@@ -118,11 +116,14 @@ export const NewCronogramaForm = (props: Props) => {
     useEffect(() => {
         if (props.cronogramaOnDetail.cronograma != null) {
             const { cronograma } = props.cronogramaOnDetail
-            const dateI = cronograma.inicio.split(' ')[0].split('-')
-            const dateF = cronograma.fim.split(' ')[0].split('-')
 
-            setNovoCronogramaDataInicio(dateI[0] + "-" + dateI[1] + "-" + dateI[2])
-            setNovoCronogramaDataFim(dateF[0] + "-" + dateF[1] + "-" + dateF[2])
+            const dateI = cronograma.inicio.split(" ").length > 1 ?
+                new Date(cronograma.inicio).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : cronograma.inicio
+            const dateF = cronograma.fim.split(" ").length > 1 ?
+                new Date(cronograma.fim).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : cronograma.fim
+
+            setNovoCronogramaDataInicio(dateI)
+            setNovoCronogramaDataFim(dateF)
             setNovoCronogramaTitulo(cronograma.titulo)
             setNovoCronogramaDescricao(cronograma.descricao)
             setEhEdicao(true)

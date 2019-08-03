@@ -1,12 +1,10 @@
 import { Artefato } from "./Artefato";
 
 export class Material extends Artefato {
-    public porcentagem: number
-    public uuid: string = '';
-    public descricao: string = '';
+    public minutos: number;
 
-    constructor(descricao: string, porcentagem: number) {
+    constructor(minutos: number) {
         super()
-        this.porcentagem = porcentagem
+        this.minutos = minutos
     }
 }

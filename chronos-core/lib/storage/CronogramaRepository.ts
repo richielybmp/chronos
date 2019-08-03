@@ -1,17 +1,28 @@
-import { Assunto } from './../domain/Assunto';
+import { Assunto } from '../domain/Assunto';
 import { Cronograma, Disciplina } from "../domain";
 
 export class CronogramaRepository {
+    convertaAssunto(disciplina: Disciplina, idAssunto: string): any {
+        let toModel;
+        let assunto = disciplina.assuntos.find(a => a.uuid == idAssunto)
 
+        if (assunto) {
+            toModel = new Assunto(assunto.uuid, assunto.disciplina_uuid, assunto.descricao)
+            //TODO: atribuir os artefatos
+            //toModel.artefatos = assunto.artefatos
+        }
+
+        return toModel;
+    }
 
     constructor() {
     }
 
-    cronogramasToDomain(payload: any[]): Cronograma[] {
+    cronogramasToDomain(payload: any): Cronograma[] {
         let cronogramas: Cronograma[] = [];
 
         if (payload != null) {
-            payload.forEach((el: any) => {
+            payload.forEach((el: Cronograma) => {
                 var cronograma = new Cronograma(el.uuid, el.titulo, el.descricao, el.inicio, el.fim, []);
 
                 if (el.disciplinas) {
@@ -46,8 +57,8 @@ export class CronogramaRepository {
         }
     }
 
-    convertaNovoAssunto(payload: any) {
-        let assunto = new Assunto(payload.uuid, payload.disciplina_uuid, payload.descricao, [], [], [], payload.anotacao)
+    convertaNovoAssunto(payload: any): Assunto {
+        let assunto = new Assunto(payload.uuid, payload.disciplina_uuid, payload.descricao)
         return assunto
     }
 }

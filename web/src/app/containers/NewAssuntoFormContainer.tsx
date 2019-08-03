@@ -5,11 +5,14 @@ import {
     createAssunto,
     createAssuntoSuccess,
     createAssuntoFailure,
-    clearError
+    clearError,
+    updateAssuntoSuccess,
+    updateAssunto,
+    updateAssuntoFailure,
 } from "chronos-core";
 
 const mapStateToProps = (state: any) => ({
-    cronogramaOnDetail: state.cronogramas.cronogramaOnDetail,
+    assuntoOnDetail: state.cronogramas.assuntoOnDetail,
 });
 
 const mapDispatchToProps = (dispatch: any) => {
@@ -23,6 +26,19 @@ const mapDispatchToProps = (dispatch: any) => {
                 }
                 else {
                     dispatch(createAssuntoFailure(data.message));
+                }
+            });
+        },
+
+        editAssunto: (assunto: Assunto) => {
+            var promisse = dispatch(updateAssunto(assunto))
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!response.error && !data.exception) {
+                    dispatch(updateAssuntoSuccess(data));
+                }
+                else {
+                    dispatch(updateAssuntoFailure(data.message));
                 }
             });
         },

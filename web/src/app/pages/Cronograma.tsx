@@ -19,6 +19,7 @@ const CronogramaDetail = (props: Props) => {
     const [modalShowToggle, setmodalShowToggle] = useState(false)
     const [confirmationDelete, setConfirmationDelete] = useState(false)
 
+    //#region Handles
     const handlePopModal = () => {
         setmodalShowToggle(!modalShowToggle)
     }
@@ -35,6 +36,11 @@ const CronogramaDetail = (props: Props) => {
         setConfirmationDelete(true)
     }
 
+    const handleErrorClose = () => {
+        props.clearError()
+    }
+    //#endregion
+
     const deleteCronograma = () => {
         if (cronograma != null) {
             setConfirmationDelete(false)
@@ -46,10 +52,6 @@ const CronogramaDetail = (props: Props) => {
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
-    }
-
-    const handleErrorClose = () => {
-        props.clearError()
     }
 
     return (
@@ -72,7 +74,6 @@ const CronogramaDetail = (props: Props) => {
                 cronograma != null ? (
                     <>
                         <CronogramaSubHeader complement={null} titulo={cronograma.titulo} handlePopModal={handlePopModal} deleteAction={handleDeleteAction} />
-
                         <CronogramaContent cronograma={cronograma}>
                             <DisciplinaListContainer history={props.history} disciplinas={cronograma.disciplinas} matchUrl={props.match} />
                             <PortalError error={error} handleErrorClose={handleErrorClose} />

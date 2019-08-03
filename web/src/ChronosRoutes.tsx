@@ -1,13 +1,14 @@
-import React from 'react'
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import Main from './app/Main';
-import IndexHome from './app/home/IndexHome';
-import SignInContainer from './app/containers/login/SignInContainer';
-import Unauthorized from './app/pages/httpStatus/Unauthorized';
-import SignUpContainer from './app/containers/login/SignUpContainer';
-import { Provider } from 'react-redux';
-import { configureStore } from 'chronos-core';
-import RecoverPasswordContainer from './app/containers/login/RecoverPasswordContainer';
+import React from "react";
+import { configureStore } from "chronos-core";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { Switch, Route } from "react-router";
+import IndexHome from "./app/home/IndexHome";
+import Main from "./app/Main";
+import SignInContainer from "./app/containers/login/SignInContainer";
+import SignUpContainer from "./app/containers/login/SignUpContainer";
+import RecoverPasswordContainer from "./app/containers/login/RecoverPasswordContainer";
+import Unauthorized from "./app/pages/httpStatus/Unauthorized";
 
 export const ChronosContext = React.createContext<any>({})
 const store = configureStore() as any;

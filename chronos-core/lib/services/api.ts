@@ -5,6 +5,14 @@ let isRefreshing = false;
 
 let refreshSubscribers: any = [];
 
+let subscribeTokenRefresh = (cb: any) => {
+    refreshSubscribers.push(cb);
+}
+
+let onRrefreshed = (token: string) => {
+    refreshSubscribers.map((cb: any) => cb(token));
+}
+
 const api = axios.create({
     baseURL: "http://cronos.vizzarconsultoria.com/api"
 });
@@ -23,10 +31,14 @@ api.interceptors.request.use(async config => {
 
 api.interceptors.response.use(async response => {
 
-    const newToken = response.headers.authorization
+    let newToken = response.headers.authorization
 
     if (newToken) {
         await localStorage.setItem(TOKEN_KEY, newToken);
+    }
+    else if (response.data.token) {
+        newToken = response.data.token
+        await localStorage.setItem(TOKEN_KEY, `Bearer ${newToken}`);
     }
 
     return response;
@@ -35,6 +47,15 @@ api.interceptors.response.use(async response => {
 
     const { config, response: { status } } = error;
     const originalRequest = config;
+
+    // Criando uma nova promise para tentativa de refresh token
+    let retryOriginalRequest = new Promise((resolve) => {
+        subscribeTokenRefresh(() => {
+            // replace the expired token and retry
+            originalRequest.headers.Authorization = getToken();
+            resolve(api(originalRequest));
+        });
+    });
 
     switch (status) {
         case 400:
@@ -56,7 +77,6 @@ api.interceptors.response.use(async response => {
                     .then((newToken: any) => {
                         if ((newToken != undefined || newToken != null) &&
                             (newToken.data.token != null || newToken.data.token != undefined)) {
-                            debugger
                             isRefreshing = false;
                             login(newToken.data.token)
                             onRrefreshed(newToken);
@@ -68,15 +88,8 @@ api.interceptors.response.use(async response => {
                     });
 
             }
-            // Criando uma nova promise para tentativa de refresh token
-            return await new Promise((resolve, reject) => {
-                subscribeTokenRefresh(() => {
-                    // replace the expired token and retry
-                    debugger
-                    originalRequest.headers.Authorization = getToken();
-                    resolve(api(originalRequest));
-                });
-            });
+
+            return await retryOriginalRequest;
         case 404:
             return await new Promise((resolve, reject) => {
                 resolve(error.response)
@@ -96,13 +109,5 @@ api.interceptors.response.use(async response => {
             return Promise.reject(error);
     }
 });
-
-const subscribeTokenRefresh = (cb: any) => {
-    refreshSubscribers.push(cb);
-}
-
-const onRrefreshed = (token: string) => {
-    refreshSubscribers.map((cb: any) => cb(token));
-}
 
 export default api;
