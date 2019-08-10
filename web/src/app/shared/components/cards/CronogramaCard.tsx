@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Cronograma } from 'chronos-core';
+import Utils from '../../../utils/utils';
 
 interface CronogramaCardProps {
     cronograma: Cronograma,
@@ -10,7 +11,11 @@ interface CronogramaCardProps {
 
 export function CronogramaCard(props: CronogramaCardProps) {
 
-    const { disciplinas, uuid, descricao, titulo, inicio } = props.cronograma
+    const { disciplinas, uuid, descricao, titulo, inicio, fim } = props.cronograma
+
+    let dataInicio = Utils.formatDateString(inicio)
+    let dataFim = Utils.formatDateString(fim)
+
     return (
         <Card fluid
             as={Link}
@@ -24,7 +29,7 @@ export function CronogramaCard(props: CronogramaCardProps) {
             <Card.Content extra>
                 <Icon name='book' />
                 {disciplinas.length} Disciplinas
-            <Card.Content description={`Você iniciou esse cronograma em ${inicio}`} />
+            <Card.Content description={`${dataInicio} - ${dataFim}`} />
             </Card.Content>
         </Card>
     )

@@ -70,7 +70,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                         {/* Botões 'Editar' e 'Excluir' */}
                                         <Grid.Column floated='right' tablet={3} computer={3} only='tablet computer'>
                                             <Button.Group floated='right' >
-                                                <Button disabled={emEdicao} color='yellow' icon='edit' onClick={() => handleUpdateDisciplina(item.uuid)}></Button>
+                                                <Button disabled={emEdicao} color='blue' icon='edit' onClick={() => handleUpdateDisciplina(item.uuid)}></Button>
                                                 <Button disabled={emEdicao} color='red' icon='trash' onClick={() => handleDeleteDisciplina(item.uuid)}></Button>
                                                 <Button disabled={emEdicao} onClick={() => handleCreateAssunto(item.uuid)}
                                                     color='green' content='Assunto' icon='plus' size='tiny'

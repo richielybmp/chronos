@@ -4,11 +4,12 @@ import { Assunto } from "./Assunto";
 export class Disciplina extends DtoCodigoDescricao {
     public assuntos: Assunto[];
     public nome: string;
-    public cronograma_uuid: string = "";
+    public cronograma_uuid: string;
 
-    constructor(uuid: string, nome: string, descricao: string, assuntos: Assunto[]) {
+    constructor(uuid: string, cronograma_uuid: string, nome: string, descricao: string) {
         super(uuid, descricao)
-        this.assuntos = assuntos;
+        this.cronograma_uuid = cronograma_uuid;
+        this.assuntos = [];
         this.nome = nome;
     }
 }

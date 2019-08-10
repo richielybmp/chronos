@@ -5,11 +5,15 @@ import { CronogramaRepository } from "../../storage";
 
 const repository = new CronogramaRepository();
 
+const INITIAL_STATE_CRONOGRAMAS = { cronogramas: [], error: null, loading: false }
+const INITIAL_STATE_NOVO_CRONOGRAMA = { old: null, cronograma: null, error: null, loading: false }
+const INITIAL_STATE_ASSUNTO_ON_DETAIL = { old: null, assunto: null, error: null, loading: false }
+
 const INITIAL_STATE = {
-    cronogramasList: { cronogramas: [], error: null, loading: false },
-    novoCronograma: { old: null, cronograma: null, error: null, loading: false },
-    cronogramaOnDetail: { old: null, cronograma: null, error: null, loading: false },
-    assuntoOnDetail: { old: null, assunto: null, error: null, loading: false },
+    cronogramasList: INITIAL_STATE_CRONOGRAMAS,
+    novoCronograma: INITIAL_STATE_NOVO_CRONOGRAMA,
+    cronogramaOnDetail: INITIAL_STATE_NOVO_CRONOGRAMA,
+    assuntoOnDetail: INITIAL_STATE_ASSUNTO_ON_DETAIL,
 };
 
 export const chronosReducer = (
@@ -17,6 +21,7 @@ export const chronosReducer = (
     action: CronogramaActionsType
 ): ChronosStateType => {
     let error;
+    let cronograma;
     switch (action.type) {
         //#region 'fetch cronogramas'
         case EnumCronogramaActions.FETCH_CRONOGRAMAS:
@@ -25,11 +30,11 @@ export const chronosReducer = (
                 cronogramasList: { cronogramas: [], error: null, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_SUCCESS:
-            const cronogramas = repository.cronogramasToDomain(action.payload.cronogramas)
+            let cronogramas = repository.cronogramasToDomain(action.payload.cronogramas)
             return {
                 ...state,
                 cronogramasList: { cronogramas: cronogramas, error: null, loading: false },
-                cronogramaOnDetail: { old: null, cronograma: null, error: null, loading: false }
+                cronogramaOnDetail: INITIAL_STATE_NOVO_CRONOGRAMA
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -41,15 +46,15 @@ export const chronosReducer = (
 
         //#region 'fetch cronograma'
         case EnumCronogramaActions.FETCH_CRONOGRAMA:
+            cronograma = state.cronogramasList.cronogramas.find(x => x.uuid == action.payload)
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: true }
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: cronograma, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_SUCCESS:
-            var cronograma = repository.cronogramasToDomain(action.payload.cronograma)[0]
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: cronograma, error: null, loading: false }
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: false }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -105,21 +110,12 @@ export const chronosReducer = (
                 }
             };
         case EnumCronogramaActions.UPDATE_CRONOGRAMA_SUCCESS:
-            var cronogramaDetalhe = state.cronogramaOnDetail.cronograma;
-            var atual = action.payload;
-
-            if (cronogramaDetalhe) {
-                cronogramaDetalhe.titulo = atual.titulo;
-                cronogramaDetalhe.descricao = atual.descricao;
-                cronogramaDetalhe.inicio = atual.inicio;
-                cronogramaDetalhe.fim = atual.fim;
-            }
-
+            cronograma = repository.updateCronograma(state.cronogramaOnDetail.cronograma, action.payload)
             return {
                 ...state,
                 cronogramaOnDetail: {
                     ...state.cronogramaOnDetail,
-                    cronograma: cronogramaDetalhe,
+                    cronograma: cronograma,
                     error: null,
                     loading: false
                 },
@@ -186,7 +182,7 @@ export const chronosReducer = (
         case EnumCronogramaActions.DELETE_DISCIPLINA_SUCCESS:
             //{disciplina, message, success}
             var uuid_delete = action.payload.disciplina.uuid
-            var cronograma = state.cronogramaOnDetail.cronograma;
+            cronograma = state.cronogramaOnDetail.cronograma;
 
             if (cronograma) {
                 var listaDeDisciplinas = cronograma.disciplinas;
@@ -345,7 +341,7 @@ export const chronosReducer = (
             }
         case EnumCronogramaActions.DELETE_ASSUNTO_SUCCESS:
             var assunto_delete = action.payload.assunto
-            var cronograma = state.cronogramaOnDetail.cronograma
+            cronograma = state.cronogramaOnDetail.cronograma
 
             if (cronograma) {
                 var disciplina = cronograma.disciplinas.find(d => d.uuid == assunto_delete.disciplina_uuid)
@@ -371,6 +367,7 @@ export const chronosReducer = (
             }
         //#endregion
 
+        //#region 'RESET'
         case EnumCronogramaActions.CLEAR_ERROR:
             return {
                 ...state,
@@ -387,6 +384,9 @@ export const chronosReducer = (
 
         case EnumCronogramaActions.CLEAR_STATE:
             return INITIAL_STATE;
+
+        //#endregion
+
         default:
             return state;
     }

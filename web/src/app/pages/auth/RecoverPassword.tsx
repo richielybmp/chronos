@@ -3,6 +3,7 @@ import logo from '../../../assets/images/logo.png'
 import React, { useContext } from 'react';
 import { ChronosContext } from '../../../ChronosRoutes';
 import { LoaderComponent, LoginForm } from '../../shared/components';
+import RecoverPasswordForm from '../forms/RecoverPasswordForm';
 
 interface Props {
     auth: any;
@@ -18,7 +19,7 @@ function RecoverPassword(props: Props) {
 
     const context = useContext(ChronosContext)
 
-    const handleRecuperar = (name: string, email: string, novaSenha: string) => {
+    const handleRecuperar = (email: string, novaSenha: string) => {
         props.recoverPassword(email, novaSenha, () => {
             props.history.push(`${process.env.PUBLIC_URL}/entrar`);
         })
@@ -29,15 +30,7 @@ function RecoverPassword(props: Props) {
     }
 
     return (
-        <LoginForm
-            keyIsSignIn={"recover"}
-            logo={logo}
-            title={'Recuperar senha'}
-            labelBtnEntrar={'Recuperar'}
-            labelConvite={''}
-            actionButton={handleRecuperar}
-            error={error}
-        />
+        <RecoverPasswordForm error={error} actionRecoverPassword={handleRecuperar} />
     )
 }
 

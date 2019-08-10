@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { LoaderComponent, LoginForm } from '../../shared/components';
 import { Confirm } from 'semantic-ui-react';
 import logo from '../../../assets/images/logo.png'
+import SignUpForm from '../forms/SignUpForm';
 
 interface Props {
     auth: any;
@@ -17,7 +18,7 @@ function SignUp(props: Props) {
     const { loading, error, user } = props.auth
     const [criouUsuario, setCriouUsuario] = useState(false)
 
-    const handleLogin = (name: string, email: string, password: string) => {
+    const handleAcionSignUp = (name: string, email: string, password: string) => {
         props.signUp(new User(name, email, password))
     }
 
@@ -31,33 +32,29 @@ function SignUp(props: Props) {
         props.history.push(`${process.env.PUBLIC_URL}/entrar`);
     };
 
-    // useEffect(() => {
-    //     props.clearState()
-    // }, [])
-
     useEffect(() => {
         listenForAuthUser();
         return listenForAuthUser;
     }, [props.auth.user])
+
+    useEffect(() => {
+        props.clearState()
+    }, [])
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
 
     if (criouUsuario) {
-        return <Confirm open={criouUsuario == true} onCancel={() => setCriouUsuario(false)} onConfirm={() => redirectToSignIn()} />
+        return <Confirm
+            content="Usuário criado com sucesso! Por favor, prossiga com o login."
+            open={criouUsuario == true}
+            onCancel={() => setCriouUsuario(false)}
+            onConfirm={() => redirectToSignIn()} />
     }
 
     return (
-        <LoginForm
-            keyIsSignIn={"signUp"}
-            logo={logo}
-            title={'Cadastre-se'}
-            labelBtnEntrar={'Cadastrar'}
-            labelConvite={'Já possui conta? Entrar!'}
-            actionButton={handleLogin}
-            error={error}
-        />
+        <SignUpForm error={error} actionSignUp={handleAcionSignUp} />
     )
 }
 

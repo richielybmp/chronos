@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { EmptyHeader } from '../shared/components/header/EmptyHeader';
-import { DisciplinaTab, ConfirmDelete, ModalContainer } from '../shared/components';
-import { Artefato } from 'chronos-core/dist/domain/Artefato';
+import React, { useState, useContext } from 'react'
+import { ConfirmDelete, ModalContainer, ArtefatosSection } from '../shared/components';
 import NewArtefatoFormContainer from '../containers/NewArtefatoFormContainer';
+import ModalNovoArtefato from './modal/ModalNovoArtefato';
+import { Assunto, Artefato } from 'chronos-core';
+import { ChronosContext } from '../../ChronosRoutes';
 
 interface Props {
     artefatos: Artefato[],
@@ -12,7 +13,12 @@ interface Props {
 }
 
 function ArtefatoList(props: Props) {
-    const { artefatos, matchUrl, deleteArtefato } = props
+
+    const context = useContext(ChronosContext);
+
+    let assunto: Assunto = context.getState().cronogramas.assuntoOnDetail.assunto;
+
+    const { artefatos, deleteArtefato } = props
 
     const hasArtefatos = artefatos.length > 0
 
@@ -68,17 +74,17 @@ function ArtefatoList(props: Props) {
         }
     }
 
-    if (!hasArtefatos && !novoArtefato) {
-        return (
-            <EmptyHeader
-                icon='table'
-                title='Você ainda não possui nenhum artefato criada'
-                subtitle='Adicione um tipo de material ou lista de exercícios!'
-                btnTitle="Novo artefato"
-                onClick={handleNovoArtefato}
-            />
-        )
-    }
+    // if (!hasArtefatos && !novoArtefato ) {
+    //     return (
+    //         <EmptyHeader
+    //             icon='table'
+    //             title='Você ainda não possui nenhum artefato criado'
+    //             subtitle='Adicione um tipo de material ou lista de exercícios!'
+    //             btnTitle="Novo artefato"
+    //             onClick={handleNovoArtefato}
+    //         />
+    //     )
+    // }
 
     return (
         <>
@@ -90,15 +96,16 @@ function ArtefatoList(props: Props) {
                 confirmDelete={deletarArtefato} />
 
             {/* Modal 'Novo artefato' */}
-            {/* <ModalNovoArtefato
-                history={props.history}
+            <ModalNovoArtefato
+                idOnDetail=''
                 show={modalShowToggle}
                 toggle={handlePopModal}
-                close={handleCloseModal} /> */}
+                close={handleCloseModal} />
 
             {showArtefatoForm(idOnDetail, handleClose)}
 
-            {/* <DisciplinaTab
+            {/* 
+            <DisciplinaTab
                 disciplinas={disciplinas}
                 matchUrl={matchUrl}
                 handleDeleteDisciplina={handleDeletarDisciplina}
@@ -106,14 +113,10 @@ function ArtefatoList(props: Props) {
                 handleCreateAssunto={handelCreateAssunto}
                 handleAssuntoOnDetail={handleAssuntoOnDetail}
                 idOnDetail={idOnDetail}
-            /> */}
-            {
-                artefatos.forEach(element => {
-                    return (
-                        <div>{element.uuid}</div>
-                    )
-                })
-            }
+            /> 
+            */}
+
+            <ArtefatosSection />
         </>
     )
 }

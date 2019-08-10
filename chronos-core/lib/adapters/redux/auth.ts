@@ -79,7 +79,7 @@ export const authReducer = (
         //#endregion
 
         case EnumAuthActions.CLEAR_STATE:
-            return INITIAL_STATE;
+            return INITIAL_STATE
 
         default:
             return state;

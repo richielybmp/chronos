@@ -47,13 +47,13 @@ export const NewCronogramaForm = (props: Props) => {
 
     const handleDataInicioChange = (e: any) => {
         setNovoCronogramaDataInicioErro('')
-        console.log(e.target.value)
+        // console.log(e.target.value)
         setNovoCronogramaDataInicio(e.target.value)
     }
 
     const handleDataFimChange = (e: any) => {
         setNovoCronogramaDataFimErro('')
-        console.log(e.target.value)
+        // console.log(e.target.value)
         setNovoCronogramaDataFim(e.target.value)
     }
 

@@ -28,7 +28,7 @@ export function clearError() {
 export function fetchCronogramas() {
     return {
         type: EnumCronogramaActions.FETCH_CRONOGRAMAS,
-        payload: interactorCronograma.getAll()
+        payload: interactorCronograma.getAllFull()
     };
 }
 
@@ -51,14 +51,15 @@ export function fetchCronogramasFailure(error: any) {
 export function fetchCronograma(id: string) {
     return {
         type: EnumCronogramaActions.FETCH_CRONOGRAMA,
-        payload: interactorCronograma.getCronogramaById(id)
+        payload: id
+        //payload: interactorCronograma.getCronogramaById(id)
     };
 }
 
-export function fetchCronogramaSuccess(cronogramaSelecionado: any) {
+export function fetchCronogramaSuccess() {
     return {
         type: EnumCronogramaActions.FETCH_CRONOGRAMA_SUCCESS,
-        payload: cronogramaSelecionado
+        // payload: cronogramaSelecionado
     };
 }
 

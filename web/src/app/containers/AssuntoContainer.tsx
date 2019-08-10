@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { deleteAssunto, deleteAssuntoSuccess, deleteAssuntoFailure } from "chronos-core";
+import { deleteAssunto, deleteAssuntoSuccess, deleteAssuntoFailure, fetchAssunto, fetchAssuntoSuccess, fetchAssuntoFailure } from "chronos-core";
 import AssuntoDetail from "../pages/Assunto";
 
 const mapStateToProps = (state: any) => {
@@ -25,6 +25,16 @@ const mapDispatchToProps = (dispatch: any) => {
                     dispatch(deleteAssuntoFailure(data.message));
                 }
             });
+        },
+
+        fetchAssunto: (idDisciplina: string, idAssunto: string) => {
+            try {
+                dispatch(fetchAssunto(idDisciplina, idAssunto))
+                dispatch(fetchAssuntoSuccess({}));
+            }
+            catch (e) {
+                dispatch(fetchAssuntoFailure(e.message));
+            }
         },
     }
 }

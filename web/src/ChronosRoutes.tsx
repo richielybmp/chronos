@@ -3,11 +3,11 @@ import { configureStore } from "chronos-core";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { Switch, Route } from "react-router";
-import IndexHome from "./app/home/IndexHome";
+import IndexHome from "./app/pages/home/IndexHome";
 import Main from "./app/Main";
-import SignInContainer from "./app/containers/login/SignInContainer";
-import SignUpContainer from "./app/containers/login/SignUpContainer";
-import RecoverPasswordContainer from "./app/containers/login/RecoverPasswordContainer";
+import SignInContainer from "./app/containers/auth/SignInContainer";
+import SignUpContainer from "./app/containers/auth/SignUpContainer";
+import RecoverPasswordContainer from "./app/containers/auth/RecoverPasswordContainer";
 import Unauthorized from "./app/pages/httpStatus/Unauthorized";
 
 export const ChronosContext = React.createContext<any>({})

@@ -1,3 +1,43 @@
-body{
-    background-color: #ffffff
+html, body, #root {
+    height: 100%;
+}
+
+body {
+    background-color: #F8F8F8
+}
+.section-revisoes .ui.checkbox{
+    margin-right: 45px;
+}
+
+.btn-editar {
+    background-color: #007f97 !important;
+}
+
+.dropdown.outros-assuntos {
+    background-color: #ddd;
+    padding: 10px;
+    margin: 0;
+    border-radius: 6px;
+}
+
+.ui.container input{
+    border :1px solid  #ddd !important;
+}
+
+@media (min-width: 375px) and (max-width: 667px) {
+
+    .dropdown.outros-assuntos {
+        display: block;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .dropdown.outros-assuntos i{
+        float: right;
+        top: 4px;
+    }
+
+    .dropdown .menu {
+        width: 100%;
+    }
 }

@@ -24,17 +24,17 @@ export function AssuntoContent({ children, assunto }: AssuntoContentProps) {
                     {assunto.descricao}
                 </Header.Content>
             </Header>
-            {/* {assunto.disciplinas.length > 0 &&
-                <Segment basic>
-                    <Grid columns={1}>
-                        <Grid.Column mobile={16} tablet={6} computer={3} floated='right'>
-                            <Button fluid onClick={() => setnovaDisciplina(true)}
-                                color='green' content='Disicplina' icon='plus' size='tiny'
-                                labelPosition='right' />
-                        </Grid.Column>
-                    </Grid>
-                </Segment>
-            } */}
+            {/* {assunto.artefatos.length > 0 && */}
+            <Segment basic>
+                <Grid columns={2}>
+                    <Grid.Column mobile={16} tablet={6} computer={3} floated='right'>
+                        <Button fluid onClick={() => setNovoArtefato(true)}
+                            color='green' content='Artefato' icon='plus' size='tiny'
+                            labelPosition='right' />
+                    </Grid.Column>
+                </Grid>
+            </Segment>
+            {/* }  */}
 
             {novoArtefato ?
                 showArtefatoForm("novoartefato", handleClose) : null

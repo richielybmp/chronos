@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { EmptyHeader, CronogramaSubHeader, ConfirmDelete, LoaderComponent, PortalError, AssuntoContent } from '../shared/components';
-import { AssuntoState, CronogramaState } from 'chronos-core';
+import { AssuntoState, CronogramaState, Assunto, fetchAssunto } from 'chronos-core';
 import ModalNovoAssunto from './modal/ModalNovoAssunto';
 import ArtefatoListContainer from '../containers/ArtefatoListContainer';
+import { Dropdown, Container, Menu, Divider } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 interface Props {
     match: any,
@@ -10,10 +12,13 @@ interface Props {
     assuntoOnDetail: AssuntoState,
     cronogramaOnDetail: CronogramaState,
     delete: (id: string, callback: Function) => void,
+    fetchAssunto: (idDisciplina: string, idAssunto: string) => void,
     // clearError: () => void,
 }
 
 const AssuntoDetail = (props: Props) => {
+
+    const { match, history } = props
 
     const { assunto, loading, error } = props.assuntoOnDetail
     const { cronograma } = props.cronogramaOnDetail
@@ -42,6 +47,10 @@ const AssuntoDetail = (props: Props) => {
     const handleDeleteAction = () => {
         setConfirmationDelete(true)
     }
+
+    const handleFetchAssunto = (idDisciplina: string, idAssunto: string) => {
+        props.fetchAssunto(idDisciplina, idAssunto)
+    }
     //#endregion
 
     const deleteAssunto = () => {
@@ -53,7 +62,7 @@ const AssuntoDetail = (props: Props) => {
         }
     }
 
-    if (loading) {
+    if (loading || props.assuntoOnDetail.loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />
     }
 
@@ -85,6 +94,32 @@ const AssuntoDetail = (props: Props) => {
                         titulo={assunto.descricao}
                         handlePopModal={handlePopModal}
                         deleteAction={handleDeleteAction} />
+
+                    {/* TODO: Componentizar */}
+                    {disciplina &&
+                        <Container>
+                            <Divider />
+                            <Dropdown item text='Outros assuntos' className='outros-assuntos'>
+                                <Dropdown.Menu>
+                                    {disciplina.assuntos.length > 0 &&
+                                        disciplina.assuntos.map((a: Assunto, index: number) => {
+                                            const url = match.url.substring(0, match.url.lastIndexOf('/assunto/'))
+                                            return (
+                                                <Dropdown.Item
+                                                    key={index}
+                                                    as={Link}
+                                                    to={`${url}/assunto/${a.uuid}`}
+                                                    onClick={() => handleFetchAssunto(a.disciplina_uuid, a.uuid)}
+                                                >
+                                                    {a.descricao}
+                                                </Dropdown.Item>
+                                            )
+                                        })
+                                    }
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Container>
+                    }
 
                     <AssuntoContent assunto={assunto}>
                         <ArtefatoListContainer history={props.history} artefatos={assunto.artefatos} matchUrl={props.match} />

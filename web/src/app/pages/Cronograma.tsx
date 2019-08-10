@@ -55,7 +55,7 @@ const CronogramaDetail = (props: Props) => {
     }
 
     return (
-        <div>
+        <>
             {/* Modal 'Editar" */}
             <ModalNovoCronograma
                 history={props.history}
@@ -87,7 +87,7 @@ const CronogramaDetail = (props: Props) => {
                         btnTitle='Voltar'
                         linkTo={`/cronogramas`} />
             }
-        </div>
+        </>
     )
 }
 

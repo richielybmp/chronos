@@ -48,7 +48,7 @@ export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
                     {/* Botões 'Editar' e 'Excluir' */}
                     <Grid.Column floated='right' tablet={3} computer={3} only='tablet computer'>
                         <Button fluid onClick={() => handlePopModal()}
-                            color='yellow' floated='right' content='Editar' icon='edit' size='tiny'
+                            color='blue' floated='right' content='Editar' icon='edit' size='tiny'
                             labelPosition='right' />
                     </Grid.Column>
                     <Grid.Column tablet={3} computer={3} only='tablet computer'>

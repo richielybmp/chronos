@@ -1,0 +1,25 @@
+.my-slider > .slick-list {
+    padding: 1rem
+} 
+
+.arrow-prev {
+    top: 50%;
+    display: block;
+    position: absolute;
+    left: -25px;
+}
+
+.arrow-next {
+    top: 50%;
+    display: block;
+    position: absolute;
+    right: 15px;
+}
+    /* @media screen and (max-width: 480px) 
+    right: -12px
+    @media screen and (min-width: 485px)
+    right: -30px
+    @media screen and (min-width: 1000px) 
+    right: -40px
+    @media screen and (min-width: 1200px)
+    right: 15px */

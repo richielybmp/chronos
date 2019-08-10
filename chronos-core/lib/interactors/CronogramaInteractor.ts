@@ -14,6 +14,12 @@ export class CronogramaInteractor {
     }
 
     // GET
+    // '/cronograma/completos'
+    getAllFull(): AxiosPromise<any> {
+        return api.get("/cronograma/completos");
+    }
+
+    // GET
     // '/cronogramas/<id>
     // id: Identificador do cronograma
     getCronogramaById(id: string): AxiosPromise<any> {

@@ -4,6 +4,7 @@ import { Container, Header, Segment, Grid, Button } from 'semantic-ui-react';
 import { Cronograma } from 'chronos-core';
 import NewDisciplinaFormContainer from '../../../containers/NewDisciplinaFormContainer';
 import { ModalContainer } from '..';
+import Utils from '../../../utils/utils';
 
 interface CronogramaContentProps {
     children: ReactNodeLike,
@@ -12,6 +13,9 @@ interface CronogramaContentProps {
 
 export function CronogramaContent({ children, cronograma }: CronogramaContentProps) {
     const [novaDisciplina, setnovaDisciplina] = useState(false)
+
+    let dataInicio = Utils.formatDateString(cronograma.inicio)
+    let dataFim = Utils.formatDateString(cronograma.fim)
 
     const handleClose = () => {
         setnovaDisciplina(false)
@@ -23,7 +27,7 @@ export function CronogramaContent({ children, cronograma }: CronogramaContentPro
                 <Header.Content>
                     {cronograma.titulo}
                     <Header.Subheader>
-                        {cronograma.inicio} - {cronograma.fim}
+                        {dataInicio} - {dataFim}
                     </Header.Subheader>
                 </Header.Content>
             </Header>
