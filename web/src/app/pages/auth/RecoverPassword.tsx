@@ -1,8 +1,7 @@
 
-import logo from '../../../assets/images/logo.png'
 import React, { useContext } from 'react';
 import { ChronosContext } from '../../../ChronosRoutes';
-import { LoaderComponent, LoginForm } from '../../shared/components';
+import { LoaderComponent } from '../../shared/components';
 import RecoverPasswordForm from '../forms/RecoverPasswordForm';
 
 interface Props {

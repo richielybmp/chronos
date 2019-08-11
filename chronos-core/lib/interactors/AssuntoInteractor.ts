@@ -32,7 +32,7 @@ export class AssuntoInteractor {
     updateAssunto(assunto: Assunto) {
         return api.put(`/assuntos/${assunto.uuid}`,
             {
-                "titulo": assunto.descricao,
+                "descricao": assunto.descricao,
             }
         );
     }

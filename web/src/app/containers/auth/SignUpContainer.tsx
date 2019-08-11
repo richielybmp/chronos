@@ -7,6 +7,7 @@ import {
     signUpUserSuccess,
     clearAuthState
 } from "chronos-core";
+import Utils from "../../utils/utils";
 
 const mapStateToProps = (state: any) => {
     return {
@@ -39,6 +40,7 @@ const mapDispatchToProps = (dispatch: any) => {
 
         clearState: () => {
             dispatch(clearAuthState());
+            Utils.delay(1500)
         }
     }
 };

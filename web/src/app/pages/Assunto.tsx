@@ -14,11 +14,12 @@ interface Props {
     delete: (id: string, callback: Function) => void,
     fetchAssunto: (idDisciplina: string, idAssunto: string) => void,
     // clearError: () => void,
+    editAssunto: (assunto: Assunto) => void,
 }
 
 const AssuntoDetail = (props: Props) => {
 
-    const { match, history } = props
+    const { match, history, editAssunto } = props
 
     const { assunto, loading, error } = props.assuntoOnDetail
     const { cronograma } = props.cronogramaOnDetail
@@ -70,15 +71,20 @@ const AssuntoDetail = (props: Props) => {
         // props.clearError()
     }
 
+    const handleUpdateAssunto = (descricao: string) => {
+        if (assunto)
+            editAssunto(new Assunto(assunto.uuid, assunto.disciplina_uuid, descricao))
+    }
+
     return (
         <>
             {/* Modal 'Editar" */}
-            <ModalNovoAssunto
+            {/* <ModalNovoAssunto
                 idDisciplina={assunto ? assunto.disciplina_uuid : ""}
                 history={props.history}
                 show={modalShowToggle}
                 toggle={handlePopModal}
-                close={handleCloseModal} />
+                close={handleCloseModal} /> */}
 
             {/* Modal 'Excluir" */}
             <ConfirmDelete
@@ -99,7 +105,7 @@ const AssuntoDetail = (props: Props) => {
                     {disciplina &&
                         <Container>
                             <Divider />
-                            <Dropdown item text='Outros assuntos' className='outros-assuntos'>
+                            <Dropdown item text='Outros assuntos' className='outros-assuntos' style={{ float: 'right' }}>
                                 <Dropdown.Menu>
                                     {disciplina.assuntos.length > 0 &&
                                         disciplina.assuntos.map((a: Assunto, index: number) => {
@@ -121,7 +127,7 @@ const AssuntoDetail = (props: Props) => {
                         </Container>
                     }
 
-                    <AssuntoContent assunto={assunto}>
+                    <AssuntoContent assunto={assunto} editAssunto={handleUpdateAssunto}>
                         <ArtefatoListContainer history={props.history} artefatos={assunto.artefatos} matchUrl={props.match} />
                         <PortalError error={error} handleErrorClose={handleErrorClose} />
                     </AssuntoContent>

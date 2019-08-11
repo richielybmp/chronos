@@ -21,7 +21,7 @@ export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
     return (
         <div>
             <Container>
-                <Grid columns={3}>
+                <Grid columns={props.complement == null ? 2 : 3}>
                     <Grid.Column mobile={14} tablet={10} computer={10}>
                         <Breadcrumb size='large'>
                             <Breadcrumb.Section as={Link} to={'/cronogramas'} link>Cronogramas</Breadcrumb.Section>
@@ -46,12 +46,15 @@ export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
                     </Grid.Column>
 
                     {/* Botões 'Editar' e 'Excluir' */}
+
+                    {props.complement == null &&
+                        <Grid.Column floated='right' tablet={3} computer={3} only='tablet computer'>
+                            <Button fluid onClick={() => handlePopModal()}
+                                color='blue' floated='right' content='Editar' icon='edit' size='tiny'
+                                labelPosition='right' />
+                        </Grid.Column>
+                    }
                     <Grid.Column floated='right' tablet={3} computer={3} only='tablet computer'>
-                        <Button fluid onClick={() => handlePopModal()}
-                            color='blue' floated='right' content='Editar' icon='edit' size='tiny'
-                            labelPosition='right' />
-                    </Grid.Column>
-                    <Grid.Column tablet={3} computer={3} only='tablet computer'>
                         <Button fluid onClick={() => deleteAction()}
                             color='red' floated='right' content='Excluir' icon='trash' size='tiny'
                             labelPosition='right' />
@@ -61,11 +64,13 @@ export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
                     <Grid.Column mobile={2} only='mobile'>
                         <Dropdown direction='left' icon='caret square down outline'>
                             <Dropdown.Menu>
-                                <Dropdown.Item style={{ backgroundColor: '#fbbd08', margin: '4px' }} onClick={() => handlePopModal()}>
-                                    <Icon name='edit' className='floated' />
-                                    Editar
-                                </Dropdown.Item>
-                                <Dropdown.Item style={{ backgroundColor: '#db2828', margin: '4px' }} onClick={() => deleteAction()}>
+                                {props.complement == null &&
+                                    <Dropdown.Item style={{ backgroundColor: '#2185d0', color: '#fff', margin: '4px' }} onClick={() => handlePopModal()}>
+                                        <Icon name='edit' className='floated' />
+                                        Editar
+                                    </Dropdown.Item>
+                                }
+                                <Dropdown.Item style={{ backgroundColor: '#db2828', color: '#fff', margin: '4px' }} onClick={() => deleteAction()}>
                                     <Icon name='trash' className=' floated' />
                                     Excluir
                                 </Dropdown.Item>

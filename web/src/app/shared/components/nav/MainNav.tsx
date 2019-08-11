@@ -8,11 +8,12 @@ import { MobileNav } from "./MobileNav";
 interface MainNavProps {
     children: ReactNodeLike
     , cronogramaList: Cronograma[]
+    , authState: any
     , logOut: (callback: Function) => void
     , fetchCronograma: (id: string) => void
 }
 
-export function MainNav({ logOut, children, fetchCronograma, cronogramaList }: MainNavProps) {
+export function MainNav({ logOut, children, fetchCronograma, cronogramaList, authState }: MainNavProps) {
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -27,25 +28,32 @@ export function MainNav({ logOut, children, fetchCronograma, cronogramaList }: M
         fetchCronograma(id)
     }
 
-    return (
-        <>
-            {
-                isLoading &&
-                <LoaderComponent tamanho='big' titulo="Carregando" />
-            }
+    if (authState.user) {
+        const { name } = authState.user.user;
 
-            <DesktopNav
-                cronogramas={cronogramaList}
-                onSairClick={handleLogOut}
-                setOnDetail={handleSetOnDetail}>
-                {children}
-            </DesktopNav>
-            <MobileNav
-                cronogramas={cronogramaList}
-                onSairClick={handleLogOut}
-                setOnDetail={handleSetOnDetail}>
-                {children}
-            </MobileNav>
-        </>
-    )
+        return (
+            <>
+                {
+                    isLoading &&
+                    <LoaderComponent tamanho='big' titulo="Carregando" />
+                }
+
+                <DesktopNav
+                    userName={name}
+                    cronogramas={cronogramaList}
+                    onSairClick={handleLogOut}
+                    setOnDetail={handleSetOnDetail}>
+                    {children}
+                </DesktopNav>
+                <MobileNav
+                    userName={name}
+                    cronogramas={cronogramaList}
+                    onSairClick={handleLogOut}
+                    setOnDetail={handleSetOnDetail}>
+                    {children}
+                </MobileNav>
+            </>
+        )
+    }
+    else return null;
 }

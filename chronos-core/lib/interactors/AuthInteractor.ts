@@ -4,7 +4,6 @@ import api from "../services/api";
 
 export class AuthInteractor {
 
-
     constructor() {
     }
 
@@ -50,6 +49,15 @@ export class AuthInteractor {
                 'novaSenha': novaSenha
             }
         )
+    }
+
+    // PUT
+    // '/user'
+    // nome: string
+    updateUser(name: string) {
+        return api.put(`/user/${JSON.parse(localStorage.state).auth.user.user.uuid}`, {
+            'name': name
+        })
     }
 
 }

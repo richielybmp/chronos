@@ -15,22 +15,21 @@ const larguraTablet = Responsive.onlyTablet.minWidth
 
 interface ResponsiveContainerProps {
     children: ReactNodeLike
+    , userName: string
     , cronogramas: Cronograma[]
     , onSairClick: () => void
     , setOnDetail: (id: string) => void
 }
 
-export const DesktopNav = ({ children, onSairClick, setOnDetail, cronogramas }: ResponsiveContainerProps) => {
+export const DesktopNav = ({ children, onSairClick, setOnDetail, cronogramas, userName }: ResponsiveContainerProps) => {
 
     const [activeItem, setactiveItem] = useState('chronos')
     const handleItemClick = (name: string) => setactiveItem(name)
 
     //Contexto para obter o userName
-    const context = useContext(ChronosContext);
-    var userName = ''
-
-    if (context.getState().auth.user != null)
-        userName = context.getState().auth.user.user.name;
+    // const context = useContext(ChronosContext);
+    // if (context.getState().auth.user != null)
+    // userName = context.getState().auth.user.user.name;
 
     return (
         <Responsive getWidth={() => Utils.getScreenWidth(larguraTablet)} minWidth={larguraTablet}>
@@ -59,10 +58,10 @@ export const DesktopNav = ({ children, onSairClick, setOnDetail, cronogramas }: 
                         </Dropdown.Menu>
                     </Dropdown>
 
-                    <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} onClick={() => handleItemClick('relatorios')} />
+                    <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} as={Link} to={'/cronogramas/relatorios'} />
                     <Menu.Menu position='right'>
                         <Menu.Item content={`Bem vindo, ${userName}`} active={false} />
-                        <Menu.Item content="Minha conta" active={activeItem === 'profile'} onClick={() => handleItemClick('profile')} />
+                        <Menu.Item content="Minha conta" active={activeItem === 'profile'} as={Link} to={'/cronogramas/profile'} />
                         <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => onSairClick()} />
                     </Menu.Menu>
                 </Menu>

@@ -8,6 +8,10 @@ const Utils = {
         let objData = new Date(date);
         const dataFormatada = new Date(objData.getTime() + objData.getTimezoneOffset() * 60000).toLocaleString("pt-br").split(' ')[0];
         return dataFormatada
+    },
+
+    delay: (ms) => {
+        new Promise(res => setTimeout(res, ms))
     }
 }
 

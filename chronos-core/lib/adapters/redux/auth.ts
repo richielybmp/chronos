@@ -1,5 +1,6 @@
 import { EnumAuthActions, AuthActionsType } from "../..";
 import { login, logout } from "../../services/localStorageAuth";
+import { userInfo } from "os";
 
 type AuthStateType = {
     user: any
@@ -77,6 +78,27 @@ export const authReducer = (
                 user: null, error: error, loading: false
             };
         //#endregion
+
+        //#region 'update user'
+        case EnumAuthActions.UPDATE_USER:
+            return {
+                ...state, error: null, loading: true
+            }
+        case EnumAuthActions.UPDATE_USER_SUCCESS:
+            const novo_user = action.payload.user;
+            return {
+                user: { user: novo_user }, error: null, loading: false
+            }
+        case EnumAuthActions.UPDATE_USER_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                error: error, loading: false
+            };
+        //#endregion
+
+        case EnumAuthActions.CLEAR_USER_ERROR:
+            return { ...state, error: null, loading: false }
 
         case EnumAuthActions.CLEAR_STATE:
             return INITIAL_STATE

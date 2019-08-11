@@ -1,8 +1,7 @@
 import { User } from 'chronos-core/dist/domain/User';
 import React, { useState, useEffect } from 'react';
-import { LoaderComponent, LoginForm } from '../../shared/components';
+import { LoaderComponent } from '../../shared/components';
 import { Confirm } from 'semantic-ui-react';
-import logo from '../../../assets/images/logo.png'
 import SignUpForm from '../forms/SignUpForm';
 
 interface Props {

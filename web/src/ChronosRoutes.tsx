@@ -25,6 +25,7 @@ const ChronosRoutes = () => {
                         <Route path={`${process.env.PUBLIC_URL}/cadastrar`} component={SignUpContainer} />
                         <Route path={`${process.env.PUBLIC_URL}/recuperar-senha`} component={RecoverPasswordContainer} />
                         <Route path={`${process.env.PUBLIC_URL}/unauthorized`} component={Unauthorized} />
+
                     </Switch>
                 </BrowserRouter>
             </Provider>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../../../style/css/main.css';
 import '../../../style/css/util.css';
 import { Link } from 'react-router-dom';
-import { Form } from 'semantic-ui-react';
+import { Form, Icon, Message } from 'semantic-ui-react';
 
 interface RecoverPasswordFormProps {
     error: any,
@@ -106,6 +106,13 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
                             <span className="focus-input100"></span>
                             <span className="label-input100">Confirme a senha</span>
                         </div>
+
+                        {error &&
+                            <Message warning style={{ display: "block" }}>
+                                <Icon name='user x' />
+                                {error}
+                            </Message>
+                        }
 
                         <div className="container-login100-form-btn">
                             <button className="login100-form-btn">

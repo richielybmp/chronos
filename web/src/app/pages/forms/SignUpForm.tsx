@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../../../style/css/main.css';
 import '../../../style/css/util.css';
 import { Link } from 'react-router-dom';
-import { Form } from 'semantic-ui-react';
+import { Form, Message, Icon } from 'semantic-ui-react';
 
 interface SignUpFormProps {
     error: any,
@@ -99,7 +99,7 @@ export default function SignUpForm(props: SignUpFormProps) {
             <div className="container-login100">
                 <div className="wrap-login100">
 
-                    <Form className="login100-form validate-form" style={{ paddingTop: '80px' }} onSubmit={(e) => handleSubmit()}>
+                    <Form className="login100-form validate-form" style={{ paddingTop: '75px' }} onSubmit={(e) => handleSubmit()}>
                         <span className="login100-form-title p-b-43">
                             Crie uma conta
     					</span>
@@ -127,6 +127,13 @@ export default function SignUpForm(props: SignUpFormProps) {
                             <span className="focus-input100"></span>
                             <span className="label-input100">Confirme a senha</span>
                         </div>
+
+                        {error &&
+                            <Message warning style={{ display: "block" }}>
+                                <Icon name='user x' />
+                                {error}
+                            </Message>
+                        }
 
                         <div className="container-login100-form-btn">
                             <button className="login100-form-btn">

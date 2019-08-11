@@ -84,11 +84,11 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                             <Dropdown direction='left' icon='ellipsis vertical'>
                                                 <Dropdown.Menu>
                                                     <Dropdown.Header>Ações</Dropdown.Header>
-                                                    <Dropdown.Item style={{ backgroundColor: '#fbbd08', margin: '4px' }}
+                                                    <Dropdown.Item style={{ backgroundColor: '#2185d0', color: '#fff', margin: '4px' }}
                                                         icon='edit' content='Editar' onClick={() => handleUpdateDisciplina(item.uuid)} />
-                                                    <Dropdown.Item style={{ backgroundColor: '#db2828', margin: '4px' }}
+                                                    <Dropdown.Item style={{ backgroundColor: '#db2828', color: '#fff', margin: '4px' }}
                                                         icon='trash' content='Excluir' onClick={() => handleDeleteDisciplina(item.uuid)} />
-                                                    <Dropdown.Item style={{ backgroundColor: '#16ab39', margin: '4px' }}
+                                                    <Dropdown.Item style={{ backgroundColor: '#16ab39', color: '#fff', margin: '4px' }}
                                                         icon='plus' content='Assunto' onClick={() => handleCreateAssunto(item.uuid)} />
                                                 </Dropdown.Menu>
                                             </Dropdown>

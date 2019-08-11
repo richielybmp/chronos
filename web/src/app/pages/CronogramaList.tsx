@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { CronogramasState } from 'chronos-core';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
-import { LoaderComponent, CronogramaListComponent } from '../shared/components';
+import { LoaderComponent, CronogramaListComponent, SubHeader } from '../shared/components';
+import { Header } from 'semantic-ui-react';
 
 interface Props {
     cronogramaList: CronogramasState;
@@ -47,6 +48,8 @@ function CronogramaList(props: Props) {
                 show={modalShowToggle}
                 toggle={() => handlePopModal()}
                 close={() => handleCloseModal()} />
+
+            <SubHeader content="Meus cronogramas" />
 
             <CronogramaListComponent
                 cronogramas={cronogramas}

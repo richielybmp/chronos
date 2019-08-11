@@ -44,15 +44,6 @@ function SignIn(props: Props) {
     }
 
     return (
-        // <LoginForm
-        //     keyIsSignIn={"signIn"}
-        //     logo={logo}
-        //     title={'Entrar na sua conta'}
-        //     labelBtnEntrar={'Entrar'}
-        //     labelConvite={'Novo por aqui? Cadastre-se'}
-        //     actionButton={handleLogin}
-        //     error={error}
-        // />
         <SignInForm error={error} actionLogin={handleLogin} />
     )
 }

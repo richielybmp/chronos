@@ -14,12 +14,13 @@ const larguraTablet = Responsive.onlyTablet.minWidth
 
 interface ResponsiveContainerProps {
     children: ReactNodeLike
+    , userName: string
     , cronogramas: Cronograma[]
     , onSairClick: () => void
     , setOnDetail: (id: string) => void
 }
 
-export const MobileNav = ({ children, onSairClick }: ResponsiveContainerProps) => {
+export const MobileNav = ({ children, onSairClick, userName }: ResponsiveContainerProps) => {
 
     const [sideBarOpened, setsideBarOpened] = useState(false)
 
@@ -55,8 +56,8 @@ export const MobileNav = ({ children, onSairClick }: ResponsiveContainerProps) =
                     active={activeItem === 'meus-cronogramas'}
                     onClick={() => handleItemClick('meus-cronogramas')}
                     as={Link} to={`/cronogramas`} />
-                <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} onClick={() => handleItemClick('relatorios')} />
-                <Menu.Item content="Minha conta" active={activeItem === 'profile'} onClick={() => handleItemClick('profile')} />
+                <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} as={Link} to={'/cronogramas/relatorios'} />
+                <Menu.Item content="Minha conta" active={activeItem === 'profile'} as={Link} to={'/cronogramas/profile'} />
                 <Menu.Item content="Sair" active={activeItem === 'sair'} onClick={() => onSairClick()} />
             </Sidebar>
 

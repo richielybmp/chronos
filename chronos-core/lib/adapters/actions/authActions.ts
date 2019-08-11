@@ -17,6 +17,12 @@ export function clearAuthState() {
     };
 }
 
+export function clearUserError() {
+    return {
+        type: EnumAuthActions.CLEAR_USER_ERROR,
+    };
+}
+
 //#region Sign in
 export function signInUser(user: User) {
     return {
@@ -105,6 +111,29 @@ export function recoverPasswordSuccess() {
 export function recoverPasswordFailure(error: any) {
     return {
         type: EnumAuthActions.RECOVER_PASSWORD_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
+//#region Update User
+export function updateUser(name: string) {
+    return {
+        type: EnumAuthActions.UPDATE_USER,
+        payload: interactor.updateUser(name)
+    };
+}
+
+export function updateUserSuccess(data: any) {
+    return {
+        type: EnumAuthActions.UPDATE_USER_SUCCESS,
+        payload: data
+    };
+}
+
+export function updateUserFailure(error: any) {
+    return {
+        type: EnumAuthActions.UPDATE_USER_FAILURE,
         payload: error
     };
 }

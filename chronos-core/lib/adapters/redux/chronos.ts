@@ -311,10 +311,23 @@ export const chronosReducer = (
             }
         case EnumCronogramaActions.UPDATE_ASSUNTO_SUCCESS:
             var assuntoDetalhe = state.assuntoOnDetail.assunto;
+            var cronogramaDetalhe = state.cronogramaOnDetail.cronograma;
+
             var atual = action.payload.assunto;
 
             if (assuntoDetalhe) {
                 assuntoDetalhe.descricao = atual.descricao;
+            }
+
+            if (cronogramaDetalhe && assuntoDetalhe) {
+                var disc_uuid = assuntoDetalhe.disciplina_uuid;
+                var disc = cronogramaDetalhe.disciplinas.find(x => x.uuid == disc_uuid);
+                if (disc) {
+                    var obj_assunto = disc.assuntos.find(x => x.uuid == atual.uuid);
+                    if (obj_assunto) {
+                        obj_assunto.descricao = atual.descricao;
+                    }
+                }
             }
 
             return {

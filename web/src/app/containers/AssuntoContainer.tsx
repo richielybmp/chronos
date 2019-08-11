@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { deleteAssunto, deleteAssuntoSuccess, deleteAssuntoFailure, fetchAssunto, fetchAssuntoSuccess, fetchAssuntoFailure } from "chronos-core";
+import { deleteAssunto, deleteAssuntoSuccess, deleteAssuntoFailure, fetchAssunto, fetchAssuntoSuccess, fetchAssuntoFailure, Assunto, updateAssunto, updateAssuntoSuccess, updateAssuntoFailure } from "chronos-core";
 import AssuntoDetail from "../pages/Assunto";
 
 const mapStateToProps = (state: any) => {
@@ -35,6 +35,19 @@ const mapDispatchToProps = (dispatch: any) => {
             catch (e) {
                 dispatch(fetchAssuntoFailure(e.message));
             }
+        },
+
+        editAssunto: (assunto: Assunto) => {
+            var promisse = dispatch(updateAssunto(assunto))
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!response.error && !data.exception) {
+                    dispatch(updateAssuntoSuccess(data));
+                }
+                else {
+                    dispatch(updateAssuntoFailure(data.message));
+                }
+            });
         },
     }
 }

@@ -13,7 +13,8 @@ import {
 
 const mapStateToProps = (state: any) => {
     return {
-        cronogramaList: state.cronogramas.cronogramasList.cronogramas
+        cronogramaList: state.cronogramas.cronogramasList.cronogramas,
+        authState: state.auth
     }
 };
 
