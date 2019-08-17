@@ -14,6 +14,13 @@ export type AuthActionsType = AuthCronogramasType;
 export function clearAuthState() {
     return {
         type: EnumAuthActions.CLEAR_STATE,
+        payload: Promise.resolve(100)
+    };
+}
+
+export function clearAuthStateSuccess() {
+    return {
+        type: EnumAuthActions.CLEAR_STATE_SUCCESS,
     };
 }
 
@@ -91,7 +98,6 @@ export function logOutUserFailure(error: any) {
     };
 }
 //#endregion
-
 
 //#region Recover Password
 export function recoverPassword(email: string, novaSenha: string) {

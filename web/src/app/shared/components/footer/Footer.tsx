@@ -16,17 +16,17 @@ export const Footer = () => {
                         <Header inverted as='h4' content='Group XPTO' />
                         <List link inverted>
                             <List.Item>
-                                <a href="https://github.com/devfilsk" target="_blank">
+                                <a href="https://github.com/devfilsk" target="_blank" rel="noopener noreferrer">
                                     Filipe Maciel
                                 </a>
                             </List.Item>
                             <List.Item>
-                                <a href="https://github.com/mstedler" target="_blank">
+                                <a href="https://github.com/mstedler" target="_blank" rel="noopener noreferrer">
                                     Mateus Stedler
                                 </a>
                             </List.Item>
                             <List.Item>
-                                <a href="https://github.com/richielybmp" target="_blank">
+                                <a href="https://github.com/richielybmp" target="_blank" rel="noopener noreferrer">
                                     Richiely Paiva
                                 </a>
                             </List.Item>

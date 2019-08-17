@@ -15,7 +15,7 @@ interface Props {
 
 function SignIn(props: Props) {
 
-    const { loading, error, signIn } = props.auth
+    const { loading, error } = props.auth
 
     const context = useContext(ChronosContext)
 
@@ -34,10 +34,6 @@ function SignIn(props: Props) {
         listenForAuthUser();
         return listenForAuthUser;
     }, [props.auth.user])
-
-    useEffect(() => {
-        props.clearState()
-    }, [])
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />

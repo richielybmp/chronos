@@ -27,7 +27,8 @@ const mapDispatchToProps = (dispatch: any) => {
             var promisse = dispatch(logOutUser())
 
             promisse.payload.then((response: any) => {
-                if (!response.error) {
+                const data = response.data;
+                if (!data.error && !data.exception) {
                     dispatch(clearAuthState());
                     dispatch(clearChronosState());
                     dispatch(logOutUserSuccess());

@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { EmptyHeader, CronogramaSubHeader, ConfirmDelete, LoaderComponent, PortalError, AssuntoContent } from '../shared/components';
-import { AssuntoState, CronogramaState, Assunto, fetchAssunto } from 'chronos-core';
-import ModalNovoAssunto from './modal/ModalNovoAssunto';
+import { CronogramaSubHeader, ConfirmDelete, LoaderComponent, PortalError, AssuntoContent } from '../shared/components';
+import { AssuntoState, CronogramaState, Assunto } from 'chronos-core';
 import ArtefatoListContainer from '../containers/ArtefatoListContainer';
-import { Dropdown, Container, Menu, Divider } from 'semantic-ui-react';
+import { Dropdown, Container, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -19,7 +18,7 @@ interface Props {
 
 const AssuntoDetail = (props: Props) => {
 
-    const { match, history, editAssunto } = props
+    const { match, editAssunto } = props
 
     const { assunto, loading, error } = props.assuntoOnDetail
     const { cronograma } = props.cronogramaOnDetail
@@ -29,7 +28,7 @@ const AssuntoDetail = (props: Props) => {
 
     var disciplina;
     if (cronograma && assunto) {
-        disciplina = cronograma.disciplinas.find(d => d.uuid == assunto.disciplina_uuid)
+        disciplina = cronograma.disciplinas.find(d => d.uuid === assunto.disciplina_uuid)
     }
 
     //#region Handles
@@ -41,9 +40,9 @@ const AssuntoDetail = (props: Props) => {
         setConfirmationDelete(!confirmationDelete)
     }
 
-    const handleCloseModal = () => {
-        setmodalShowToggle(false)
-    }
+    // const handleCloseModal = () => {
+    //     setmodalShowToggle(false)
+    // }
 
     const handleDeleteAction = () => {
         setConfirmationDelete(true)
@@ -78,14 +77,6 @@ const AssuntoDetail = (props: Props) => {
 
     return (
         <>
-            {/* Modal 'Editar" */}
-            {/* <ModalNovoAssunto
-                idDisciplina={assunto ? assunto.disciplina_uuid : ""}
-                history={props.history}
-                show={modalShowToggle}
-                toggle={handlePopModal}
-                close={handleCloseModal} /> */}
-
             {/* Modal 'Excluir" */}
             <ConfirmDelete
                 show={confirmationDelete}

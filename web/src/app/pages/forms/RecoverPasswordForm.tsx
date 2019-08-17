@@ -28,19 +28,19 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
     function handleEmailChange(value: string) {
         setEmailError("");
         setEmail(value);
-        setEmailHasValue(value != "" ? "has-val" : "");
+        setEmailHasValue(value !== "" ? "has-val" : "");
     }
 
     function handlePasswordChange(value: string) {
         setPasswordError("");
         setPassword(value);
-        setPasswordHasValue(value != "" ? "has-val" : "");
+        setPasswordHasValue(value !== "" ? "has-val" : "");
     }
 
     function handleConfirmPasswordChange(value: string) {
         setConfirmPasswordError("");
         setConfirmPassword(value);
-        setConfirmPasswordHasValue(value != "" ? "has-val" : "");
+        setConfirmPasswordHasValue(value !== "" ? "has-val" : "");
     }
 
     function handleSubmit(e: any) {
@@ -71,7 +71,7 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
             setConfirmPasswordError('A senha deve possuir 6 ou mais caracteres.');
             inconsistente = true
         }
-        else if (confirmPassword != password) {
+        else if (confirmPassword !== password) {
             setConfirmPasswordError('As senhas não são iguais.');
             inconsistente = true
         }
@@ -89,19 +89,19 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
                             Recuperar senha
     					</span>
 
-                        <div className={`wrap-input100 validate-input ${emailError != "" && "alert-validate"}`} data-validate={emailError}>
+                        <div className={`wrap-input100 validate-input ${emailError !== "" && "alert-validate"}`} data-validate={emailError}>
                             <input className={`input100 ${emailHasValue}`} type="text" name="email" value={email} onChange={(e) => handleEmailChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">E-mail</span>
                         </div>
 
-                        <div className={`wrap-input100 validate-input ${passwordError != "" && "alert-validate"}`} data-validate={passwordError}>
+                        <div className={`wrap-input100 validate-input ${passwordError !== "" && "alert-validate"}`} data-validate={passwordError}>
                             <input className={`input100 ${passwordHasValue}`} type="password" name="pass" value={password} onChange={(e) => handlePasswordChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">Senha</span>
                         </div>
 
-                        <div className={`wrap-input100 validate-input ${confirmPasswordError != "" && "alert-validate"}`} data-validate={confirmPasswordError}>
+                        <div className={`wrap-input100 validate-input ${confirmPasswordError !== "" && "alert-validate"}`} data-validate={confirmPasswordError}>
                             <input className={`input100 ${confirmPasswordHasValue}`} type="password" name="pass" value={confirmPassword} onChange={(e) => handleConfirmPasswordChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">Confirme a senha</span>

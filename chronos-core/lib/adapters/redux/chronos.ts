@@ -380,6 +380,22 @@ export const chronosReducer = (
             }
         //#endregion
 
+        case EnumCronogramaActions.CREATE_EXERCICIO:
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.CREATE_EXERCICIO:
+            let assunto_atualizado = state.assuntoOnDetail.assunto
+
+            if (assunto_atualizado) {
+                assunto_atualizado.artefatos.push(action.payload.exercicio)
+            }
+
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
+            }
         //#region 'RESET'
         case EnumCronogramaActions.CLEAR_ERROR:
             return {

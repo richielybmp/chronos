@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Container, Grid, Input, Label, Dropdown } from 'semantic-ui-react';
+import { Form, Button, Container, Grid, Input, Dropdown } from 'semantic-ui-react';
 import { PortalError } from '../../shared/components';
-import { AssuntoState, Artefato } from 'chronos-core';
+import { AssuntoState, Material } from 'chronos-core';
 
 interface Props {
     assuntoOnDetail: AssuntoState,
     idOnDetail: string,
     close: () => void,
-    createArtefato: (idAssunto: string, artefato: Artefato) => void,
-    updateArtefato: (idAssunto: string, assunto: Artefato) => void,
+    createMaterial: (idAssunto: string, material: Material) => void,
+    updateMaterial: (idAssunto: string, material: Material) => void,
     clearError: () => void,
 }
 
@@ -30,23 +30,20 @@ const materiaisOptions = [
     },
 ]
 
-const NewArtefatoForm = (props: Props) => {
+const NewArtefatoMaterialForm = (props: Props) => {
 
-    const { close, createArtefato, updateArtefato, idOnDetail } = props;
+    const { close, createMaterial, updateMaterial, idOnDetail } = props;
     const { assunto, error, loading } = props.assuntoOnDetail;
 
     //#region States
     const [artefatoData, setArtefatoData] = useState('')
     const [artefatoDataErro, setArtefatoDataErro] = useState('')
 
-    const [total, setTotal] = useState(0)
-    const [totalErro, setTotalErro] = useState('')
-
-    const [acertos, setAcertos] = useState(0)
-    const [acertosErro, setAcertosErro] = useState('')
-
     const [minutos, setMinutos] = useState(0)
     const [minutosErro, setMinutosErro] = useState('')
+
+    const [tipoMaterial, setTipoMaterial] = useState(0)
+    const [tipoMaterialErro, setTipoMaterialErro] = useState('')
 
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
@@ -55,31 +52,18 @@ const NewArtefatoForm = (props: Props) => {
 
     // #region Handles
     const handleDataChange = (e: any) => {
-        setArtefatoDataErro('')
-        setArtefatoData(e.target.value)
+        setArtefatoDataErro('');
+        setArtefatoData(e.target.value);
     }
 
     const handleMinutos = (e: any) => {
-        setMinutosErro('')
-        setMinutos(e.target.value)
+        setMinutosErro('');
+        setMinutos(e.target.value);
     }
 
-    const handleTotalExerciciosChange = (e: any) => {
-        const valor = parseInt(e.target.value);
-        setTotalErro('')
-        if (valor > acertos) {
-            setAcertosErro("")
-        }
-        setTotal(valor)
-    }
-
-    const handleAcertos = (e: any) => {
-        const valor = parseInt(e.target.value);
-        setAcertosErro('')
-        if (valor > total) {
-            setAcertosErro("Quantidade de exercícios acertados é maior do que o total.")
-        }
-        setAcertos(valor)
+    const handleTipoChanged = (tipo: any) => {
+        setTipoMaterialErro('');
+        setTipoMaterial(tipo);
     }
 
     const handleErrorClose = () => {
@@ -88,22 +72,26 @@ const NewArtefatoForm = (props: Props) => {
 
     const validaCampos = () => {
         let inconsistente = false;
-        // setNovaDisciplinaTituloErro('')
-        // setNovaDisciplinaDescricaoErro('')
+        setMinutosErro('');
+        setTipoMaterialErro('');
+        setArtefatoDataErro('');
 
-        // if (disciplinaTitulo == '') {
-        //     setNovaDisciplinaTituloErro("Título da disciplina obrigatório.")
-        //     inconsistente = true
-        // }
-        // if (disciplinaDescricao == '') {
-        //     setNovaDisciplinaDescricaoErro("Descrição da disciplina obrigatório.")
-        //     inconsistente = true
-        // }
+        if (minutos === 0) {
+            setMinutosErro("Informe a quantidade de minutos.");
+            inconsistente = true;
+        }
+
+        if (tipoMaterial === 0) {
+            setTipoMaterialErro("Informe o tipo de material.");
+            inconsistente = true;
+        }
+
         return inconsistente;
     }
 
-    const handleCreateDisciplina = (e: any) => {
+    const handleCreateMaterial = (e: any) => {
         e.preventDefault();
+
         if (!validaCampos() && assunto) {
 
             var artefato = assunto.artefatos.find(d => d.uuid == idOnDetail);
@@ -132,16 +120,16 @@ const NewArtefatoForm = (props: Props) => {
     }, [props.assuntoOnDetail])
 
     return (
-        <Form onSubmit={(e: any, dispatch: any) => handleCreateDisciplina(e)}>
+        <Form onSubmit={(e: any, dispatch: any) => handleCreateMaterial(e)}>
             <PortalError error={error} handleErrorClose={handleErrorClose} />
             <Container text style={{ padding: '2em 2em' }}>
-                {acertosErro &&
+                {/* {acertosErro &&
                     <Label color='red' basic>  {acertosErro} </Label>
-                }
-                <h2>Novo artefato</h2>
+                } */}
+                <h2>Novo Material</h2>
                 <Grid columns={1} container stackable>
-                    <Grid.Column>
-                        <Form.Field inline className={artefatoDataErro.length > 0 ? "error" : ""}>
+                    <Grid.Column mobile={6}>
+                        <Form.Field className={artefatoDataErro.length > 0 ? "error" : ""}>
                             <label>Data</label>
                             <Input
                                 type="date"
@@ -149,7 +137,7 @@ const NewArtefatoForm = (props: Props) => {
                                 iconPosition='left'
                                 placeholder='Data'
                                 defaultValue={artefatoData}
-                                onChange={(e) => handleDataChange(e)}
+                                onChange={(e) => handleDataChange(e.target.value)}
                             />
                         </Form.Field>
                     </Grid.Column>
@@ -157,17 +145,19 @@ const NewArtefatoForm = (props: Props) => {
 
                 <Grid columns={2} container stackable>
                     <Grid.Column>
-                        <Form.Field>
+                        <Form.Field className={tipoMaterialErro.length > 0 ? "error" : ""}>
                             <label>Tipo de material</label>
                             <Dropdown
                                 placeholder='Tipo de material'
                                 search
                                 selection
-                                options={materiaisOptions} />
+                                options={materiaisOptions}
+                                onChange={(e, { value }) => handleTipoChanged(value)}
+                            />
                         </Form.Field>
                     </Grid.Column>
                     <Grid.Column>
-                        <Form.Field className={acertosErro.length > 0 ? "error" : ""}>
+                        <Form.Field className={minutosErro.length > 0 ? "error" : ""}>
                             <label>Tempo gasto</label>
                             <Input
                                 placeholder='minutos'
@@ -180,7 +170,7 @@ const NewArtefatoForm = (props: Props) => {
                         </Form.Field>
                     </Grid.Column>
                 </Grid>
-
+                {/* 
                 <Grid columns={2} container stackable>
                     <Grid.Column>
                         <Form.Field>
@@ -207,7 +197,7 @@ const NewArtefatoForm = (props: Props) => {
                             />
                         </Form.Field>
                     </Grid.Column>
-                </Grid>
+                </Grid> */}
                 <Grid>
                     <Grid.Column floated='right' mobile={16} tablet={6} computer={4}>
                         <Form.Field>
@@ -226,4 +216,4 @@ const NewArtefatoForm = (props: Props) => {
     )
 }
 
-export default NewArtefatoForm
+export default NewArtefatoMaterialForm

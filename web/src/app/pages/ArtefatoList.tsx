@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react'
-import { ConfirmDelete, ModalContainer, ArtefatosSection } from '../shared/components';
-import NewArtefatoFormContainer from '../containers/NewArtefatoFormContainer';
-import ModalNovoArtefato from './modal/ModalNovoArtefato';
-import { Assunto, Artefato } from 'chronos-core';
-import { ChronosContext } from '../../ChronosRoutes';
+import React, { useState } from 'react'
+import { ConfirmDelete, ModalContainer, ArtefatosSection, ExpansibleButtons } from '../shared/components';
+import { Artefato } from 'chronos-core';
+import { Segment, Header } from 'semantic-ui-react';
+import NewArtefatoMaterialFormContainer from '../containers/NewArtefatoMaterialFormContainer';
+import NewArtefatoExercicioFormContainer from '../containers/NewArtefatoExercicioFormContainer';
+import NewArtefatoRevisaoFormContainer from '../containers/NewArtefatoRevisaoFormContainer';
 
 interface Props {
     artefatos: Artefato[],
@@ -14,16 +15,15 @@ interface Props {
 
 function ArtefatoList(props: Props) {
 
-    const context = useContext(ChronosContext);
-
-    let assunto: Assunto = context.getState().cronogramas.assuntoOnDetail.assunto;
-
     const { artefatos, deleteArtefato } = props
 
     const hasArtefatos = artefatos.length > 0
 
     //#region States
-    const [novoArtefato, setNovoArtefato] = useState(false)
+    const [novaRevisao, setNovaRevisao] = useState(false)
+    const [novoMaterial, setNovoMaterial] = useState(false)
+    const [novoExercicio, setNovoExercicio] = useState(false)
+
     const [confirmationDelete, setConfirmationDelete] = useState(false)
     const [idOnDetail, setidOnDetail] = useState("")
     const [idParaDeletar, setIdParaDeletar] = useState("")
@@ -32,7 +32,9 @@ function ArtefatoList(props: Props) {
 
     //#region Handles
     const handleClose = () => {
-        setNovoArtefato(false)
+        setNovaRevisao(false)
+        setNovoExercicio(false)
+        setNovoMaterial(false)
         setidOnDetail("")
         // setIdDisciplinaToCreateSubject("")
     }
@@ -41,29 +43,39 @@ function ArtefatoList(props: Props) {
         setConfirmationDelete(!confirmationDelete)
     }
 
-    const handleDeletarArtefato = (id: string) => {
-        if (id != null) {
-            setConfirmationDelete(true)
-            setIdParaDeletar(id)
-        }
+    // const handleDeletarArtefato = (id: string) => {
+    //     if (id != null) {
+    //         setConfirmationDelete(true)
+    //         setIdParaDeletar(id)
+    //     }
+    // }
+
+    // const handleUpdateArtefato = (id: string) => {
+    //     setidOnDetail(id)
+    // }
+
+    const handleNovaRevisao = () => {
+        setNovaRevisao(true)
+        setidOnDetail("novarevisao")
     }
 
-    const handleUpdateArtefato = (id: string) => {
-        setidOnDetail(id)
+    const handleNovoMaterial = () => {
+        setNovoMaterial(true)
+        setidOnDetail("novomaterial")
     }
 
-    const handleNovoArtefato = () => {
-        setNovoArtefato(true)
-        setidOnDetail("novoartefato")
+    const handleNovoExercicio = () => {
+        setNovoExercicio(true)
+        setidOnDetail("novoexercicio")
     }
 
-    const handlePopModal = () => {
-        setmodalShowToggle(!modalShowToggle)
-    }
+    // const handlePopModal = () => {
+    //     setmodalShowToggle(!modalShowToggle)
+    // }
 
-    const handleCloseModal = () => {
-        setmodalShowToggle(false)
-    }
+    // const handleCloseModal = () => {
+    //     setmodalShowToggle(false)
+    // }
     //#endregion
 
     const deletarArtefato = () => {
@@ -74,18 +86,6 @@ function ArtefatoList(props: Props) {
         }
     }
 
-    // if (!hasArtefatos && !novoArtefato ) {
-    //     return (
-    //         <EmptyHeader
-    //             icon='table'
-    //             title='Você ainda não possui nenhum artefato criado'
-    //             subtitle='Adicione um tipo de material ou lista de exercícios!'
-    //             btnTitle="Novo artefato"
-    //             onClick={handleNovoArtefato}
-    //         />
-    //     )
-    // }
-
     return (
         <>
             {/* Modal 'Excluir Artefato' */}
@@ -95,40 +95,85 @@ function ArtefatoList(props: Props) {
                 toggle={handlePopModalDelete}
                 confirmDelete={deletarArtefato} />
 
-            {/* Modal 'Novo artefato' */}
-            <ModalNovoArtefato
-                idOnDetail=''
-                show={modalShowToggle}
-                toggle={handlePopModal}
-                close={handleCloseModal} />
 
-            {showArtefatoForm(idOnDetail, handleClose)}
+            {novoMaterial && showMaterialForm(idOnDetail, handleClose)}
+            {novoExercicio && showExerciciosForm(idOnDetail, handleClose)}
+            {novaRevisao && showRevisaoForm(idOnDetail, handleClose)}
 
-            {/* 
-            <DisciplinaTab
-                disciplinas={disciplinas}
-                matchUrl={matchUrl}
-                handleDeleteDisciplina={handleDeletarDisciplina}
-                handleUpdateDisciplina={handleUpdateDisciplina}
-                handleCreateAssunto={handelCreateAssunto}
-                handleAssuntoOnDetail={handleAssuntoOnDetail}
-                idOnDetail={idOnDetail}
-            /> 
-            */}
+            <Segment basic>
+                {/* {artefatos.length > 0 ? */}
+                {true ?
+                    <>
+                        <ExpansibleButtons
+                            actionNewMaterial={handleNovoMaterial}
+                            actionNewExercicio={handleNovoExercicio}
+                            actionNewRevisao={handleNovaRevisao}
+                        />
+                        <br />
+                        <ArtefatosSection />
+                    </>
+                    :
+                    <EmptyArtefatosHeader
+                        actionNewMaterial={handleNovoMaterial}
+                        actionNewExercicio={handleNovoExercicio}
+                        actionNewRevisao={handleNovaRevisao}
+                    />
+                }
+            </Segment>
 
-            <ArtefatosSection />
         </>
     )
 }
 
-function showArtefatoForm(idOnDetail: string, handleClose: () => void) {
-    if (idOnDetail === "novoartefato" || idOnDetail !== "") {
+function showMaterialForm(idOnDetail: string, handleClose: () => void) {
+    if (idOnDetail === "novomaterial" || idOnDetail !== "") {
         return (
             <ModalContainer show={true} toggle={handleClose}>
-                <NewArtefatoFormContainer close={handleClose} idOnDetail="" />
+                <NewArtefatoMaterialFormContainer close={handleClose} idOnDetail="" />
             </ModalContainer>
         )
     }
+}
+
+function showExerciciosForm(idOnDetail: string, handleClose: () => void) {
+    if (idOnDetail === "novoexercicio" || idOnDetail !== "") {
+        return (
+            <ModalContainer show={true} toggle={handleClose}>
+                <NewArtefatoExercicioFormContainer close={handleClose} idOnDetail="" />
+            </ModalContainer>
+        )
+    }
+}
+
+function showRevisaoForm(idOnDetail: string, handleClose: () => void) {
+    if (idOnDetail === "novarevisao" || idOnDetail !== "") {
+        return (
+            <ModalContainer show={true} toggle={handleClose}>
+                <NewArtefatoRevisaoFormContainer close={handleClose} idOnDetail="" />
+            </ModalContainer>
+        )
+    }
+}
+
+function EmptyArtefatosHeader(props: any) {
+
+    return (
+        <>
+            <Header as='h2' textAlign='center'>
+                Crie itens para acompanhar seus estudos
+            <Header.Subheader>Você pode escolher entre Revisões, Materiais de Estudo ou Lista de Exercícios</Header.Subheader>
+                <br />
+
+            </Header>
+            <Segment basic>
+                <ExpansibleButtons
+                    actionNewMaterial={props.actionNewMaterial}
+                    actionNewExercicio={props.actionNewExercicio}
+                    actionNewRevisao={props.actionNewRevisao}
+                />
+            </Segment>
+        </>
+    );
 }
 
 export default ArtefatoList

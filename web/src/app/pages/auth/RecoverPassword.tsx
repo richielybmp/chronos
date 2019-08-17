@@ -16,8 +16,6 @@ function RecoverPassword(props: Props) {
 
     const { loading, error } = props.auth
 
-    const context = useContext(ChronosContext)
-
     const handleRecuperar = (email: string, novaSenha: string) => {
         props.recoverPassword(email, novaSenha, () => {
             props.history.push(`${process.env.PUBLIC_URL}/entrar`);

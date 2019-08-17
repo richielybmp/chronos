@@ -1,19 +1,3 @@
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
-//Cronograma list
 export enum EnumCronogramaActions {
     FETCH_CRONOGRAMAS = 'FETCH_CRONOGRAMAS',
     FETCH_CRONOGRAMAS_SUCCESS = 'FETCH_CRONOGRAMAS_SUCCESS',
@@ -55,5 +39,14 @@ export enum EnumCronogramaActions {
     UPDATE_ASSUNTO = "UPDATE_ASSUNTO",
     UPDATE_ASSUNTO_SUCCESS = "UPDATE_ASSUNTO_SUCCESS",
     UPDATE_ASSUNTO_FAILURE = "UPDATE_ASSUNTO_FAILURE",
-    RESET_ASSUNTO = "RESET_ASSUNTO"
+    RESET_ASSUNTO = "RESET_ASSUNTO",
+    CREATE_EXERCICIO = "CREATE_EXERCICIO",
+    CREATE_EXERCICIO_SUCCESS = "CREATE_EXERCICIO_SUCCESS",
+    CREATE_EXERCICIO_FAILURE = "CREATE_EXERCICIO_FAILURE",
+    CREATE_REVISAO = "CREATE_REVISAO",
+    CREATE_REVISAO_SUCCESS = "CREATE_REVISAO_SUCCESS",
+    CREATE_REVISAO_FAILURE = "CREATE_REVISAO_FAILURE",
+    CREATE_MATERIAL = "CREATE_MATERIAL",
+    CREATE_MATERIAL_FAILURE = "CREATE_MATERIAL_FAILURE",
+    CREATE_MATERIAL_SUCCESS = "CREATE_MATERIAL_SUCCESS"
 }

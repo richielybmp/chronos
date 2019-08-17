@@ -1,0 +1,32 @@
+div{
+  opacity: 1;
+  /* transition: opacity .3s linear; */
+}
+
+div.content-buttons-closed {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+div.content-buttons {
+  animation: reveal 0.5s;
+}
+
+@keyframes reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes hide {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}

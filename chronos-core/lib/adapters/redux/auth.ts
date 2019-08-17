@@ -4,12 +4,14 @@ import { userInfo } from "os";
 
 type AuthStateType = {
     user: any
+    , newUser: any
     , error: any
     , loading: boolean
 }
 
 const INITIAL_STATE = {
     user: null
+    , newUser: null
     , error: undefined
     , loading: false
 };
@@ -25,7 +27,7 @@ export const authReducer = (
         case EnumAuthActions.SIGN_IN:
             return {
                 ...state,
-                user: null, error: undefined, loading: true
+                newUser: null, user: null, error: undefined, loading: true
             };
         case EnumAuthActions.SIGN_IN_SUCCESS:
             login(action.payload.token)
@@ -50,13 +52,13 @@ export const authReducer = (
         case EnumAuthActions.SIGN_UP_SUCCESS:
             return {
                 ...state,
-                user: action.payload, error: undefined, loading: false
+                newUser: action.payload, error: undefined, loading: false
             };
         case EnumAuthActions.SIGN_UP_FAILURE:
             error = action.payload || { message: action.payload.message };
             return {
                 ...state,
-                user: null, error: error, loading: false
+                newUser: null, user: null, error: error, loading: false
             };
         //#endregion
 
@@ -87,7 +89,7 @@ export const authReducer = (
         case EnumAuthActions.UPDATE_USER_SUCCESS:
             const novo_user = action.payload.user;
             return {
-                user: { user: novo_user }, error: null, loading: false
+                ...state, user: { user: novo_user }, error: null, loading: false
             }
         case EnumAuthActions.UPDATE_USER_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -101,6 +103,13 @@ export const authReducer = (
             return { ...state, error: null, loading: false }
 
         case EnumAuthActions.CLEAR_STATE:
+            return {
+                user: null
+                , newUser: null
+                , error: undefined
+                , loading: true
+            }
+        case EnumAuthActions.CLEAR_STATE_SUCCESS:
             return INITIAL_STATE
 
         default:

@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!data.error) {
+                if (!data.error && !data.exception) {
                     dispatch(recoverPasswordSuccess());
                     if (callBack)
                         callBack()

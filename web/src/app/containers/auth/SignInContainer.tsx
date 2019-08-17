@@ -5,7 +5,8 @@ import {
     signInUser,
     signInUserSuccess,
     signInUserFailure,
-    clearAuthState
+    clearAuthState,
+    clearAuthStateSuccess
 } from "chronos-core";
 
 const mapStateToProps = (state: any) => {
@@ -22,7 +23,7 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!data.error) {
+                if (!data.error && !data.exception) {
                     dispatch(signInUserSuccess(data));
                 }
                 else {
@@ -31,8 +32,14 @@ const mapDispatchToProps = (dispatch: any) => {
             });
         },
 
-        clearState: () => {
-            dispatch(clearAuthState());
+        clearState: async () => {
+            var promisse = dispatch(clearAuthState());
+
+            await promisse.payload.then((response: any) => {
+                if (response) {
+                    dispatch(clearAuthStateSuccess())
+                }
+            })
         }
     }
 };

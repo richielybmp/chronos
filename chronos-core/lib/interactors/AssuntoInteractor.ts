@@ -1,5 +1,6 @@
 import { Assunto } from '../domain/Assunto';
 import api from '../services/api';
+import { Exercicio, Revisao, Material } from '..';
 
 export class AssuntoInteractor {
 
@@ -36,4 +37,38 @@ export class AssuntoInteractor {
             }
         );
     }
+
+    // POST
+    // '/assunto/{id}
+    createExercicio(exercicio: Exercicio) {
+        return api.post(`/assunto/artefato/${exercicio.uuid_assunto}`,
+            {
+                'tipo': 1,
+                'data': exercicio.data,
+                'total': exercicio.quantidade,
+                'acertos': exercicio.acertos,
+            }
+        )
+    }
+
+    createRevisao(revisao: Revisao) {
+        return api.post(`/assunto/artefato/${revisao.uuid_assunto}`,
+            {
+                'tipo': 2,
+                'data': revisao.data,
+                'quantidade': revisao.quantidade,
+            }
+        )
+    }
+
+    createMaterial(material: Material) {
+        return api.post(`/assunto/artefato/${material.uuid_assunto}`,
+            {
+                'tipo': 3,
+                'data': material.data,
+                'minutos': material.minutos,
+            }
+        )
+    }
+
 }

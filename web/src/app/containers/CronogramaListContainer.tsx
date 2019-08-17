@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch: any) => {
             var promisse = dispatch(fetchCronogramas())
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error) {
+                if (!data.error && !data.exception) {
                     dispatch(fetchCronogramasSuccess(data));
                 }
                 else {

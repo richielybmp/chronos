@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Card, Icon, Divider } from 'semantic-ui-react';
+import { Card, Icon, Divider, Image } from 'semantic-ui-react';
 import "./slider.css";
 import Slider from 'react-slick';
 
@@ -23,16 +23,21 @@ function PrevArrow(props: any) {
 
 function ArtefatoCard() {
     return (
-        <Card link
-            color='black'>
+        <Card color='black'>
             <Card.Content>
+                <Icon
+                    floated='right'
+                    name='x'
+                    style={{ float: 'right', marginRight: '0', cursor: 'pointer' }}
+                    onClick={() => alert('buh')} />
                 <Card.Header>titulo</Card.Header>
                 <Card.Meta>descricao</Card.Meta>
             </Card.Content>
-            <Card.Content extra>
-                <Icon name='book' />
-                Disciplinas
+            <Card.Content >
+                <Icon name='edit' style={{ marginRight: '0', cursor: 'pointer' }} />
+                Editar
             </Card.Content>
+
         </Card>
     )
 }
@@ -69,6 +74,18 @@ function SideMenuContent() {
     return (
         <div className="sidebar-content">
             <div className="content-list">
+                <div className="content" id="material">
+                    <h2>Revisões</h2>
+                    <Slider {...settings} className="my-slider">
+                        <ArtefatoCard />
+                        <ArtefatoCard />
+                        <ArtefatoCard />
+                        <ArtefatoCard />
+                    </Slider>
+                </div>
+
+                <Divider />
+
                 <div className="content" id="material">
                     <h2>Material de estudos</h2>
                     <Slider {...settings} className="my-slider">

@@ -1,0 +1,12 @@
+input.input-edit-assunto-descricao {
+    padding: 10px 10px 10px 5px;
+    display: block;
+    border: none !important;
+    border-bottom: 1px solid #ddd !important;
+    background-color: #f8f8f8;
+}
+
+input.input-edit-assunto-descricao:focus {
+  border-bottom: 1px solid #ddd !important;
+  background-color: #f8f8f8;
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ModalContainer } from '../../shared/components';
-import NewArtefatoFormContainer from '../../containers/NewArtefatoFormContainer';
+import NewArtefatoMaterialFormContainer from '../../containers/NewArtefatoMaterialFormContainer';
 
 interface ModalNovoArtefatoProps {
     show: boolean
@@ -9,17 +9,17 @@ interface ModalNovoArtefatoProps {
     close: () => void
 }
 
-function ModalNovoArtefato(props: ModalNovoArtefatoProps) {
+function ModalNovoArtefatoRevisao(props: ModalNovoArtefatoProps) {
 
     const { show, toggle, close, idOnDetail } = props
 
     return (
         <div>
             <ModalContainer show={show} toggle={toggle} >
-                <NewArtefatoFormContainer close={close} idOnDetail={idOnDetail} />
+                <NewArtefatoMaterialFormContainer close={close} idOnDetail={idOnDetail} />
             </ModalContainer>
         </div>
     )
 }
 
-export default ModalNovoArtefato
+export default ModalNovoArtefatoRevisao

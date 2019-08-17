@@ -20,12 +20,59 @@ body {
     border-radius: 6px;
 }
 
-.ui.container input{
+.modal .ui.container input{
     border :1px solid  #ddd !important;
 }
 
-@media (min-width: 375px) and (max-width: 667px) {
+.menu.transition.left.visible .item {
+    width: 200px;
+    height: 50px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
 
+.ui.ribbon.label{
+    border-color: #025362;
+}
+
+@media (min-width: 360px) and (max-width: 667px) {
+    .menu.transition.left.visible .item {
+        width: 200px;
+        height: 50px;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        display: flex;
+    }
+
+    .ui.divided.selection.list .list>.item, .ui.divided.selection.list>.item{
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+@media (min-width: 577px) and (max-width: 767px){
+    .accordion .detail {
+        max-width: 500px;
+    }
+}
+
+@media (min-width: 377px) and (max-width: 576spx){
+     .accordion .detail {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 376px){
+     .accordion .detail {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 600px) {
     .dropdown.outros-assuntos {
         display: block;
         width: 100%;

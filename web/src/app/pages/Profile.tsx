@@ -1,10 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { Header, Container, List, Button, Divider, Icon, Input, Message } from 'semantic-ui-react';
-import { ChronosContext } from '../../ChronosRoutes';
+import React, { useState, useEffect } from 'react'
+import { Container, List, Button, Divider, Icon, Message } from 'semantic-ui-react';
 import { LoaderComponent, SubHeader } from '../shared/components';
 import { Cronograma } from 'chronos-core';
 import Utils from '../utils/utils';
-
 
 interface ProfileProps {
     cronogramaList: Cronograma[],
@@ -64,7 +62,7 @@ const Profile = (props: ProfileProps) => {
                             {!editMode ?
                                 <List.Content>
                                     {name}
-                                    <a onClick={() => handleEditMode()}>
+                                    <a onClick={() => handleEditMode()} rel="noopener noreferrer">
                                         <Icon name='edit' style={{ marginLeft: '10px' }} />
                                     </a>
                                 </List.Content>
@@ -72,11 +70,11 @@ const Profile = (props: ProfileProps) => {
                                 <List.Content>
                                     <input value={editName} onChange={(e) => setEditName(e.target.value)}></input>
 
-                                    <a onClick={() => handleEditMode()}>
+                                    <a onClick={() => handleEditMode()} rel="noopener noreferrer">
                                         <Icon name='cancel' style={{ marginLeft: '10px' }} />
                                     </a>
 
-                                    <a onClick={() => handleUpdateUser()}>
+                                    <a onClick={() => handleUpdateUser()} rel="noopener noreferrer">
                                         <Icon name='save' style={{ marginLeft: '10px' }} />
                                     </a>
                                 </List.Content>

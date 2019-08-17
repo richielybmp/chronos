@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
-import { Artefato } from "chronos-core/dist/domain/Artefato";
-import { clearError } from "chronos-core";
-import NewArtefatoForm from "../pages/forms/NewArtefatoForm";
+import { clearError, Revisao } from "chronos-core";
+import NewArtefatoRevisaoForm from "../pages/forms/NewArtefatoRevisaoForm";
 
 const mapStateToProps = (state: any) => ({
     assuntoOnDetail: state.cronogramas.assuntoOnDetail,
@@ -9,8 +8,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        createArtefato: (idAssunto: string, artefato: Artefato) => { },
-        updateArtefato: (idAssunto: string, assunto: Artefato) => { },
+        createRevisao: (idAssunto: string, revisao: Revisao) => { },
+        updateRevisao: (idAssunto: string, revisao: Revisao) => { },
 
         clearError: () => {
             dispatch(clearError())
@@ -21,4 +20,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(NewArtefatoForm);
+)(NewArtefatoRevisaoForm);

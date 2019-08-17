@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Accordion, List, Label, Button, Header, Grid, Dropdown, Icon } from 'semantic-ui-react'
+import { Accordion, List, Label, Button, Grid, Dropdown } from 'semantic-ui-react'
 import { Disciplina, Assunto } from 'chronos-core';
 import { EmptyHeader } from '..';
 import { Link } from 'react-router-dom';
@@ -27,7 +27,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
     } = props
 
     const hasDisciplinas = disciplinas.length > 0;
-    const emEdicao = idOnDetail != "";
+    const emEdicao = idOnDetail !== "";
 
     const [activeItem, setActiveItem] =
         useState(hasDisciplinas ? disciplinas[0].descricao : "")
@@ -56,9 +56,8 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                     <Grid columns={3}>
                                         <Grid.Column mobile={12} tablet={10} computer={10}>
                                             <Label as='div' ribbon
-                                                color='teal'
                                                 size='large'
-                                                style={{ backgroundImage: '-webkit-radial-gradient(125% top, circle cover, rgb(15, 171, 156) 0%, rgba(84, 90, 182, 0) 50%), -webkit-radial-gradient(right top, circle cover, rgb(5, 79, 79) 0%, rgba(121, 74, 162, 0) 130%)' }}
+                                                style={{ backgroundColor: '#23689c', color: '#fff' }}
                                                 onClick={() => handleItemClick(item.descricao)}
                                             >
                                                 {item.nome}

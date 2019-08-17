@@ -1,5 +1,4 @@
 import React from 'react'
-import { error } from 'console';
 import { Portal, Segment, Header, Button } from 'semantic-ui-react';
 
 interface MyProps {
