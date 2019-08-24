@@ -45,5 +45,5 @@ export function ConfirmDelete(props: ModalProps) {
         )
     }
 
-    return null
+    return null;
 }

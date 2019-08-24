@@ -113,7 +113,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                             })
                                             :
                                             <EmptyHeader
-                                                icon='table'
+                                                icon=''
                                                 title='Você ainda não possui nenhum Assunto criado'
                                                 subtitle='Adicione assuntos!'
                                                 btnTitle="Novo assunto"

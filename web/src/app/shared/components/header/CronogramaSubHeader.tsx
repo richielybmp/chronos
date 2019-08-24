@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { Container, Grid, Breadcrumb, Button, Dropdown, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { ChronosContext } from '../../../../ChronosRoutes';
-import { Cronograma } from 'chronos-core';
 
 interface CronogramaSubHeaderProps {
     titulo: string,

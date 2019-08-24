@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { CronogramasState } from 'chronos-core';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
 import { LoaderComponent, CronogramaListComponent, SubHeader } from '../shared/components';
-import { Header } from 'semantic-ui-react';
 
 interface Props {
     cronogramaList: CronogramasState;

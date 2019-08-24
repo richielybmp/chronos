@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { Header, Form, Message, Icon } from 'semantic-ui-react';
+import { Form, Message, Icon } from 'semantic-ui-react';
 import '../../../style/css/main.css';
 import '../../../style/css/util.css';
 
@@ -24,13 +24,13 @@ export default function SignInForm(props: SignInFormProps) {
     function handleEmailChange(value: string) {
         setEmailError("")
         setEmail(value)
-        setEmailHasValue(value != "" ? "has-val" : "")
+        setEmailHasValue(value !== "" ? "has-val" : "")
     }
 
     function handlePasswordChange(value: string) {
         setPasswordError("")
         setPassword(value)
-        setPasswordHasValue(value != "" ? "has-val" : "")
+        setPasswordHasValue(value !== "" ? "has-val" : "")
     }
 
     function handleSubmit() {
@@ -44,7 +44,7 @@ export default function SignInForm(props: SignInFormProps) {
         setEmailError('');
         setPasswordError('');
 
-        const regex_mail = new RegExp('[a-zA-Z0-9!#$%&amp;\'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*')
+        const regex_mail = new RegExp('[a-zA-Z0-9!#$%&amp;\'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(.[a-zA-Z0-9-]+)*')
         if (!regex_mail.test(email)) {
             setEmailError('Por favor, entre com um endereço de email no formato correto.');
             inconsistente = true
@@ -68,7 +68,7 @@ export default function SignInForm(props: SignInFormProps) {
                             Login
     					</span>
 
-                        <div className={`wrap-input100 validate-input ${emailError != "" && "alert-validate"}`} data-validate={emailError}>
+                        <div className={`wrap-input100 validate-input ${emailError !== "" && "alert-validate"}`} data-validate={emailError}>
                             <input
                                 className={`input100 ${emailHasValue}`}
                                 type="text"
@@ -80,7 +80,7 @@ export default function SignInForm(props: SignInFormProps) {
                             <span className="label-input100">E-mail</span>
                         </div>
 
-                        <div className={`wrap-input100 validate-input ${passwordError != "" && "alert-validate"}`} data-validate={passwordError}>
+                        <div className={`wrap-input100 validate-input ${passwordError !== "" && "alert-validate"}`} data-validate={passwordError}>
                             <input
                                 className={`input100 ${passwordHasValue}`}
                                 type="password"

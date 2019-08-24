@@ -1,8 +1,10 @@
+import { CronogramaInteractor } from './../../interactors/CronogramaInteractor';
 import { AssuntoInteractor } from '../../interactors/AssuntoInteractor';
 import { EnumCronogramaActions, Assunto, } from "../..";
 import { Exercicio, Revisao, Material } from '../../domain';
 
 const interactorAssunto = new AssuntoInteractor()
+const interactorCronograma = new CronogramaInteractor()
 
 //#region "Actions para CREATE ASSUNTO"
 export function createAssunto(assunto: Assunto) {
@@ -142,12 +144,12 @@ export function createRevisaoFailure(error: any) {
 }
 //#endregion
 
-
-//#region "Actions para CREATE REVISAO"
+//#region "Actions para CREATE MATERIAL"
 export function createMaterial(material: Material) {
     return {
         type: EnumCronogramaActions.CREATE_MATERIAL,
-        payload: interactorAssunto.createMaterial(material)
+        // payload: interactorAssunto.createMaterial(material)
+        payload: interactorCronograma.getAllFull()
     };
 }
 

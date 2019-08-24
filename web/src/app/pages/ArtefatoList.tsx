@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ConfirmDelete, ModalContainer, ArtefatosSection, ExpansibleButtons } from '../shared/components';
+import { ConfirmDelete, ModalContainer, ArtefatosSection, ExpansibleButtons, EmptyArtefatosHeader } from '../shared/components';
 import { Artefato } from 'chronos-core';
 import { Segment, Header } from 'semantic-ui-react';
 import NewArtefatoMaterialFormContainer from '../containers/NewArtefatoMaterialFormContainer';
@@ -25,17 +25,21 @@ function ArtefatoList(props: Props) {
     const [novoExercicio, setNovoExercicio] = useState(false)
 
     const [confirmationDelete, setConfirmationDelete] = useState(false)
-    const [idOnDetail, setidOnDetail] = useState("")
+    const [keyOnDetail, setKeyOnDetail] = useState("")
+
+    const [idParaEditar, setIdParaEditar] = useState("")
+
     const [idParaDeletar, setIdParaDeletar] = useState("")
-    const [modalShowToggle, setmodalShowToggle] = useState(false)
+    // const [modalShowToggle, setmodalShowToggle] = useState(false)
     //#endregion
 
     //#region Handles
     const handleClose = () => {
-        setNovaRevisao(false)
-        setNovoExercicio(false)
-        setNovoMaterial(false)
-        setidOnDetail("")
+        setNovaRevisao(false);
+        setNovoExercicio(false);
+        setNovoMaterial(false);
+        setKeyOnDetail("");
+        setIdParaEditar("");
         // setIdDisciplinaToCreateSubject("")
     }
 
@@ -56,17 +60,17 @@ function ArtefatoList(props: Props) {
 
     const handleNovaRevisao = () => {
         setNovaRevisao(true)
-        setidOnDetail("novarevisao")
+        setKeyOnDetail("novarevisao")
     }
 
     const handleNovoMaterial = () => {
         setNovoMaterial(true)
-        setidOnDetail("novomaterial")
+        setKeyOnDetail("novomaterial")
     }
 
     const handleNovoExercicio = () => {
         setNovoExercicio(true)
-        setidOnDetail("novoexercicio")
+        setKeyOnDetail("novoexercicio")
     }
 
     // const handlePopModal = () => {
@@ -86,6 +90,24 @@ function ArtefatoList(props: Props) {
         }
     }
 
+    const handleEditArtefato = (id: string, tipoArtefato: number) => {
+        setIdParaEditar(id);
+
+        switch (tipoArtefato) {
+            case 0: //Material
+                handleNovoMaterial();
+                break;
+            case 1: // Revisao
+                handleNovaRevisao();
+                break;
+            case 2: // Exercicio
+                handleNovoExercicio();
+                break;
+            default:
+                break;
+        }
+    }
+
     return (
         <>
             {/* Modal 'Excluir Artefato' */}
@@ -96,13 +118,13 @@ function ArtefatoList(props: Props) {
                 confirmDelete={deletarArtefato} />
 
 
-            {novoMaterial && showMaterialForm(idOnDetail, handleClose)}
-            {novoExercicio && showExerciciosForm(idOnDetail, handleClose)}
-            {novaRevisao && showRevisaoForm(idOnDetail, handleClose)}
+            {novoMaterial && showMaterialForm(keyOnDetail, idParaEditar, handleClose)}
+            {novoExercicio && showExerciciosForm(keyOnDetail, idParaEditar, handleClose)}
+            {novaRevisao && showRevisaoForm(keyOnDetail, idParaEditar, handleClose)}
 
             <Segment basic>
-                {/* {artefatos.length > 0 ? */}
-                {true ?
+                {/* {true ? */}
+                {hasArtefatos ?
                     <>
                         <ExpansibleButtons
                             actionNewMaterial={handleNovoMaterial}
@@ -110,7 +132,7 @@ function ArtefatoList(props: Props) {
                             actionNewRevisao={handleNovaRevisao}
                         />
                         <br />
-                        <ArtefatosSection />
+                        <ArtefatosSection artefatos={artefatos} handleEdit={handleEditArtefato} />
                     </>
                     :
                     <EmptyArtefatosHeader
@@ -125,55 +147,34 @@ function ArtefatoList(props: Props) {
     )
 }
 
-function showMaterialForm(idOnDetail: string, handleClose: () => void) {
-    if (idOnDetail === "novomaterial" || idOnDetail !== "") {
+function showMaterialForm(keyOnDetail: string, id: string, handleClose: () => void) {
+    if (keyOnDetail === "novomaterial" || keyOnDetail !== "") {
         return (
             <ModalContainer show={true} toggle={handleClose}>
-                <NewArtefatoMaterialFormContainer close={handleClose} idOnDetail="" />
+                <NewArtefatoMaterialFormContainer close={handleClose} idOnDetail={id} />
             </ModalContainer>
         )
     }
 }
 
-function showExerciciosForm(idOnDetail: string, handleClose: () => void) {
-    if (idOnDetail === "novoexercicio" || idOnDetail !== "") {
+function showExerciciosForm(keyOnDetail: string, id: string, handleClose: () => void) {
+    if (keyOnDetail === "novoexercicio" || keyOnDetail !== "") {
         return (
             <ModalContainer show={true} toggle={handleClose}>
-                <NewArtefatoExercicioFormContainer close={handleClose} idOnDetail="" />
+                <NewArtefatoExercicioFormContainer close={handleClose} idOnDetail={id} />
             </ModalContainer>
         )
     }
 }
 
-function showRevisaoForm(idOnDetail: string, handleClose: () => void) {
-    if (idOnDetail === "novarevisao" || idOnDetail !== "") {
+function showRevisaoForm(keyOnDetail: string, id: string, handleClose: () => void) {
+    if (keyOnDetail === "novarevisao" || keyOnDetail !== "") {
         return (
             <ModalContainer show={true} toggle={handleClose}>
-                <NewArtefatoRevisaoFormContainer close={handleClose} idOnDetail="" />
+                <NewArtefatoRevisaoFormContainer close={handleClose} idOnDetail={id} />
             </ModalContainer>
         )
     }
-}
-
-function EmptyArtefatosHeader(props: any) {
-
-    return (
-        <>
-            <Header as='h2' textAlign='center'>
-                Crie itens para acompanhar seus estudos
-            <Header.Subheader>Você pode escolher entre Revisões, Materiais de Estudo ou Lista de Exercícios</Header.Subheader>
-                <br />
-
-            </Header>
-            <Segment basic>
-                <ExpansibleButtons
-                    actionNewMaterial={props.actionNewMaterial}
-                    actionNewExercicio={props.actionNewExercicio}
-                    actionNewRevisao={props.actionNewRevisao}
-                />
-            </Segment>
-        </>
-    );
 }
 
 export default ArtefatoList

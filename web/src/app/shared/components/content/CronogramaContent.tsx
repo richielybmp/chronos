@@ -56,7 +56,7 @@ export function CronogramaContent({ children, cronograma }: CronogramaContentPro
 }
 
 function showDisciplinaForm(idOnDetail: string, handleClose: () => void) {
-    if (idOnDetail == "novadisciplina") {
+    if (idOnDetail === "novadisciplina") {
         return (
             <ModalContainer show={true} toggle={handleClose}>
                 <NewDisciplinaFormContainer close={handleClose} idOnDetail="" />

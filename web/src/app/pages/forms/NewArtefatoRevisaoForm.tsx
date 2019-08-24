@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Container, Grid, Input, Dropdown, Label } from 'semantic-ui-react';
+import { Form, Button, Container, Grid, Input, Label } from 'semantic-ui-react';
 import { PortalError } from '../../shared/components';
 import { AssuntoState, Revisao } from 'chronos-core';
-import RevisaoContent from '../../shared/components/section/RevisaoContent';
+import RevisaoContent from '../../shared/components/content/RevisaoContent';
 
 interface Props {
     assuntoOnDetail: AssuntoState,
@@ -16,19 +16,19 @@ interface Props {
 const NewArtefatoRevisaoForm = (props: Props) => {
 
     const { close, createRevisao, updateRevisao, idOnDetail } = props;
-    const { assunto, error, loading } = props.assuntoOnDetail;
+    const { assunto, error } = props.assuntoOnDetail;
 
     //#region States
     const [artefatoData, setArtefatoData] = useState('')
     const [artefatoDataErro, setArtefatoDataErro] = useState('')
 
-    const [optionRevisao, setOptionRevisao] = useState()
+    const [optionRevisao, setOptionRevisao] = useState(-1)
     const [optionRevisaoErro, setOptionRevisaoErro] = useState('')
 
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
 
-    const descricaoBotao = idOnDetail != "" ? "Editar" : "Salvar";
+    const descricaoBotao = idOnDetail !== "" ? "Editar" : "Salvar";
 
     // #region Handles
     const handleDataChange = (e: any) => {
@@ -37,7 +37,7 @@ const NewArtefatoRevisaoForm = (props: Props) => {
     }
 
     const handleOptionSelected = (option: number) => {
-        setOptionRevisao(option)
+        setOptionRevisao(option);
     }
 
     const handleErrorClose = () => {
@@ -46,15 +46,15 @@ const NewArtefatoRevisaoForm = (props: Props) => {
 
     const validaCampos = () => {
         let inconsistente = false;
-        setArtefatoDataErro('')
-        setOptionRevisaoErro('')
+        setArtefatoDataErro('');
+        setOptionRevisaoErro('');
 
         if (artefatoData === '') {
             setArtefatoDataErro("A data da realização da revisão é obrigatória.");
             inconsistente = true;
         }
 
-        if (!optionRevisao || optionRevisao === "") {
+        if (!optionRevisao) {
             setOptionRevisaoErro("Selecione alguma das opções de período da revisão realizada.");
             inconsistente = true;
         }
@@ -66,7 +66,7 @@ const NewArtefatoRevisaoForm = (props: Props) => {
 
         if (!validaCampos() && assunto) {
 
-            var artefato = assunto.artefatos.find(d => d.uuid == idOnDetail);
+            var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
                 // const novo_artefato = new Disciplina("", disciplinaTitulo, disciplinaDescricao, [])
@@ -82,20 +82,32 @@ const NewArtefatoRevisaoForm = (props: Props) => {
     }
     //#endregion
 
-    useEffect(() => {
+    const listenForId = () => {
         if (assunto) {
-            var artefato = assunto.artefatos.find(d => d.uuid == idOnDetail);
+            var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
             if (artefato) {
-                setEhEdicao(true)
+
+                const data = '2019-12-03'
+                const escopo = (artefato as Revisao).escopo;
+
+                setArtefatoData(data);
+                setOptionRevisao(escopo);
+                setEhEdicao(true);
+
             }
         }
-    }, [props.assuntoOnDetail])
+    }
+
+    useEffect(() => {
+        listenForId();
+        return listenForId;
+    }, [props.idOnDetail])
 
     return (
         <Form onSubmit={(e: any, dispatch: any) => handleCreateRevisao(e)}>
             <PortalError error={error} handleErrorClose={handleErrorClose} />
             <Container text style={{ padding: '2em 2em' }}>
-                <h2>Nova Revisão</h2>
+                <h2>{ehEdicao ? `Editar` : `Nova`} revisão</h2>
                 <Grid columns={1} container stackable>
                     <Grid.Column mobile={6}>
                         <Form.Field className={artefatoDataErro.length > 0 ? "error" : ""}>
@@ -112,8 +124,8 @@ const NewArtefatoRevisaoForm = (props: Props) => {
                     </Grid.Column>
                 </Grid>
 
+                <RevisaoContent setOptionSelected={handleOptionSelected} value={optionRevisao} />
 
-                <RevisaoContent setOptionSelected={handleOptionSelected} />
                 {optionRevisaoErro.length > 0 &&
                     <Label color='red' basic>{optionRevisaoErro} </Label>
                 }

@@ -86,7 +86,7 @@ function DisciplinaList(props: Props) {
     if (!hasDisciplinas && !novaDisciplina) {
         return (
             <EmptyHeader
-                icon='table'
+                icon=''
                 title='Você ainda não possui nenhuma Disciplina criada'
                 subtitle='Adicione disciplinas para podermos começar!'
                 btnTitle="Nova disicplina"

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { ReactNodeLike } from 'prop-types';
-import { Container, Header, Segment, Grid, Button, Icon } from 'semantic-ui-react';
+import { Container, Header, Grid, Button, Icon } from 'semantic-ui-react';
 import { Assunto } from 'chronos-core';
-import { ModalContainer, ExpansibleButtons } from '..';
-import NewArtefatoFormContainer from '../../../containers/NewArtefatoMaterialFormContainer';
 import './style.css';
 
 interface AssuntoContentProps {
@@ -13,14 +11,9 @@ interface AssuntoContentProps {
 }
 
 export function AssuntoContent({ children, assunto, editAssunto }: AssuntoContentProps) {
-    const [novoArtefato, setNovoArtefato] = useState(false)
 
     const [editName, setEditName] = useState(assunto.descricao);
     const [editMode, setEditMode] = useState(false);
-
-    const handleClose = () => {
-        setNovoArtefato(false)
-    }
 
     const handleEditMode = () => {
         setEditName(assunto.descricao)
@@ -56,37 +49,7 @@ export function AssuntoContent({ children, assunto, editAssunto }: AssuntoConten
                     </Header.Content>
                 }
             </Header>
-
-            {/* {assunto.artefatos.length > 0 ?
-                <>
-                    <Segment basic>
-                        <Grid columns={2}>
-                            <Grid.Column mobile={16} tablet={6} computer={3} floated='right'>
-                                <Button fluid onClick={() => setNovoArtefato(true)}
-                                    color='green' content='Artefato' icon='plus' size='tiny'
-                                    labelPosition='right' />
-                            </Grid.Column>
-                        </Grid>
-                    </Segment>
-                    <ExpansibleButtons />
-                </>
-                :
-                <p> Olá vazio</p>
-            } */}
-
-            {/* {novoArtefato && showArtefatoForm("novoartefato", handleClose)} */}
-
             {children}
         </Container>
     )
-}
-
-function showArtefatoForm(idOnDetail: string, handleClose: () => void) {
-    if (idOnDetail == "novoartefato") {
-        return (
-            <ModalContainer show={true} toggle={handleClose}>
-                <NewArtefatoFormContainer close={handleClose} idOnDetail="" />
-            </ModalContainer>
-        )
-    }
 }

@@ -1,4 +1,4 @@
-import { EnumCronogramaActions } from "../../domain";
+import { EnumCronogramaActions, Material, Revisao, EnumEscopo, Exercicio } from "../../domain";
 import { CronogramaActionsType } from "../actions/cronogramaActions";
 import { ChronosStateType } from "../../frameworks";
 import { CronogramaRepository } from "../../storage";
@@ -22,6 +22,7 @@ export const chronosReducer = (
 ): ChronosStateType => {
     let error;
     let cronograma;
+    let assunto_atualizado;
     switch (action.type) {
         //#region 'fetch cronogramas'
         case EnumCronogramaActions.FETCH_CRONOGRAMAS:
@@ -380,13 +381,14 @@ export const chronosReducer = (
             }
         //#endregion
 
+        // #region 'CREATE EXERCICIO'
         case EnumCronogramaActions.CREATE_EXERCICIO:
             return {
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: null, loading: true }
             }
-        case EnumCronogramaActions.CREATE_EXERCICIO:
-            let assunto_atualizado = state.assuntoOnDetail.assunto
+        case EnumCronogramaActions.CREATE_EXERCICIO_SUCCESS:
+            assunto_atualizado = state.assuntoOnDetail.assunto
 
             if (assunto_atualizado) {
                 assunto_atualizado.artefatos.push(action.payload.exercicio)
@@ -396,6 +398,51 @@ export const chronosReducer = (
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
             }
+        case EnumCronogramaActions.CREATE_EXERCICIO_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
+            }
+        // #endregion
+
+        // #region 'CREATE MATERIAL'
+        case EnumCronogramaActions.CREATE_MATERIAL:
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.CREATE_MATERIAL_SUCCESS:
+            assunto_atualizado = state.assuntoOnDetail.assunto
+
+            if (assunto_atualizado) {
+                let material = new Material(10, 0);
+                material.data = '01/01/2019';
+                material.uuid = '1234';
+                material.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f' // conjuntos
+
+                let revisao = new Revisao("...", EnumEscopo.QUINZENAL, 1)
+                revisao.data = '02/01/2019';
+                revisao.uuid = '5678';
+                revisao.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f';
+
+                let exercicio = new Exercicio(30, 25, 2);
+                exercicio.data = '03/01/2019';
+                exercicio.uuid = '09876';
+                exercicio.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f';
+
+                assunto_atualizado.artefatos.push(exercicio)
+                assunto_atualizado.artefatos.push(material)
+                assunto_atualizado.artefatos.push(revisao)
+                // assunto_atualizado.artefatos.push(action.payload.material)
+            }
+
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
+            }
+        // #endregion
+
         //#region 'RESET'
         case EnumCronogramaActions.CLEAR_ERROR:
             return {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Container, Grid } from 'semantic-ui-react';
-import { Disciplina, Cronograma, CronogramaState } from 'chronos-core';
+import { Disciplina, CronogramaState } from 'chronos-core';
 import { PortalError } from '../../shared/components';
 
 interface Props {
@@ -26,7 +26,7 @@ const NewDisciplinaForm = (props: Props) => {
 
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
-    const descricaoBotao = idOnDetail != "" ? "Editar" : "Salvar";
+    const descricaoBotao = idOnDetail !== "" ? "Editar" : "Salvar";
 
     // #region Handles
     const handleTituloChange = (e: any) => {
@@ -48,11 +48,11 @@ const NewDisciplinaForm = (props: Props) => {
         setNovaDisciplinaTituloErro('')
         setNovaDisciplinaDescricaoErro('')
 
-        if (disciplinaTitulo == '') {
+        if (disciplinaTitulo === '') {
             setNovaDisciplinaTituloErro("Título da disciplina obrigatório.")
             inconsistente = true
         }
-        if (disciplinaDescricao == '') {
+        if (disciplinaDescricao === '') {
             setNovaDisciplinaDescricaoErro("Descrição da disciplina obrigatório.")
             inconsistente = true
         }
@@ -63,7 +63,7 @@ const NewDisciplinaForm = (props: Props) => {
         e.preventDefault();
         if (!validaCampos() && cronograma) {
 
-            var disciplina = cronograma.disciplinas.find(d => d.uuid == idOnDetail);
+            var disciplina = cronograma.disciplinas.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
                 const nova_disciplina = new Disciplina("", cronograma.uuid, disciplinaTitulo, disciplinaDescricao)
@@ -81,7 +81,7 @@ const NewDisciplinaForm = (props: Props) => {
 
     useEffect(() => {
         if (cronograma) {
-            var disciplina = cronograma.disciplinas.find(d => d.uuid == idOnDetail);
+            var disciplina = cronograma.disciplinas.find(d => d.uuid === idOnDetail);
             if (disciplina) {
                 setNovaDisciplinaTitulo(disciplina.nome)
                 setNovaDisciplinaDescricao(disciplina.descricao)

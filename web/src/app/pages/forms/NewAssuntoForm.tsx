@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Container, Grid } from 'semantic-ui-react';
-import { CronogramaState, Assunto, AssuntoState } from 'chronos-core';
+import { Assunto, AssuntoState } from 'chronos-core';
 import { PortalError } from '../../shared/components';
 
 interface Props {
@@ -38,7 +38,7 @@ const NewAssuntoForm = (props: Props) => {
         let inconsistente = false;
         setAssuntoDescricaoErro('')
 
-        if (assuntoDescricao == '') {
+        if (assuntoDescricao === '') {
             setAssuntoDescricao("Descrição do assunto obrigatório.")
             inconsistente = true
         }
@@ -65,7 +65,7 @@ const NewAssuntoForm = (props: Props) => {
 
     useEffect(() => {
         const { assunto } = props.assuntoOnDetail
-        if (idDisciplina != "" && assunto) {
+        if (idDisciplina !== "" && assunto) {
             setAssuntoDescricao(assunto.descricao)
             setEhEdicao(true)
         }

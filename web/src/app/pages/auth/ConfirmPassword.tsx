@@ -1,26 +1,30 @@
-
 import React, { useState } from 'react';
 import { LoaderComponent } from '../../shared/components';
-import RecoverPasswordForm from '../forms/RecoverPasswordForm';
+import ConfirmPasswordForm from '../forms/ConfirmPasswordForm';
 import { Modal, Button } from 'semantic-ui-react';
 
 interface Props {
     auth: any;
     match: any,
     history: any,
-    recoverPassword: (email: string, callBack: Function) => void
+    confirmPassword: (novaSenha: string, callBack: Function) => void,
     clearState: () => void
 }
 
-function RecoverPassword(props: Props) {
+function ConfirmPassword(props: Props) {
 
     const { loading, error } = props.auth;
     const [showMessage, setShowMessage] = useState(false);
 
-    const handleRecuperar = (email: string) => {
-        props.recoverPassword(email, () => {
+    const handleRecuperar = (novaSenha: string) => {
+        props.confirmPassword(novaSenha, () => {
             setShowMessage(true);
         })
+    }
+
+    const handleOk = () => {
+        setShowMessage(false);
+        props.history.push(`${process.env.PUBLIC_URL}/entrar`);
     }
 
     if (loading) {
@@ -29,13 +33,13 @@ function RecoverPassword(props: Props) {
 
     return (
         <>
-            <RecoverPasswordForm error={error} actionRecoverPassword={handleRecuperar} />
+            <ConfirmPasswordForm error={error} actionConfirmPassword={handleRecuperar} />
 
             {showMessage &&
                 <Modal closeIcon={true} size='tiny' open={showMessage} onClose={() => setShowMessage(false)}>
                     <Modal.Header>Recuperar senha</Modal.Header>
                     <Modal.Content>
-                        <p>Enviamos um email para que você possa definir uma nova senha.</p>
+                        <p>Sua senha foi redefinida com sucesso.</p>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button
@@ -43,13 +47,16 @@ function RecoverPassword(props: Props) {
                             icon='checkmark'
                             labelPosition='right'
                             content='Ok'
-                            onClick={() => setShowMessage(false)}
+                            onClick={() => handleOk()}
                         />
                     </Modal.Actions>
                 </Modal>
             }
+
+
         </>
+
     )
 }
 
-export default RecoverPassword
+export default ConfirmPassword

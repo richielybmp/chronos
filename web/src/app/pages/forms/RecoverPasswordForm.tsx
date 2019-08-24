@@ -6,7 +6,7 @@ import { Form, Icon, Message } from 'semantic-ui-react';
 
 interface RecoverPasswordFormProps {
     error: any,
-    actionRecoverPassword: (email: string, password: string) => void,
+    actionRecoverPassword: (email: string) => void,
 }
 
 export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
@@ -17,36 +17,16 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
     const [emailHasValue, setEmailHasValue] = useState("");
     const [emailError, setEmailError] = useState('');
 
-    const [password, setPassword] = useState("");
-    const [passwordHasValue, setPasswordHasValue] = useState("");
-    const [passwordError, setPasswordError] = useState('');
-
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [confirmPasswordHasValue, setConfirmPasswordHasValue] = useState("");
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
-
     function handleEmailChange(value: string) {
         setEmailError("");
         setEmail(value);
         setEmailHasValue(value !== "" ? "has-val" : "");
     }
 
-    function handlePasswordChange(value: string) {
-        setPasswordError("");
-        setPassword(value);
-        setPasswordHasValue(value !== "" ? "has-val" : "");
-    }
-
-    function handleConfirmPasswordChange(value: string) {
-        setConfirmPasswordError("");
-        setConfirmPassword(value);
-        setConfirmPasswordHasValue(value !== "" ? "has-val" : "");
-    }
-
     function handleSubmit(e: any) {
         e.preventDefault();
         if (!validate()) {
-            actionRecoverPassword(email, password);
+            actionRecoverPassword(email);
         }
     }
 
@@ -54,26 +34,11 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
         let inconsistente = false;
 
         setEmailError('');
-        setPasswordError('');
 
-        const regex_mail = new RegExp('[a-zA-Z0-9!#$%&amp;\'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*')
+        const regex_mail = new RegExp('[a-zA-Z0-9!#$%&amp;\'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(.[a-zA-Z0-9-]+)*')
         if (!regex_mail.test(email)) {
             setEmailError('Por favor, entre com um endereço de email no formato correto.');
             inconsistente = true;
-        }
-
-        if (password.length <= 5) {
-            setPasswordError('A senha deve possuir 6 ou mais caracteres.');
-            inconsistente = true;
-        }
-
-        if (confirmPassword.length <= 5) {
-            setConfirmPasswordError('A senha deve possuir 6 ou mais caracteres.');
-            inconsistente = true
-        }
-        else if (confirmPassword !== password) {
-            setConfirmPasswordError('As senhas não são iguais.');
-            inconsistente = true
         }
 
         return inconsistente
@@ -93,18 +58,6 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
                             <input className={`input100 ${emailHasValue}`} type="text" name="email" value={email} onChange={(e) => handleEmailChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">E-mail</span>
-                        </div>
-
-                        <div className={`wrap-input100 validate-input ${passwordError !== "" && "alert-validate"}`} data-validate={passwordError}>
-                            <input className={`input100 ${passwordHasValue}`} type="password" name="pass" value={password} onChange={(e) => handlePasswordChange(e.target.value)}></input>
-                            <span className="focus-input100"></span>
-                            <span className="label-input100">Senha</span>
-                        </div>
-
-                        <div className={`wrap-input100 validate-input ${confirmPasswordError !== "" && "alert-validate"}`} data-validate={confirmPasswordError}>
-                            <input className={`input100 ${confirmPasswordHasValue}`} type="password" name="pass" value={confirmPassword} onChange={(e) => handleConfirmPasswordChange(e.target.value)}></input>
-                            <span className="focus-input100"></span>
-                            <span className="label-input100">Confirme a senha</span>
                         </div>
 
                         {error &&

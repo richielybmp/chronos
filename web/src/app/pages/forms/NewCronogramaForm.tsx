@@ -47,13 +47,11 @@ export const NewCronogramaForm = (props: Props) => {
 
     const handleDataInicioChange = (e: any) => {
         setNovoCronogramaDataInicioErro('')
-        // console.log(e.target.value)
         setNovoCronogramaDataInicio(e.target.value)
     }
 
     const handleDataFimChange = (e: any) => {
         setNovoCronogramaDataFimErro('')
-        // console.log(e.target.value)
         setNovoCronogramaDataFim(e.target.value)
     }
 
@@ -70,19 +68,19 @@ export const NewCronogramaForm = (props: Props) => {
         setNovoCronogramaDataInicioErro('')
         setNovoCronogramaDataFimErro('')
 
-        if (cronogramaTitulo == '') {
+        if (cronogramaTitulo === '') {
             setNovoCronogramaTituloErro("Título do cronograma obrigatório.")
             inconsistente = true
         }
-        if (cronogramaDescricao == '') {
+        if (cronogramaDescricao === '') {
             setNovoCronogramaDescricaoErro("Descrição do cronograma obrigatório.")
             inconsistente = true
         }
-        if (cronogramaDataInicio == '') {
+        if (cronogramaDataInicio === '') {
             setNovoCronogramaDataInicioErro('Data início do cronograma obrigatório.')
             inconsistente = true
         }
-        if (cronogramaDataFim == '') {
+        if (cronogramaDataFim === '') {
             setNovoCronogramaDataFimErro('Data fim do cronograma obrigatório.')
             inconsistente = true
         }
@@ -91,15 +89,15 @@ export const NewCronogramaForm = (props: Props) => {
 
     const addCronograma = (e: any) => {
         e.preventDefault();
-
+        var obj;
         if (!validaCampos()) {
             if (!ehEdicao) {
-                var obj = new Cronograma('', cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
+                obj = new Cronograma('', cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
                 props.createCronograma(obj)
             }
             else if (props.cronogramaOnDetail.cronograma) {
                 const id = props.cronogramaOnDetail.cronograma.uuid
-                var obj = new Cronograma(id, cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
+                obj = new Cronograma(id, cronogramaTitulo, cronogramaDescricao, cronogramaDataInicio, cronogramaDataFim, []);
                 props.editCronograma(obj)
                 props.close()
             }

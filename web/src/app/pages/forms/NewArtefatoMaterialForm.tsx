@@ -7,8 +7,8 @@ interface Props {
     assuntoOnDetail: AssuntoState,
     idOnDetail: string,
     close: () => void,
-    createMaterial: (idAssunto: string, material: Material) => void,
-    updateMaterial: (idAssunto: string, material: Material) => void,
+    createMaterial: (material: Material) => void,
+    updateMaterial: (material: Material) => void,
     clearError: () => void,
 }
 
@@ -33,7 +33,7 @@ const materiaisOptions = [
 const NewArtefatoMaterialForm = (props: Props) => {
 
     const { close, createMaterial, updateMaterial, idOnDetail } = props;
-    const { assunto, error, loading } = props.assuntoOnDetail;
+    const { assunto, error } = props.assuntoOnDetail;
 
     //#region States
     const [artefatoData, setArtefatoData] = useState('')
@@ -48,12 +48,12 @@ const NewArtefatoMaterialForm = (props: Props) => {
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
 
-    const descricaoBotao = idOnDetail != "" ? "Editar" : "Salvar";
+    const descricaoBotao = idOnDetail !== "" ? "Editar" : "Salvar";
 
     // #region Handles
     const handleDataChange = (e: any) => {
         setArtefatoDataErro('');
-        setArtefatoData(e.target.value);
+        setArtefatoData(e);
     }
 
     const handleMinutos = (e: any) => {
@@ -72,9 +72,14 @@ const NewArtefatoMaterialForm = (props: Props) => {
 
     const validaCampos = () => {
         let inconsistente = false;
+        setArtefatoDataErro('');
         setMinutosErro('');
         setTipoMaterialErro('');
-        setArtefatoDataErro('');
+
+        if (artefatoData === '') {
+            setArtefatoDataErro("A data da realização da revisão é obrigatória.");
+            inconsistente = true;
+        }
 
         if (minutos === 0) {
             setMinutosErro("Informe a quantidade de minutos.");
@@ -94,11 +99,13 @@ const NewArtefatoMaterialForm = (props: Props) => {
 
         if (!validaCampos() && assunto) {
 
-            var artefato = assunto.artefatos.find(d => d.uuid == idOnDetail);
+            var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
-                // const novo_artefato = new Disciplina("", disciplinaTitulo, disciplinaDescricao, [])
-                // createArtefato(cronograma.uuid, nova_disciplina);
+                let material = new Material(10, tipoMaterial);
+                material.data = artefatoData;
+                material.uuid_assunto = '1234567890'
+                createMaterial(material);
                 close();
             }
             else if (artefato) {
@@ -110,23 +117,26 @@ const NewArtefatoMaterialForm = (props: Props) => {
     }
     //#endregion
 
-    useEffect(() => {
-        if (assunto) {
-            var artefato = assunto.artefatos.find(d => d.uuid == idOnDetail);
-            if (artefato) {
-                setEhEdicao(true)
-            }
-        }
-    }, [props.assuntoOnDetail])
+    // useEffect(() => {
+    //     if (assunto) {
+    //         var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
+    //         if (artefato) {
+    //             setEhEdicao(true)
+    //         }
+    //     }
+    // }, [props.assuntoOnDetail])
 
     return (
         <Form onSubmit={(e: any, dispatch: any) => handleCreateMaterial(e)}>
             <PortalError error={error} handleErrorClose={handleErrorClose} />
             <Container text style={{ padding: '2em 2em' }}>
-                {/* {acertosErro &&
-                    <Label color='red' basic>  {acertosErro} </Label>
-                } */}
-                <h2>Novo Material</h2>
+
+                {ehEdicao ?
+                    <h2>Editar material</h2>
+                    :
+                    <h2>Novo material</h2>
+                }
+
                 <Grid columns={1} container stackable>
                     <Grid.Column mobile={6}>
                         <Form.Field className={artefatoDataErro.length > 0 ? "error" : ""}>
@@ -170,34 +180,6 @@ const NewArtefatoMaterialForm = (props: Props) => {
                         </Form.Field>
                     </Grid.Column>
                 </Grid>
-                {/* 
-                <Grid columns={2} container stackable>
-                    <Grid.Column>
-                        <Form.Field>
-                            <label>Total de exercícios</label>
-                            <Input
-                                placeholder='feitos'
-                                name='total'
-                                type="number"
-                                min='0'
-                                value={total}
-                                onChange={(e) => handleTotalExerciciosChange(e)} />
-                        </Form.Field>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Form.Field className={acertosErro.length > 0 ? "error" : ""}>
-                            <label>Exercícios corretos</label>
-                            <Input
-                                placeholder='acertados'
-                                name='acertos'
-                                type="number"
-                                min='0'
-                                value={acertos}
-                                onChange={(e) => handleAcertos(e)}
-                            />
-                        </Form.Field>
-                    </Grid.Column>
-                </Grid> */}
                 <Grid>
                     <Grid.Column floated='right' mobile={16} tablet={6} computer={4}>
                         <Form.Field>

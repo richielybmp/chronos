@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Container, Grid, Input, Label } from 'semantic-ui-react';
+import { Form, Button, Container, Grid, Input } from 'semantic-ui-react';
 import { PortalError } from '../../shared/components';
 import { AssuntoState, Exercicio } from 'chronos-core';
 
@@ -15,7 +15,7 @@ interface Props {
 const NewArtefatoExercicioForm = (props: Props) => {
 
     const { close, createExercicio, updateExercicio, idOnDetail } = props;
-    const { assunto, error, loading } = props.assuntoOnDetail;
+    const { assunto, error } = props.assuntoOnDetail;
 
     //#region States
     const [artefatoData, setArtefatoData] = useState('')
@@ -30,7 +30,7 @@ const NewArtefatoExercicioForm = (props: Props) => {
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
 
-    const descricaoBotao = idOnDetail != "" ? "Editar" : "Salvar";
+    const descricaoBotao = idOnDetail !== "" ? "Editar" : "Salvar";
 
     // #region Handles
     const handleDataChange = (e: any) => {
@@ -63,6 +63,7 @@ const NewArtefatoExercicioForm = (props: Props) => {
     const validaCampos = () => {
         let inconsistente = false;
         setArtefatoDataErro('');
+        setAcertosErro('');
 
         if (artefatoData === '') {
             setArtefatoDataErro("A data da realização da revisão é obrigatória.");
@@ -89,7 +90,7 @@ const NewArtefatoExercicioForm = (props: Props) => {
         e.preventDefault();
         if (!validaCampos() && assunto) {
 
-            var artefato = assunto.artefatos.find(d => d.uuid == idOnDetail);
+            var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
                 // const novo_artefato = new Disciplina("", disciplinaTitulo, disciplinaDescricao, [])
@@ -107,7 +108,7 @@ const NewArtefatoExercicioForm = (props: Props) => {
 
     useEffect(() => {
         if (assunto) {
-            var artefato = assunto.artefatos.find(d => d.uuid == idOnDetail);
+            var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
             if (artefato) {
                 setEhEdicao(true)
             }
@@ -119,7 +120,11 @@ const NewArtefatoExercicioForm = (props: Props) => {
             <PortalError error={error} handleErrorClose={handleErrorClose} />
             <Container text style={{ padding: '2em 2em' }}>
 
-                <h2>Novo Exercício</h2>
+                {ehEdicao ?
+                    <h2>Editar exercício</h2>
+                    :
+                    <h2>Novo exercício</h2>
+                }
 
                 <Grid columns={1} container stackable>
                     <Grid.Column mobile={6}>
@@ -139,7 +144,7 @@ const NewArtefatoExercicioForm = (props: Props) => {
                 <Grid columns={2} container stackable>
                     <Grid.Column>
                         <Form.Field className={totalErro.length > 0 ? "error" : ""}>
-                            <div className={`validate-input ${totalErro != "" && "alert-validate2"}`} data-validate={totalErro}>
+                            <div className={`validate-input ${totalErro !== "" && "alert-validate2"}`} data-validate={totalErro}>
                                 <label>Total de exercícios</label>
                                 <Input
                                     placeholder='feitos'
@@ -153,7 +158,7 @@ const NewArtefatoExercicioForm = (props: Props) => {
                     </Grid.Column>
                     <Grid.Column>
                         <Form.Field className={acertosErro.length > 0 ? "error" : ""}>
-                            <div className={`validate-input ${acertosErro != "" && "alert-validate2"}`} data-validate={acertosErro}>                            <label>Exercícios corretos</label>
+                            <div className={`validate-input ${acertosErro !== "" && "alert-validate2"}`} data-validate={acertosErro}>                            <label>Exercícios corretos</label>
                                 <Input
                                     placeholder='acertados'
                                     name='acertos'

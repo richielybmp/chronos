@@ -16,7 +16,7 @@ body {
 .dropdown.outros-assuntos {
     background-color: #ddd;
     padding: 10px;
-    margin: 0;
+    margin-bottom: 10px;
     border-radius: 6px;
 }
 
@@ -37,6 +37,19 @@ body {
     border-color: #025362;
 }
 
+.center-content {
+    margin: 15px 0;
+    align-items: center; 
+    justify-content: center;
+     display: flex
+}
+
+
+
+.ui.checkbox .box, .ui.checkbox label {
+    display: inline;
+}
+
 @media (min-width: 360px) and (max-width: 667px) {
     .menu.transition.left.visible .item {
         width: 200px;
@@ -51,6 +64,14 @@ body {
         height: 40px;
         display: flex;
         align-items: center;
+    }
+
+    .center-content button{
+        font-size: 1.2rem !important;
+    }
+    
+    .center-content button .icon{
+       font-size: 0;
     }
 }
 

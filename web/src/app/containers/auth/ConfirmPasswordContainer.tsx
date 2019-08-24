@@ -1,11 +1,6 @@
 import { connect } from "react-redux";
-import {
-    recoverPassword,
-    recoverPasswordSuccess,
-    recoverPasswordFailure,
-    clearAuthState
-} from "chronos-core";
-import RecoverPassword from "../../pages/auth/RecoverPassword";
+import { clearAuthState } from "chronos-core";
+import ConfirmPassword from "../../pages/auth/ConfirmPassword";
 
 const mapStateToProps = (state: any) => {
     return {
@@ -15,18 +10,18 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        recoverPassword: (email: string, callBack: Function) => {
-            // var promisse = dispatch(recoverPassword(email, novaSenha))
+        confirmPassword: (novaSenha: string, callBack: Function) => {
+            // var promisse = dispatch(confirmPassword(novaSenha))
 
             // promisse.payload.then((response: any) => {
             //     const data = response.data;
             //     if (!data.error && !data.exception) {
-            //         dispatch(recoverPasswordSuccess());
+            //         dispatch(confirmPasswordSuccess());
             if (callBack)
                 callBack()
             //     }
             //     else {
-            //         dispatch(recoverPasswordFailure(data.error));
+            //         dispatch(confirmPasswordFailure(data.error));
             //     }
             // });
         },
@@ -40,4 +35,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(RecoverPassword);
+)(ConfirmPassword);

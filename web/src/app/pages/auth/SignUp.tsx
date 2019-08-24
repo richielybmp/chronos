@@ -51,7 +51,7 @@ function SignUp(props: Props) {
     if (criouUsuario) {
         return <Confirm
             content="Usuário criado com sucesso! Por favor, prossiga com o login."
-            open={criouUsuario == true}
+            open={criouUsuario === true}
             onCancel={() => setCriouUsuario(false)}
             onConfirm={() => redirectToSignIn()} />
     }

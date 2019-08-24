@@ -56,7 +56,7 @@ export class AssuntoInteractor {
             {
                 'tipo': 2,
                 'data': revisao.data,
-                'quantidade': revisao.quantidade,
+                // 'quantidade': revisao.quantidade,
             }
         )
     }

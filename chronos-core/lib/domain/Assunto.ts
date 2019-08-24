@@ -1,11 +1,14 @@
-import { Material } from './Material';
 import { DtoCodigoDescricao } from "./DtoCodigoDescricao";
 import { Artefato } from "./Artefato";
+import { Material } from './Material';
 import { Exercicio } from './Exercicio';
 import { Revisao } from './Revisao';
 
 export class Assunto extends DtoCodigoDescricao {
-    public artefatos: Artefato[];
+    public artefatos: Artefato[] = [];
+    // public materiais: Material[] = [];
+    // public exercicios: Exercicio[] = [];
+    // public revisoes: Revisao[] = [];
     public anotacao: string;
     public disciplina_uuid: string;
 
@@ -15,7 +18,6 @@ export class Assunto extends DtoCodigoDescricao {
         descricao: string,
     ) {
         super(uuid, descricao)
-        this.artefatos = []
         this.disciplina_uuid = disciplina_uuid
         this.anotacao = '';
     }

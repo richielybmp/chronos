@@ -40,10 +40,6 @@ const AssuntoDetail = (props: Props) => {
         setConfirmationDelete(!confirmationDelete)
     }
 
-    // const handleCloseModal = () => {
-    //     setmodalShowToggle(false)
-    // }
-
     const handleDeleteAction = () => {
         setConfirmationDelete(true)
     }

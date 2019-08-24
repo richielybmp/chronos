@@ -1,16 +1,19 @@
 
 import React from "react";
-import SideMenuContent from "./SideMenuContent";
-import RevisaoContent from "./RevisaoContent";
 import { Divider } from "semantic-ui-react";
+import { Artefato } from "chronos-core";
+import SliderArtefatosContainer from "../../../containers/SliderArtefatosContainer";
 
-export function ArtefatosSection() {
+interface Props {
+    artefatos: Artefato[]
+    , handleEdit: (id: string, tipo: number) => void
+}
 
+export function ArtefatosSection(props: Props) {
     return (
         <>
-            {/* <RevisaoContent /> */}
             <Divider />
-            <SideMenuContent />
+            <SliderArtefatosContainer artefatos={props.artefatos} handleEdit={props.handleEdit} />
         </>
     )
 }
