@@ -102,13 +102,15 @@ export function updateAssuntoFailure(error: any) {
 export function createExercicio(exercicio: Exercicio) {
     return {
         type: EnumCronogramaActions.CREATE_EXERCICIO,
-        payload: interactorAssunto.createExercicio(exercicio)
+        // payload: interactorAssunto.createExercicio(exercicio)
+        payload: interactorCronograma.getAllFull()
     };
 }
 
 export function createExercicioSuccess(data: any) {
     return {
-        type: EnumCronogramaActions.CREATE_EXERCICIO_SUCCESS,
+        // type: EnumCronogramaActions.CREATE_EXERCICIO_SUCCESS,
+        type: EnumCronogramaActions.CREATE_MATERIAL_SUCCESS,
         payload: data
     };
 }
@@ -125,13 +127,15 @@ export function createExercicioFailure(error: any) {
 export function createRevisao(revisao: Revisao) {
     return {
         type: EnumCronogramaActions.CREATE_REVISAO,
-        payload: interactorAssunto.createRevisao(revisao)
+        // payload: interactorAssunto.createRevisao(revisao)
+        payload: interactorCronograma.getAllFull()
     };
 }
 
 export function createRevisaoSuccess(data: any) {
     return {
-        type: EnumCronogramaActions.CREATE_REVISAO_SUCCESS,
+        // type: EnumCronogramaActions.CREATE_REVISAO_SUCCESS,
+        type: EnumCronogramaActions.CREATE_MATERIAL_SUCCESS,
         payload: data
     };
 }
@@ -163,6 +167,29 @@ export function createMaterialSuccess(data: any) {
 export function createMaterialFailure(error: any) {
     return {
         type: EnumCronogramaActions.CREATE_MATERIAL_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
+// #region 'Delete artefato'
+export function deleteArtefato(id: string) {
+    return {
+        type: EnumCronogramaActions.DELETE_ARTEFATO,
+        payload: interactorAssunto.deleteArtefato(id)
+    }
+}
+
+export function deleteArtefatoSuccess(data: any) {
+    return {
+        type: EnumCronogramaActions.DELETE_ARTEFATO_SUCCESS,
+        payload: data
+    };
+}
+
+export function deleteArtefatoFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.DELETE_ARTEFATO_FAILURE,
         payload: error
     };
 }

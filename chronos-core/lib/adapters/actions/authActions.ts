@@ -27,9 +27,15 @@ export function clearAuthStateSuccess() {
 export function clearUserError() {
     return {
         type: EnumAuthActions.CLEAR_USER_ERROR,
+        payload: Promise.resolve(100)
     };
 }
 
+export function clearUserErrorSuccess() {
+    return {
+        type: EnumAuthActions.CLEAR_USER_ERROR_SUCCESS,
+    };
+}
 //#region Sign in
 export function signInUser(user: User) {
     return {

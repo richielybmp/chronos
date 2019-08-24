@@ -416,18 +416,18 @@ export const chronosReducer = (
             assunto_atualizado = state.assuntoOnDetail.assunto
 
             if (assunto_atualizado) {
-                let material = new Material(10, 0);
-                material.data = '01/01/2019';
+                let material = new Material(10, 0, 1);
+                material.data = '2019-01-02';
                 material.uuid = '1234';
                 material.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f' // conjuntos
 
                 let revisao = new Revisao("...", EnumEscopo.QUINZENAL, 1)
-                revisao.data = '02/01/2019';
+                revisao.data = '2019-02-03';
                 revisao.uuid = '5678';
                 revisao.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f';
 
                 let exercicio = new Exercicio(30, 25, 2);
-                exercicio.data = '03/01/2019';
+                exercicio.data = '2019-05-08';
                 exercicio.uuid = '09876';
                 exercicio.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f';
 
@@ -441,8 +441,64 @@ export const chronosReducer = (
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
             }
+        case EnumCronogramaActions.CREATE_MATERIAL_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
+            }
         // #endregion
 
+        // #region 'CREATE REVISAO'
+        case EnumCronogramaActions.CREATE_REVISAO:
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.CREATE_REVISAO_SUCCESS:
+            assunto_atualizado = state.assuntoOnDetail.assunto
+
+            if (assunto_atualizado) {
+                assunto_atualizado.artefatos.push(action.payload.revisao)
+            }
+
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
+            }
+        case EnumCronogramaActions.CREATE_REVISAO_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
+            }
+        // #endregion
+
+        // #region 'DELETE ARTEFATO'
+        case EnumCronogramaActions.DELETE_ARTEFATO:
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.DELETE_ARTEFATO_SUCCESS:
+            // var artefato_delete = action.payload.artefato
+            assunto_atualizado = state.assuntoOnDetail.assunto;
+            if (assunto_atualizado) {
+                assunto_atualizado.artefatos = assunto_atualizado.artefatos.filter((el) => {
+                    // return el.uuid !== artefato_delete.uuid
+                    return el.uuid !== "1234"
+                });
+            }
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
+            }
+        case EnumCronogramaActions.DELETE_ARTEFATO_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
+            }
         //#region 'RESET'
         case EnumCronogramaActions.CLEAR_ERROR:
             return {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ConfirmDelete, ModalContainer, ArtefatosSection, ExpansibleButtons, EmptyArtefatosHeader } from '../shared/components';
 import { Artefato } from 'chronos-core';
-import { Segment, Header } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 import NewArtefatoMaterialFormContainer from '../containers/NewArtefatoMaterialFormContainer';
 import NewArtefatoExercicioFormContainer from '../containers/NewArtefatoExercicioFormContainer';
 import NewArtefatoRevisaoFormContainer from '../containers/NewArtefatoRevisaoFormContainer';
@@ -40,7 +40,6 @@ function ArtefatoList(props: Props) {
         setNovoMaterial(false);
         setKeyOnDetail("");
         setIdParaEditar("");
-        // setIdDisciplinaToCreateSubject("")
     }
 
     const handlePopModalDelete = () => {
@@ -73,13 +72,6 @@ function ArtefatoList(props: Props) {
         setKeyOnDetail("novoexercicio")
     }
 
-    // const handlePopModal = () => {
-    //     setmodalShowToggle(!modalShowToggle)
-    // }
-
-    // const handleCloseModal = () => {
-    //     setmodalShowToggle(false)
-    // }
     //#endregion
 
     const deletarArtefato = () => {

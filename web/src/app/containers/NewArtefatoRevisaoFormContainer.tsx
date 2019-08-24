@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { clearError, Revisao } from "chronos-core";
+import { clearError, Revisao, createRevisao, createRevisaoSuccess, createRevisaoFailure } from "chronos-core";
 import NewArtefatoRevisaoForm from "../pages/forms/NewArtefatoRevisaoForm";
 
 const mapStateToProps = (state: any) => ({
@@ -8,8 +8,20 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        createRevisao: (idAssunto: string, revisao: Revisao) => { },
-        updateRevisao: (idAssunto: string, revisao: Revisao) => { },
+        createRevisao: (revisao: Revisao) => {
+            var promisse = dispatch(createRevisao(revisao))
+
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!response.error && !data.exception) {
+                    dispatch(createRevisaoSuccess(data));
+                }
+                else {
+                    dispatch(createRevisaoFailure(data.message));
+                }
+            });
+        },
+        updateRevisao: (revisao: Revisao) => { },
 
         clearError: () => {
             dispatch(clearError())

@@ -6,7 +6,9 @@ import {
     signInUserSuccess,
     signInUserFailure,
     clearAuthState,
-    clearAuthStateSuccess
+    clearAuthStateSuccess,
+    clearUserError,
+    clearUserErrorSuccess
 } from "chronos-core";
 
 const mapStateToProps = (state: any) => {
@@ -38,6 +40,16 @@ const mapDispatchToProps = (dispatch: any) => {
             await promisse.payload.then((response: any) => {
                 if (response) {
                     dispatch(clearAuthStateSuccess())
+                }
+            })
+        },
+
+        clearUserError: async () => {
+            var promisse = dispatch(clearUserError());
+
+            await promisse.payload.then((response: any) => {
+                if (response) {
+                    dispatch(clearUserErrorSuccess())
                 }
             })
         }

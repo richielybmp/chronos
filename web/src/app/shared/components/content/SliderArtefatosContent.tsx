@@ -8,7 +8,7 @@ import Utils from '../../../utils/utils';
 interface Props {
     artefatos: Artefato[]
     , assuntoOnDetail: AssuntoState
-    , deleteArtefato: (idArtefato: string) => void
+    , deleteArtefato: (idArtefato: string, callBack: Function) => void
     , handleEdit: (id: string, tipo: number) => void
     , clearError: () => void
 }
@@ -68,7 +68,8 @@ export function SliderArtefatosContent(props: Props) {
     const exercicios = artefatos.filter(x => x.tipoArtefato === 2);
 
     const handleDeleteArtefato = (idArtefato: string) => {
-        deleteArtefato(idArtefato);
+        deleteArtefato(idArtefato, () => {
+        });
     }
 
     return (

@@ -7,8 +7,8 @@ interface Props {
     assuntoOnDetail: AssuntoState,
     idOnDetail: string,
     close: () => void,
-    createExercicio: (idAssunto: string, exercicio: Exercicio) => void,
-    updateExercicio: (idAssunto: string, exercicio: Exercicio) => void,
+    createExercicio: (exercicio: Exercicio) => void,
+    updateExercicio: (exercicio: Exercicio) => void,
     clearError: () => void,
 }
 
@@ -93,8 +93,10 @@ const NewArtefatoExercicioForm = (props: Props) => {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
-                // const novo_artefato = new Disciplina("", disciplinaTitulo, disciplinaDescricao, [])
-                // createArtefato(cronograma.uuid, nova_disciplina);
+                let exercicio = new Exercicio(total, acertos, 2);
+                exercicio.data = artefatoData;
+                exercicio.uuid_assunto = assunto.uuid;
+                createExercicio(exercicio);
                 close();
             }
             else if (artefato) {
@@ -106,14 +108,27 @@ const NewArtefatoExercicioForm = (props: Props) => {
     }
     //#endregion
 
-    useEffect(() => {
+    const listenForId = () => {
         if (assunto) {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
             if (artefato) {
-                setEhEdicao(true)
+
+                const exercicio = (artefato as Exercicio);
+
+                setArtefatoData(exercicio.data);
+                setTotal(exercicio.quantidade);
+                setAcertos(exercicio.acertos);
+                setEhEdicao(true);
+
             }
         }
-    }, [props.assuntoOnDetail])
+    }
+    //#endregion
+
+    useEffect(() => {
+        listenForId();
+        return listenForId;
+    }, [props.idOnDetail])
 
     return (
         <Form onSubmit={(e: any, dispatch: any) => handleCreateExercicio(e)}>

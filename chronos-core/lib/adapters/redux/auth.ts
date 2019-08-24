@@ -102,12 +102,15 @@ export const authReducer = (
         case EnumAuthActions.CLEAR_USER_ERROR:
             return { ...state, error: null, loading: false }
 
+        case EnumAuthActions.CLEAR_USER_ERROR_SUCCESS:
+            return state;
+
         case EnumAuthActions.CLEAR_STATE:
             return {
                 user: null
                 , newUser: null
                 , error: undefined
-                , loading: true
+                , loading: false
             }
         case EnumAuthActions.CLEAR_STATE_SUCCESS:
             return INITIAL_STATE

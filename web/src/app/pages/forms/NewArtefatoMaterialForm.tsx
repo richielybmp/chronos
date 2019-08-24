@@ -16,17 +16,17 @@ const materiaisOptions = [
     {
         key: "1",
         text: "Vídeo aula",
-        value: "1",
+        value: 1,
     },
     {
         key: "2",
         text: "Livros",
-        value: "2",
+        value: 2,
     },
     {
         key: "3",
         text: "Internet / artigos / post",
-        value: "3",
+        value: 3,
     },
 ]
 
@@ -102,9 +102,9 @@ const NewArtefatoMaterialForm = (props: Props) => {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
-                let material = new Material(10, tipoMaterial);
+                let material = new Material(minutos, 0, tipoMaterial);
                 material.data = artefatoData;
-                material.uuid_assunto = '1234567890'
+                material.uuid_assunto = assunto.uuid;
                 createMaterial(material);
                 close();
             }
@@ -115,16 +115,28 @@ const NewArtefatoMaterialForm = (props: Props) => {
             }
         }
     }
+
+    const listenForId = () => {
+        if (assunto) {
+            var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
+            if (artefato) {
+
+                const material = (artefato as Material);
+
+                setArtefatoData(material.data);
+                setMinutos(material.minutos);
+                setTipoMaterial(material.tipoMaterial);
+                setEhEdicao(true);
+
+            }
+        }
+    }
     //#endregion
 
-    // useEffect(() => {
-    //     if (assunto) {
-    //         var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
-    //         if (artefato) {
-    //             setEhEdicao(true)
-    //         }
-    //     }
-    // }, [props.assuntoOnDetail])
+    useEffect(() => {
+        listenForId();
+        return listenForId;
+    }, [props.idOnDetail])
 
     return (
         <Form onSubmit={(e: any, dispatch: any) => handleCreateMaterial(e)}>
@@ -161,6 +173,7 @@ const NewArtefatoMaterialForm = (props: Props) => {
                                 placeholder='Tipo de material'
                                 search
                                 selection
+                                value={tipoMaterial}
                                 options={materiaisOptions}
                                 onChange={(e, { value }) => handleTipoChanged(value)}
                             />

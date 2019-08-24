@@ -4,6 +4,7 @@ import { Exercicio, Revisao, Material } from '..';
 
 export class AssuntoInteractor {
 
+
     constructor() {
     }
 
@@ -51,6 +52,8 @@ export class AssuntoInteractor {
         )
     }
 
+    // POST
+    // '/assunto/{id}
     createRevisao(revisao: Revisao) {
         return api.post(`/assunto/artefato/${revisao.uuid_assunto}`,
             {
@@ -61,6 +64,8 @@ export class AssuntoInteractor {
         )
     }
 
+    // POST
+    // '/assunto/{id}
     createMaterial(material: Material) {
         return api.post(`/assunto/artefato/${material.uuid_assunto}`,
             {
@@ -69,6 +74,13 @@ export class AssuntoInteractor {
                 'minutos': material.minutos,
             }
         )
+    }
+
+    // DELETE
+    // '/assunto/{id}
+    deleteArtefato(id: string) {
+        // return api.delete('')
+        return api.get("/cronogramas");
     }
 
 }

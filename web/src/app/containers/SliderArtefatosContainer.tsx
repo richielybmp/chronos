@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { clearError } from "chronos-core";
+import { clearError, deleteArtefato, deleteArtefatoSuccess, deleteArtefatoFailure } from "chronos-core";
 import { SliderArtefatosContent } from "../shared/components";
 
 const mapStateToProps = (state: any) => ({
@@ -8,8 +8,22 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        deleteArtefato: (idArtefato: string) => {
-            alert(`delete artefato ${idArtefato}`);
+        deleteArtefato: (idArtefato: string, callback: Function) => {
+            // alert(`delete artefato ${idArtefato}`);
+            var promisse = dispatch(deleteArtefato(idArtefato))
+
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+
+                if (!response.error && (!data.exception || response.status !== "404")) {
+                    dispatch(deleteArtefatoSuccess(data));
+                    if (callback)
+                        callback()
+                }
+                else {
+                    dispatch(deleteArtefatoFailure(data.message));
+                }
+            });
         },
 
         clearError: () => {

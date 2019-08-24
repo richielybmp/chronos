@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { clearError, Exercicio } from "chronos-core";
+import { clearError, Exercicio, createExercicio, createExercicioSuccess, createExercicioFailure } from "chronos-core";
 import NewArtefatoExercicioForm from "../pages/forms/NewArtefatoExercicioForm";
 
 const mapStateToProps = (state: any) => ({
@@ -8,11 +8,24 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        createExercicio: (idAssunto: string, exercicio: Exercicio) => { },
-        updateExercicio: (idAssunto: string, exercicio: Exercicio) => { },
+        createExercicio: (exercicio: Exercicio) => {
+            var promisse = dispatch(createExercicio(exercicio))
+            debugger
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!response.error && !data.exception) {
+                    dispatch(createExercicioSuccess(data));
+                }
+                else {
+                    dispatch(createExercicioFailure(data.message));
+                }
+            });
+        },
+
+        updateExercicio: (exercicio: Exercicio) => { },
 
         clearError: () => {
-            dispatch(clearError())
+            dispatch(clearError());
         }
     }
 };

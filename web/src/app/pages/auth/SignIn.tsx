@@ -10,7 +10,8 @@ interface Props {
     match: any,
     history: any,
     signIn: (user: User) => void,
-    clearState: () => void
+    clearState: () => void,
+    clearUserError: () => void,
 }
 
 function SignIn(props: Props) {
@@ -34,6 +35,10 @@ function SignIn(props: Props) {
         listenForAuthUser();
         return listenForAuthUser;
     }, [props.auth.user])
+
+    useEffect(() => {
+        props.clearUserError();
+    }, [])
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />

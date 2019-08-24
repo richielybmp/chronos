@@ -8,8 +8,8 @@ interface Props {
     assuntoOnDetail: AssuntoState,
     idOnDetail: string,
     close: () => void,
-    createRevisao: (idAssunto: string, revisao: Revisao) => void,
-    updateRevisao: (idAssunto: string, revisao: Revisao) => void,
+    createRevisao: (revisao: Revisao) => void,
+    updateRevisao: (revisao: Revisao) => void,
     clearError: () => void,
 }
 
@@ -69,8 +69,10 @@ const NewArtefatoRevisaoForm = (props: Props) => {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
-                // const novo_artefato = new Disciplina("", disciplinaTitulo, disciplinaDescricao, [])
-                // createArtefato(cronograma.uuid, nova_disciplina);
+                let revisao = new Revisao("", optionRevisao, 1);
+                revisao.data = artefatoData;
+                revisao.uuid_assunto = assunto.uuid;
+                createRevisao(revisao);
                 close();
             }
             else if (artefato) {
