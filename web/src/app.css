@@ -5,6 +5,18 @@ html, body, #root {
 body {
     background-color: #F8F8F8
 }
+
+ .chart-container {
+    position: relative;
+    height:300px;
+    width:100%;
+    margin-top: 80px;
+  }
+
+.chart-container h2, .chart-container h3{
+    margin-bottom:15px;
+}
+
 .section-revisoes .ui.checkbox{
     margin-right: 45px;
 }
@@ -13,7 +25,7 @@ body {
     background-color: #007f97 !important;
 }
 
-.dropdown.outros-assuntos {
+.dropdown.outros-assuntos , .dropdown.outros-cronogramas {
     background-color: #ddd;
     padding: 10px;
     margin-bottom: 10px;
@@ -44,7 +56,9 @@ body {
      display: flex
 }
 
-
+.slider-relatorios-artefatos .slick-track{
+    min-height: 440px;
+}
 
 .ui.checkbox .box, .ui.checkbox label {
     display: inline;
@@ -94,13 +108,13 @@ body {
 }
 
 @media (max-width: 600px) {
-    .dropdown.outros-assuntos {
+    .dropdown.outros-assuntos, .dropdown.outros-cronogramas {
         display: block;
         width: 100%;
         min-width: 0;
     }
 
-    .dropdown.outros-assuntos i{
+    .dropdown.outros-assuntos i, .dropdown.outros-cronogramas i{
         float: right;
         top: 4px;
     }

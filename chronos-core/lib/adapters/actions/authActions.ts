@@ -36,6 +36,7 @@ export function clearUserErrorSuccess() {
         type: EnumAuthActions.CLEAR_USER_ERROR_SUCCESS,
     };
 }
+
 //#region Sign in
 export function signInUser(user: User) {
     return {
@@ -106,10 +107,10 @@ export function logOutUserFailure(error: any) {
 //#endregion
 
 //#region Recover Password
-export function recoverPassword(email: string, novaSenha: string) {
+export function recoverPassword(email: string) {
     return {
         type: EnumAuthActions.RECOVER_PASSWORD,
-        payload: interactor.recoverPassword(email, novaSenha)
+        payload: interactor.recoverPassword(email)
     };
 }
 
@@ -123,6 +124,29 @@ export function recoverPasswordSuccess() {
 export function recoverPasswordFailure(error: any) {
     return {
         type: EnumAuthActions.RECOVER_PASSWORD_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
+//#region Confirm Password
+export function confirmPassword(senha: string) {
+    return {
+        type: EnumAuthActions.CONFIRM_PASSWORD,
+        payload: interactor.confirmPassword(senha)
+    };
+}
+
+export function confirmPasswordSuccess(data: any) {
+    return {
+        type: EnumAuthActions.CONFIRM_PASSWORD_SUCCESS,
+        payload: data
+    };
+}
+
+export function confirmPasswordFailure(error: any) {
+    return {
+        type: EnumAuthActions.CONFIRM_PASSWORD_FAILURE,
         payload: error
     };
 }

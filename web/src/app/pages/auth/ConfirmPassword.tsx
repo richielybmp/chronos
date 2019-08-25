@@ -52,10 +52,7 @@ function ConfirmPassword(props: Props) {
                     </Modal.Actions>
                 </Modal>
             }
-
-
         </>
-
     )
 }
 

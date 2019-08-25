@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, Icon, Divider } from 'semantic-ui-react';
 import "./slider.css";
 import Slider from 'react-slick';
-import { Artefato, Revisao, Material, Exercicio, AssuntoState, EnumEscopo } from 'chronos-core';
-import Utils from '../../../utils/utils';
+import { RevisaoCard } from '..';
+import { MaterialCard, ExercicioCard } from '../cards';
+import { Artefato, AssuntoState } from 'chronos-core';
+import { Divider, Icon } from 'semantic-ui-react';
 
 interface Props {
     artefatos: Artefato[]
@@ -13,49 +14,6 @@ interface Props {
     , clearError: () => void
 }
 
-interface CardProps {
-    actionDelete: (idArtefato: string) => void
-    , actionEdit: (id: string, tipo: number) => void
-    , artefato: Artefato
-}
-
-function RevisaoCard(props: CardProps) {
-    const { actionDelete, artefato, actionEdit } = props;
-
-    let descricaoEscopo = '';
-
-    switch ((artefato as Revisao).escopo) {
-        case EnumEscopo.QUINZENAL:
-            descricaoEscopo = '15 dias';
-            break;
-
-        default:
-            break;
-    }
-
-    return (
-        <Card color='black'>
-            <Card.Content>
-                <Icon
-                    style={{ float: 'right', marginRight: '0', cursor: 'pointer' }}
-                    floated='right'
-                    name='x'
-                    onClick={() => actionDelete(artefato.uuid)} />
-                <Card.Header>{descricaoEscopo}</Card.Header>
-                <Card.Meta>{Utils.formatDateString(artefato.data)}</Card.Meta>
-            </Card.Content>
-            <Card.Content
-                style={{ marginRight: '0', cursor: 'pointer' }}
-                onClick={() => actionEdit(artefato.uuid, 1)}
-            >
-                <Icon
-                    name='edit'
-                />
-                Editar
-            </Card.Content>
-        </Card>
-    )
-}
 
 export function SliderArtefatosContent(props: Props) {
 
@@ -108,7 +66,7 @@ export function SliderArtefatosContent(props: Props) {
 
                                 {materiais.map((artefato: Artefato, index: number) => {
                                     return (
-                                        <RevisaoCard
+                                        <MaterialCard
                                             key={index}
                                             artefato={artefato}
                                             actionDelete={handleDeleteArtefato}
@@ -132,7 +90,7 @@ export function SliderArtefatosContent(props: Props) {
 
                                 {exercicios.map((artefato: Artefato, index: number) => {
                                     return (
-                                        <RevisaoCard
+                                        <ExercicioCard
                                             key={index}
                                             artefato={artefato}
                                             actionDelete={handleDeleteArtefato}
@@ -173,15 +131,15 @@ function PrevArrow(props: any) {
 function SliderSettings() {
     const settings = {
         infinite: false,
-        speed: 500,
+        speed: 300,
         slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToScroll: 2,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
         initialSlide: 0,
         responsive: [
             {
-                breakpoint: 600,
+                breakpoint: 992,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
@@ -189,7 +147,7 @@ function SliderSettings() {
                 }
             },
             {
-                breakpoint: 480,
+                breakpoint: 662,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1

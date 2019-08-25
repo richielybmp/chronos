@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { clearAuthState } from "chronos-core";
+import { clearAuthState, confirmPassword, confirmPasswordSuccess, confirmPasswordFailure } from "chronos-core";
 import ConfirmPassword from "../../pages/auth/ConfirmPassword";
 
 const mapStateToProps = (state: any) => {
@@ -11,19 +11,20 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         confirmPassword: (novaSenha: string, callBack: Function) => {
-            // var promisse = dispatch(confirmPassword(novaSenha))
+            var promisse = dispatch(confirmPassword(novaSenha))
 
-            // promisse.payload.then((response: any) => {
-            //     const data = response.data;
-            //     if (!data.error && !data.exception) {
-            //         dispatch(confirmPasswordSuccess());
-            if (callBack)
-                callBack()
-            //     }
-            //     else {
-            //         dispatch(confirmPasswordFailure(data.error));
-            //     }
-            // });
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+
+                if (!data.error && !data.exception) {
+                    dispatch(confirmPasswordSuccess(data));
+                    if (callBack)
+                        callBack()
+                }
+                else {
+                    dispatch(confirmPasswordFailure(data.error ? data.error : data));
+                }
+            });
         },
 
         clearState: () => {

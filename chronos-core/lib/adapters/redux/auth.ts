@@ -7,6 +7,7 @@ type AuthStateType = {
     , newUser: any
     , error: any
     , loading: boolean
+    // , mailToRecover: string
 }
 
 const INITIAL_STATE = {
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
     , newUser: null
     , error: undefined
     , loading: false
+    // , mailToRecover: ''
 };
 
 export const authReducer = (
@@ -99,6 +101,26 @@ export const authReducer = (
             };
         //#endregion
 
+        //#region 'recover password'
+        case EnumAuthActions.RECOVER_PASSWORD:
+            return { ...state, error: null, loading: true }
+        case EnumAuthActions.RECOVER_PASSWORD_SUCCESS:
+            return { ...state, error: null, loading: false }
+        case EnumAuthActions.RECOVER_PASSWORD_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return { ...state, error: error, loading: false }
+        //#endregion
+
+        //#region 'confirm password'
+        case EnumAuthActions.CONFIRM_PASSWORD:
+            return { ...state, error: null, loading: true }
+        case EnumAuthActions.CONFIRM_PASSWORD_SUCCESS:
+            return { ...state, error: null, loading: false }
+        case EnumAuthActions.CONFIRM_PASSWORD_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return { ...state, error: error, loading: false }
+        //#endregion
+
         case EnumAuthActions.CLEAR_USER_ERROR:
             return { ...state, error: null, loading: false }
 
@@ -111,6 +133,7 @@ export const authReducer = (
                 , newUser: null
                 , error: undefined
                 , loading: false
+                // , mailToRecover: ''
             }
         case EnumAuthActions.CLEAR_STATE_SUCCESS:
             return INITIAL_STATE

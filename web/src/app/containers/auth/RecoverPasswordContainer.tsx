@@ -16,19 +16,19 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         recoverPassword: (email: string, callBack: Function) => {
-            // var promisse = dispatch(recoverPassword(email, novaSenha))
+            var promisse = dispatch(recoverPassword(email))
 
-            // promisse.payload.then((response: any) => {
-            //     const data = response.data;
-            //     if (!data.error && !data.exception) {
-            //         dispatch(recoverPasswordSuccess());
-            if (callBack)
-                callBack()
-            //     }
-            //     else {
-            //         dispatch(recoverPasswordFailure(data.error));
-            //     }
-            // });
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!data.error && !data.exception) {
+                    dispatch(recoverPasswordSuccess());
+                    if (callBack)
+                        callBack()
+                }
+                else {
+                    dispatch(recoverPasswordFailure(data.error ? data.error : data.message));
+                }
+            });
         },
 
         clearState: () => {

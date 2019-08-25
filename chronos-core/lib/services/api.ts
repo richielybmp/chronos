@@ -14,7 +14,7 @@ let onRrefreshed = (token: string) => {
 }
 
 const api = axios.create({
-    baseURL: "http://cronos.vizzarconsultoria.com/api"
+    baseURL: "https://cronos.vizzarconsultoria.com/api"
 });
 
 api.interceptors.request.use(async config => {
@@ -91,6 +91,8 @@ api.interceptors.response.use(async response => {
 
             return await retryOriginalRequest;
         case 404:
+        case 422:
+            debugger
             return await new Promise((resolve, reject) => {
                 resolve(error.response)
                 reject(error.response)

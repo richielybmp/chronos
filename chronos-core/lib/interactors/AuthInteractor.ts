@@ -42,11 +42,10 @@ export class AuthInteractor {
     // POST
     // '/recuperar-senha'
     // email: string, novaSenha: string
-    recoverPassword(email: string, novaSenha: string) {
-        return api.post('/password/reset',
+    recoverPassword(email: string) {
+        return api.post('/email-reset-password',
             {
                 'email': email,
-                'novaSenha': novaSenha
             }
         )
     }
@@ -60,4 +59,31 @@ export class AuthInteractor {
         })
     }
 
+    confirmPassword(senha: string) {
+        const params: any = this.obtenhaParams();
+        return api.post('/reset-password',
+            {
+                'email': 'email',
+                'token': params["token"],
+                'password': senha
+            }
+        )
+    }
+
+    obtenhaParams(): any {
+        var qs = (function (a: any) {
+            if (a == "") return {};
+            var b = [];
+            for (var i = 0; i < a.length; ++i) {
+                var p: any[] = a[i].split('=', 2);
+                if (p.length == 1)
+                    b[p[0]] = "";
+                else
+                    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+            }
+            return b;
+        })(window.location.search.substr(1).split('&'));
+
+        return qs;
+    }
 }
