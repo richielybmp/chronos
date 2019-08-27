@@ -51,11 +51,11 @@ function ObtenhaDadosAssuntos(assuntos: Assunto[]) {
 
                 return {
                     label: el.descricao,
-                    backgroundColor: 'rgba(0,99,132,0.2)',
-                    borderColor: 'rgba(0,99,132,1)',
+                    backgroundColor: 'rgba(77,65,127,0.2)',
+                    borderColor: 'rgba(77,69,110,1)',
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(0,99,132,0.4)',
-                    hoverBorderColor: 'rgba(0,99,132,1)',
+                    hoverBackgroundColor: 'rgba(78,68,117,0.4)',
+                    hoverBorderColor: 'rgba(77,65,127,1)',
                     data: [total, acertos]
                 }
             })

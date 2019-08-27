@@ -41,7 +41,13 @@ function SeletorCronogramas(props: PropsSeletor) {
 
 function BlankFooter() {
     return (
-        <div style={{ height: '100px' }} />
+        <div style={{
+            backgroundColor: '#dbdbdb',
+            height: '100px',
+            bottom: '0',
+            position: 'fixed',
+            width: '100%'
+        }} />
     )
 }
 
@@ -70,10 +76,13 @@ function Relatorios(props: Props) {
         <>
             <SubHeader content="Relatórios" />
 
-            <Container>
+            <Container className='chronos-charts'>
                 <SeletorCronogramas cronogramas={cronogramas} setOnDetail={handleOnDetail} />
+
                 <DisciplinasCountChart cronogramas={cronogramas} />
+
                 <AssuntosCountChart cronograma={onDetail} />
+
 
                 {onDetail &&
                     onDetail.disciplinas.map((disc: Disciplina, i) => {
@@ -86,7 +95,7 @@ function Relatorios(props: Props) {
 
             </Container>
 
-            <BlankFooter />
+            {/* <BlankFooter /> */}
         </>
     )
 }
@@ -112,12 +121,13 @@ function PrevArrow(props: any) {
 
 function SliderSettings() {
     const settings = {
+        dots: true,
         infinite: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
+        // nextArrow: <NextArrow />,
+        // prevArrow: <PrevArrow />,
         initialSlide: 0,
     };
 

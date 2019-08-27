@@ -54,7 +54,7 @@ export class AuthInteractor {
     // '/user'
     // nome: string
     updateUser(name: string) {
-        return api.put(`/user/${JSON.parse(localStorage.state).auth.user.user.uuid}`, {
+        return api.put(`/users/${JSON.parse(localStorage.state).auth.user.user.uuid}`, {
             'name': name
         })
     }
