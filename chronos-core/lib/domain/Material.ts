@@ -4,9 +4,18 @@ export class Material extends Artefato {
     public minutos: number;
     public tipoMaterial: number;
 
-    constructor(minutos: number, tipoArtefato: number, tipoMaterial: number) {
-        super(tipoArtefato)
-        this.minutos = minutos
-        this.tipoMaterial = tipoMaterial
+    constructor(
+        uuid: string,
+        uuid_assunto: string,
+        data: string,
+        descricao: string,
+        minutos: number,
+        tipoMaterial: number,
+        tipoArtefato: number
+    ) {
+        super(uuid, uuid_assunto, data, descricao, tipoArtefato);
+
+        this.minutos = minutos;
+        this.tipoMaterial = tipoMaterial;
     }
 }

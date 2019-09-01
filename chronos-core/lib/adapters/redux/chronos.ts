@@ -2,6 +2,7 @@ import { EnumCronogramaActions, Material, Revisao, EnumEscopo, Exercicio } from 
 import { CronogramaActionsType } from "../actions/cronogramaActions";
 import { ChronosStateType } from "../../frameworks";
 import { CronogramaRepository } from "../../storage";
+import _ = require("lodash");
 
 const repository = new CronogramaRepository();
 
@@ -271,27 +272,18 @@ export const chronosReducer = (
 
         // #region 'FETCH assunto'
         case EnumCronogramaActions.FETCH_ASSUNTO:
-            var cronograma_atual = state.cronogramaOnDetail.cronograma
-
-            if (cronograma_atual) {
-                var disciplina = cronograma_atual.disciplinas.find(d => d.uuid == action.payload.idDisciplina)
-                var assunto;
-                if (disciplina) {
-                    assunto = repository.convertaAssunto(disciplina, action.payload.idAssunto)
-                }
-            }
             return {
                 ...state,
                 assuntoOnDetail: {
                     ...state.assuntoOnDetail,
-                    assunto: assunto,
                     loading: true
                 }
             }
         case EnumCronogramaActions.FETCH_ASSUNTO_SUCCESS:
+            assuntoDetalhe = repository.convertaAssunto(action.payload.assunto[0]);
             return {
                 ...state,
-                assuntoOnDetail: { ...state.assuntoOnDetail, loading: false }
+                assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assuntoDetalhe, loading: false }
             }
         case EnumCronogramaActions.FETCH_ASSUNTO_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -391,7 +383,7 @@ export const chronosReducer = (
             assunto_atualizado = state.assuntoOnDetail.assunto
 
             if (assunto_atualizado) {
-                assunto_atualizado.artefatos.push(action.payload.exercicio)
+                assunto_atualizado.artefatos.push(repository.convertaExercicio(action.payload.exercicio));
             }
 
             return {
@@ -416,25 +408,7 @@ export const chronosReducer = (
             assunto_atualizado = state.assuntoOnDetail.assunto
 
             if (assunto_atualizado) {
-                let material = new Material(10, 0, 1);
-                material.data = '2019-01-02';
-                material.uuid = '1234';
-                material.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f' // conjuntos
-
-                let revisao = new Revisao("...", EnumEscopo.QUINZENAL, 1)
-                revisao.data = '2019-02-03';
-                revisao.uuid = '5678';
-                revisao.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f';
-
-                let exercicio = new Exercicio(30, 25, 2);
-                exercicio.data = '2019-05-08';
-                exercicio.uuid = '09876';
-                exercicio.uuid_assunto = '2607d9a4-e29f-4917-90e4-18a5159f2f3f';
-
-                assunto_atualizado.artefatos.push(exercicio)
-                assunto_atualizado.artefatos.push(material)
-                assunto_atualizado.artefatos.push(revisao)
-                // assunto_atualizado.artefatos.push(action.payload.material)
+                assunto_atualizado.artefatos.push(repository.convertaMaterial(action.payload.material));
             }
 
             return {
@@ -459,7 +433,7 @@ export const chronosReducer = (
             assunto_atualizado = state.assuntoOnDetail.assunto
 
             if (assunto_atualizado) {
-                assunto_atualizado.artefatos.push(action.payload.revisao)
+                assunto_atualizado.artefatos.push(repository.convertaRevisao(action.payload.revisao));
             }
 
             return {
@@ -474,6 +448,27 @@ export const chronosReducer = (
             }
         // #endregion
 
+        // #region 'UPDATE ARTEFATO'
+        case EnumCronogramaActions.UPDATE_ARTEFATO:
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: null, loading: true }
+            }
+        case EnumCronogramaActions.UPDATE_ARTEFATO_SUCCESS:
+            assunto_atualizado = state.assuntoOnDetail.assunto;
+
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
+            }
+        case EnumCronogramaActions.UPDATE_ARTEFATO_FAILURE:
+            error = action.payload || { message: action.payload.message };
+            return {
+                ...state,
+                assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
+            }
+        // #endregion
+
         // #region 'DELETE ARTEFATO'
         case EnumCronogramaActions.DELETE_ARTEFATO:
             return {
@@ -481,17 +476,37 @@ export const chronosReducer = (
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: null, loading: true }
             }
         case EnumCronogramaActions.DELETE_ARTEFATO_SUCCESS:
-            // var artefato_delete = action.payload.artefato
-            assunto_atualizado = state.assuntoOnDetail.assunto;
-            if (assunto_atualizado) {
-                assunto_atualizado.artefatos = assunto_atualizado.artefatos.filter((el) => {
-                    // return el.uuid !== artefato_delete.uuid
-                    return el.uuid !== "1234"
+            var artefato_delete = obtenhaIDArtefatoDeletado(action.payload);
+            var assuntoDetalhe = state.assuntoOnDetail.assunto;
+            var cronogramaDetalhe = state.cronogramaOnDetail.cronograma;
+
+            // removendo do assunto detalhe
+            if (assuntoDetalhe) {
+                _.remove(assuntoDetalhe.artefatos, (el) => {
+                    return el.uuid == artefato_delete.uuid;
                 });
             }
+
+            if (cronogramaDetalhe && assuntoDetalhe) {
+                var disc_uuid = assuntoDetalhe.disciplina_uuid;
+                var disc = cronogramaDetalhe.disciplinas.find(x => x.uuid == disc_uuid);
+                if (disc) {
+                    var obj_assunto = disc.assuntos.find(x => x.uuid == artefato_delete.assunto_uuid);
+                    if (obj_assunto) {
+                        _.remove(obj_assunto.artefatos, (el) => {
+                            return el.uuid == artefato_delete;
+                        });
+                    }
+                }
+            }
+
             return {
                 ...state,
-                assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
+                assuntoOnDetail: {
+                    ...state.assuntoOnDetail,
+                    assunto: assuntoDetalhe,
+                    loading: false
+                }
             }
         case EnumCronogramaActions.DELETE_ARTEFATO_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -499,6 +514,8 @@ export const chronosReducer = (
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
             }
+        //#endregion
+
         //#region 'RESET'
         case EnumCronogramaActions.CLEAR_ERROR:
             return {
@@ -522,4 +539,22 @@ export const chronosReducer = (
         default:
             return state;
     }
+}
+
+/*
+Método responsável por identificar a resposta da action de 
+DELETE ARTEFATO e atualizar os artefatos do state.
+*/
+const obtenhaIDArtefatoDeletado = (artefato: any) => {
+
+    if (artefato.material) {
+        return artefato.material;
+    }
+    else if (artefato.revisao) {
+        return artefato.revisao;
+    }
+    else if (artefato.exercicio) {
+        return artefato.exercicio;
+    }
+
 }

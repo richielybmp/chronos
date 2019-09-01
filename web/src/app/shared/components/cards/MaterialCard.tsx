@@ -13,7 +13,7 @@ export function MaterialCard(props: CardProps) {
     const { actionDelete, artefato, actionEdit } = props;
 
     const minutos = (artefato as Material).minutos;
-    const material = ObtenhaTipoDoMaterial((artefato as Material).tipoMaterial);
+    const material = ObtenhaTipoDoMaterial((artefato as Material).tipoMaterial.toString());
 
     return (
         <Card color='black'>
@@ -31,7 +31,7 @@ export function MaterialCard(props: CardProps) {
             </Card.Content>
             <Card.Content
                 style={{ marginRight: '0', cursor: 'pointer' }}
-                onClick={() => actionEdit(artefato.uuid, 1)}
+                onClick={() => actionEdit(artefato.uuid, 0)}
             >
                 <Icon name='edit' />
                 Editar
@@ -40,8 +40,8 @@ export function MaterialCard(props: CardProps) {
     )
 }
 
-function ObtenhaTipoDoMaterial(indicador: number) {
-    switch (indicador) {
+function ObtenhaTipoDoMaterial(indicador: string) {
+    switch (parseInt(indicador)) {
         case 1:
             return "Vídeo aula";
         case 2:

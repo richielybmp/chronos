@@ -28,6 +28,10 @@ body {
     margin-right: 45px;
 }
 
+textarea:focus{
+    border-color: rgba(70,6,138,0.4) !important;
+}
+
 .btn-editar {
     background-color: #007f97 !important;
 }
@@ -69,6 +73,10 @@ body {
 
 .ui.checkbox .box, .ui.checkbox label {
     display: inline;
+}
+
+.meta{
+    word-wrap: break-word;
 }
 
 @media (min-width: 360px) and (max-width: 667px) {

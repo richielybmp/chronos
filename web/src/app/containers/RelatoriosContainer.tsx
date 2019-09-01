@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { clearError, deleteArtefato, deleteArtefatoSuccess, deleteArtefatoFailure } from "chronos-core";
+import { clearError, deleteArtefato, deleteArtefatoSuccess, deleteArtefatoFailure, fetchCronogramas, fetchCronogramasSuccess, fetchCronogramasFailure } from "chronos-core";
 import Relatorios from "../pages/Relatorios";
 
 const mapStateToProps = (state: any) => {
@@ -10,6 +10,20 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
+        // Obter todos os cronogramas.
+        fetchCronogramas: () => {
+            var promisse = dispatch(fetchCronogramas())
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!data.error && !data.exception) {
+                    dispatch(fetchCronogramasSuccess(data));
+                }
+                else {
+                    dispatch(fetchCronogramasFailure(data));
+                }
+            });
+        },
+
         clearError: () => {
             dispatch(clearError())
         }

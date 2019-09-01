@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Container, Grid, Input, Dropdown } from 'semantic-ui-react';
+import { Form, Button, Container, Grid, Input, Dropdown, TextArea } from 'semantic-ui-react';
 import { PortalError } from '../../shared/components';
-import { AssuntoState, Material } from 'chronos-core';
+import { AssuntoState, Material, updateArtefato, Artefato } from 'chronos-core';
 
 interface Props {
     assuntoOnDetail: AssuntoState,
     idOnDetail: string,
     close: () => void,
     createMaterial: (material: Material) => void,
-    updateMaterial: (material: Material) => void,
+    updateArtefato: (artefato: Artefato) => void,
     clearError: () => void,
 }
 
@@ -32,7 +32,7 @@ const materiaisOptions = [
 
 const NewArtefatoMaterialForm = (props: Props) => {
 
-    const { close, createMaterial, updateMaterial, idOnDetail } = props;
+    const { close, createMaterial, updateArtefato, idOnDetail } = props;
     const { assunto, error } = props.assuntoOnDetail;
 
     //#region States
@@ -44,6 +44,9 @@ const NewArtefatoMaterialForm = (props: Props) => {
 
     const [tipoMaterial, setTipoMaterial] = useState(0)
     const [tipoMaterialErro, setTipoMaterialErro] = useState('')
+
+    const [descricao, setDescricao] = useState('')
+    const [descricaoErro, setDescricaoErro] = useState('')
 
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
@@ -64,6 +67,10 @@ const NewArtefatoMaterialForm = (props: Props) => {
     const handleTipoChanged = (tipo: any) => {
         setTipoMaterialErro('');
         setTipoMaterial(tipo);
+    }
+
+    const handleDescricaoChange = (value: string) => {
+        setDescricao(value);
     }
 
     const handleErrorClose = () => {
@@ -102,15 +109,18 @@ const NewArtefatoMaterialForm = (props: Props) => {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
-                let material = new Material(minutos, 0, tipoMaterial);
-                material.data = artefatoData;
-                material.uuid_assunto = assunto.uuid;
+                let material = new Material('', assunto.uuid, artefatoData, descricao, minutos, tipoMaterial, 0);
                 createMaterial(material);
                 close();
             }
             else if (artefato) {
-                // const nova_disciplina = new Disciplina(idOnDetail, disciplinaTitulo, disciplinaDescricao, [])
-                // updateDisciplina(cronograma.uuid, nova_disciplina)
+                let material = artefato as Material;
+                material.data = artefatoData;
+                material.descricao = descricao;
+                material.tipoMaterial = tipoMaterial;
+                material.minutos = minutos;
+
+                updateArtefato(material);
                 close();
             }
         }
@@ -119,15 +129,16 @@ const NewArtefatoMaterialForm = (props: Props) => {
     const listenForId = () => {
         if (assunto) {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
+
             if (artefato) {
-
                 const material = (artefato as Material);
-
-                setArtefatoData(material.data);
+                const data = artefato.data.split(" ").length > 1 ?
+                    new Date(artefato.data).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : artefato.data
+                setArtefatoData(data);
                 setMinutos(material.minutos);
-                setTipoMaterial(material.tipoMaterial);
+                setTipoMaterial(parseInt(material.tipoMaterial.toString()));
+                setDescricao(material.descricao);
                 setEhEdicao(true);
-
             }
         }
     }
@@ -191,6 +202,15 @@ const NewArtefatoMaterialForm = (props: Props) => {
                                 onChange={(e) => handleMinutos(e)}
                             />
                         </Form.Field>
+                    </Grid.Column>
+                </Grid>
+                <Grid>
+                    <Grid.Column>
+                        <TextArea
+                            placeholder='Anotações'
+                            value={descricao}
+                            onChange={(e: any) => handleDescricaoChange(e.target.value.toString())}
+                        />
                     </Grid.Column>
                 </Grid>
                 <Grid>

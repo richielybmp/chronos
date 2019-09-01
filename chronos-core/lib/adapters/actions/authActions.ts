@@ -1,5 +1,4 @@
-import { EnumAuthActions } from '../../domain';
-import { User } from '../../domain/User';
+import { EnumAuthActions, User } from '../../domain';
 import { AuthInteractor } from '../../interactors';
 
 const interactor = new AuthInteractor();
@@ -11,6 +10,7 @@ type AuthCronogramasType = {
 
 export type AuthActionsType = AuthCronogramasType;
 
+//#region 'Actions para CLEAR'
 export function clearAuthState() {
     return {
         type: EnumAuthActions.CLEAR_STATE,
@@ -36,8 +36,9 @@ export function clearUserErrorSuccess() {
         type: EnumAuthActions.CLEAR_USER_ERROR_SUCCESS,
     };
 }
+//#endregion
 
-//#region Sign in
+//#region 'Actions para SIGN IN'
 export function signInUser(user: User) {
     return {
         type: EnumAuthActions.SIGN_IN,
@@ -60,7 +61,7 @@ export function signInUserFailure(error: any) {
 }
 //#endregion
 
-//#region Sign up
+//#region 'Actions para SIGN UP'
 export function signUpUser(user: User) {
     return {
         type: EnumAuthActions.SIGN_UP,
@@ -83,7 +84,7 @@ export function signUpUserFailure(error: any) {
 }
 //#endregion
 
-//#region Log out
+//#region 'Actions para LOG OUT'
 export function logOutUser() {
     return {
         type: EnumAuthActions.LOG_OUT,
@@ -106,7 +107,7 @@ export function logOutUserFailure(error: any) {
 }
 //#endregion
 
-//#region Recover Password
+//#region 'Actions para RECOVER PASSWORD'
 export function recoverPassword(email: string) {
     return {
         type: EnumAuthActions.RECOVER_PASSWORD,
@@ -129,7 +130,7 @@ export function recoverPasswordFailure(error: any) {
 }
 //#endregion
 
-//#region Confirm Password
+//#region 'Actions para CONFIRM PASSWORD'
 export function confirmPassword(senha: string) {
     return {
         type: EnumAuthActions.CONFIRM_PASSWORD,
@@ -152,7 +153,7 @@ export function confirmPasswordFailure(error: any) {
 }
 //#endregion
 
-//#region Update User
+//#region 'Actions para UPDATE PASSWORD'
 export function updateUser(name: string) {
     return {
         type: EnumAuthActions.UPDATE_USER,

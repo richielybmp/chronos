@@ -1,5 +1,5 @@
 import { DisciplinaInteractor } from '../../interactors/DisciplinaInteractor';
-import { Disciplina, EnumCronogramaActions } from "../..";
+import { EnumCronogramaActions, Disciplina } from '../../domain';
 
 const interactorDisciplina = new DisciplinaInteractor();
 

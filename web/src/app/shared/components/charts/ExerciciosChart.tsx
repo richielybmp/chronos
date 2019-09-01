@@ -31,9 +31,9 @@ function ObtenhaExercicios(artefatos: Artefato[]) {
         }
     });
 
-    exercicios.push(new Exercicio(10, 8, 2));
-    exercicios.push(new Exercicio(50, 35, 2));
-    exercicios.push(new Exercicio(30, 22, 2));
+    // exercicios.push(new Exercicio(10, 8, 2));
+    // exercicios.push(new Exercicio(50, 35, 2));
+    // exercicios.push(new Exercicio(30, 22, 2));
 
     return exercicios;
 }

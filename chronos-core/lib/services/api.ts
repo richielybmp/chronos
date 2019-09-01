@@ -58,14 +58,14 @@ api.interceptors.response.use(async response => {
     });
 
     switch (status) {
-        case 400:
-            // TODO Mesangem de erro de requisição inválida
+        // case 400:
+        //     // TODO Mesangem de erro de requisição inválida
 
-            // Criando uma nova promise para tentativa de refresh token
-            return await new Promise((resolve, reject) => {
-                resolve(error.response)
-                reject(error.response)
-            });
+        //     // Criando uma nova promise para tentativa de refresh token
+        //     return await new Promise((resolve, reject) => {
+        //         resolve(error.response)
+        //         reject(error.response)
+        //     });
         case 401:
             if (!isRefreshing) {
 
@@ -78,7 +78,7 @@ api.interceptors.response.use(async response => {
                         if ((newToken != undefined || newToken != null) &&
                             (newToken.data.token != null || newToken.data.token != undefined)) {
                             isRefreshing = false;
-                            login(newToken.data.token)
+                            login(newToken.data.token);
                             onRrefreshed(newToken);
                         }
                         else {
@@ -90,16 +90,33 @@ api.interceptors.response.use(async response => {
             }
 
             return await retryOriginalRequest;
+        case 400:
         case 404:
         case 422:
-            debugger
+        case 500:
             return await new Promise((resolve, reject) => {
                 resolve(error.response)
                 reject(error.response)
             });
-        case 500:
-            // TODO inserir link para redirecionamento de pagina com erro 500
-            // window.location = '/500';
+            if (!isRefreshing) {
+
+                isRefreshing = true;
+
+                // Atualizamos o login para evitar de cair a sessão com token na blacklist.
+                await api.post('/refresh')
+                    .then((newToken: any) => {
+                        if ((newToken != undefined || newToken != null) &&
+                            (newToken.data.token != null || newToken.data.token != undefined)) {
+                            isRefreshing = false;
+                            login(newToken.data.token);
+                        }
+                        else {
+                            window.location.href = '/unauthorized';
+                            logout();
+                        }
+                    });
+            }
+
             return await new Promise((resolve, reject) => {
                 resolve(error.response)
                 reject(error.response)

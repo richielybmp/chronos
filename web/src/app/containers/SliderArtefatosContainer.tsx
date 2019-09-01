@@ -8,9 +8,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        deleteArtefato: (idArtefato: string, callback: Function) => {
-            // alert(`delete artefato ${idArtefato}`);
-            var promisse = dispatch(deleteArtefato(idArtefato))
+        deleteArtefato: (idArtefato: string, tipoArtefato: number, callback: Function) => {
+            var promisse = dispatch(deleteArtefato(idArtefato, tipoArtefato))
 
             promisse.payload.then((response: any) => {
                 const data = response.data;

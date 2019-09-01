@@ -30,13 +30,17 @@ const mapDispatchToProps = (dispatch: any) => {
         },
 
         fetchAssunto: (idDisciplina: string, idAssunto: string) => {
-            try {
-                dispatch(fetchAssunto(idDisciplina, idAssunto))
-                dispatch(fetchAssuntoSuccess({}));
-            }
-            catch (e) {
-                dispatch(fetchAssuntoFailure(e.message));
-            }
+            var promisse = dispatch(fetchAssunto(idDisciplina, idAssunto))
+
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!response.error && !data.exception) {
+                    dispatch(fetchAssuntoSuccess(data));
+                }
+                else {
+                    dispatch(fetchAssuntoFailure(data.message));
+                }
+            });
         },
 
         clearAssuntoOnDetail: () => {

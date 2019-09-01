@@ -26,14 +26,10 @@ function ObtenhaMateriais(artefatos: Artefato[]) {
     var exercicios: Material[] = [];
 
     artefatos.forEach(element => {
-        if (element.tipoArtefato === 2) {
+        if (element.tipoArtefato === 0) {
             exercicios.push(element as Material);
         }
     });
-
-    exercicios.push(new Material(20, 0, 1));
-    exercicios.push(new Material(50, 0, 2));
-    exercicios.push(new Material(30, 0, 3));
 
     return exercicios;
 }
@@ -48,21 +44,21 @@ function ObtenhaDadosAssuntos(assuntos: Assunto[]) {
                 const exercicios = ObtenhaMateriais(el.artefatos);
 
                 const minutos_video = exercicios.reduce((a, b) => {
-                    if (b.tipoMaterial === 1) {
+                    if (parseInt(b.tipoMaterial.toString()) === 1) {
                         return a + b['minutos'];
                     }
                     return a;
                 }, 0);
 
                 const minutos_livros = exercicios.reduce((a, b) => {
-                    if (b.tipoMaterial === 2) {
+                    if (parseInt(b.tipoMaterial.toString()) === 2) {
                         return a + b['minutos'];
                     }
                     return a;
                 }, 0);
 
                 const minutos_internet = exercicios.reduce((a, b) => {
-                    if (b.tipoMaterial === 3) {
+                    if (parseInt(b.tipoMaterial.toString()) === 3) {
                         return a + b['minutos'];
                     }
                     return a;

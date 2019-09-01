@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Container, Grid, Input, Label } from 'semantic-ui-react';
+import { Form, Button, Container, Grid, Input, Label, TextArea, Segment } from 'semantic-ui-react';
 import { PortalError } from '../../shared/components';
-import { AssuntoState, Revisao } from 'chronos-core';
+import { AssuntoState, Revisao, Artefato } from 'chronos-core';
 import RevisaoContent from '../../shared/components/content/RevisaoContent';
+import Utils from '../../utils/utils';
 
 interface Props {
     assuntoOnDetail: AssuntoState,
     idOnDetail: string,
     close: () => void,
     createRevisao: (revisao: Revisao) => void,
-    updateRevisao: (revisao: Revisao) => void,
+    updateArtefato: (artefatl: Artefato) => void,
     clearError: () => void,
 }
 
 const NewArtefatoRevisaoForm = (props: Props) => {
 
-    const { close, createRevisao, updateRevisao, idOnDetail } = props;
+    const { close, createRevisao, updateArtefato, idOnDetail } = props;
     const { assunto, error } = props.assuntoOnDetail;
 
     //#region States
@@ -24,6 +25,9 @@ const NewArtefatoRevisaoForm = (props: Props) => {
 
     const [optionRevisao, setOptionRevisao] = useState(-1)
     const [optionRevisaoErro, setOptionRevisaoErro] = useState('')
+
+    const [descricao, setDescricao] = useState('')
+    const [descricaoErro, setDescricaoErro] = useState('')
 
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
@@ -40,6 +44,10 @@ const NewArtefatoRevisaoForm = (props: Props) => {
         setOptionRevisao(option);
     }
 
+    const handleDescricaoChange = (value: string) => {
+        setDescricao(value);
+    }
+
     const handleErrorClose = () => {
         props.clearError()
     }
@@ -54,10 +62,11 @@ const NewArtefatoRevisaoForm = (props: Props) => {
             inconsistente = true;
         }
 
-        if (!optionRevisao) {
+        if (optionRevisao === -1) {
             setOptionRevisaoErro("Selecione alguma das opções de período da revisão realizada.");
             inconsistente = true;
         }
+
         return inconsistente;
     }
 
@@ -69,15 +78,17 @@ const NewArtefatoRevisaoForm = (props: Props) => {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
-                let revisao = new Revisao("", optionRevisao, 1);
-                revisao.data = artefatoData;
-                revisao.uuid_assunto = assunto.uuid;
+                let revisao = new Revisao('', assunto.uuid, artefatoData, descricao, optionRevisao, 1);
                 createRevisao(revisao);
                 close();
             }
             else if (artefato) {
-                // const nova_disciplina = new Disciplina(idOnDetail, disciplinaTitulo, disciplinaDescricao, [])
-                // updateDisciplina(cronograma.uuid, nova_disciplina)
+                let revisao = artefato as Revisao;
+                revisao.data = artefatoData;
+                revisao.descricao = descricao;
+                revisao.escopo = optionRevisao;
+
+                updateArtefato(revisao);
                 close();
             }
         }
@@ -88,12 +99,14 @@ const NewArtefatoRevisaoForm = (props: Props) => {
         if (assunto) {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
             if (artefato) {
+                const data = artefato.data.split(" ").length > 1 ?
+                    new Date(artefato.data).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : artefato.data
 
-                const data = '2019-12-03'
-                const escopo = (artefato as Revisao).escopo;
+                const escopo = (artefato as Revisao).escopo.toString();
 
                 setArtefatoData(data);
-                setOptionRevisao(escopo);
+                setOptionRevisao(parseInt(escopo));
+                setDescricao(artefato.descricao);
                 setEhEdicao(true);
 
             }
@@ -126,7 +139,15 @@ const NewArtefatoRevisaoForm = (props: Props) => {
                     </Grid.Column>
                 </Grid>
 
-                <RevisaoContent setOptionSelected={handleOptionSelected} value={optionRevisao} />
+                <Segment basic>
+                    <RevisaoContent setOptionSelected={handleOptionSelected} value={optionRevisao} />
+
+                    <TextArea
+                        placeholder='Anotações'
+                        value={descricao}
+                        onChange={(e: any) => handleDescricaoChange(e.target.value.toString())}
+                    />
+                </Segment>
 
                 {optionRevisaoErro.length > 0 &&
                     <Label color='red' basic>{optionRevisaoErro} </Label>

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./slider.css";
 import Slider from 'react-slick';
-import { RevisaoCard } from '..';
+import { RevisaoCard, ConfirmDelete } from '..';
 import { MaterialCard, ExercicioCard } from '../cards';
 import { Artefato, AssuntoState } from 'chronos-core';
 import { Divider, Icon } from 'semantic-ui-react';
@@ -9,11 +9,10 @@ import { Divider, Icon } from 'semantic-ui-react';
 interface Props {
     artefatos: Artefato[]
     , assuntoOnDetail: AssuntoState
-    , deleteArtefato: (idArtefato: string, callBack: Function) => void
+    , deleteArtefato: (id: string, tipo: number, callBack: Function) => void
     , handleEdit: (id: string, tipo: number) => void
     , clearError: () => void
 }
-
 
 export function SliderArtefatosContent(props: Props) {
 
@@ -21,13 +20,33 @@ export function SliderArtefatosContent(props: Props) {
 
     const { artefatos, deleteArtefato, handleEdit } = props;
 
+    const [idParaDeletar, setIdParaDeletar] = useState("");
+    const [tipoParaDeletar, setTipoParaDeletar] = useState(-1);
+    const [confirmationDelete, setConfirmationDelete] = useState(false)
+
     const materiais = artefatos.filter(x => x.tipoArtefato === 0);
     const revisoes = artefatos.filter(x => x.tipoArtefato === 1);
     const exercicios = artefatos.filter(x => x.tipoArtefato === 2);
 
-    const handleDeleteArtefato = (idArtefato: string) => {
-        deleteArtefato(idArtefato, () => {
-        });
+    const handlePopModalDelete = () => {
+        setConfirmationDelete(!confirmationDelete)
+    }
+
+    const handleDeleteArtefato = (idArtefato: string, tipoArtefato: number) => {
+        if (idArtefato && tipoArtefato !== -1) {
+            setConfirmationDelete(true);
+            setIdParaDeletar(idArtefato);
+            setTipoParaDeletar(tipoArtefato);
+        }
+    }
+
+    const deletarArtefato = () => {
+        if (idParaDeletar) {
+            deleteArtefato(idParaDeletar, tipoParaDeletar, () => { });
+            setConfirmationDelete(false);
+            setIdParaDeletar("");
+            setTipoParaDeletar(-1);
+        }
     }
 
     return (
@@ -45,7 +64,7 @@ export function SliderArtefatosContent(props: Props) {
                                         <RevisaoCard
                                             key={index}
                                             artefato={artefato}
-                                            actionDelete={handleDeleteArtefato}
+                                            actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
                                             actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
                                         />
                                     )
@@ -69,7 +88,7 @@ export function SliderArtefatosContent(props: Props) {
                                         <MaterialCard
                                             key={index}
                                             artefato={artefato}
-                                            actionDelete={handleDeleteArtefato}
+                                            actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
                                             actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
                                         />
                                     )
@@ -93,7 +112,7 @@ export function SliderArtefatosContent(props: Props) {
                                         <ExercicioCard
                                             key={index}
                                             artefato={artefato}
-                                            actionDelete={handleDeleteArtefato}
+                                            actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
                                             actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
                                         />
                                     )
@@ -106,6 +125,14 @@ export function SliderArtefatosContent(props: Props) {
                     </>
                 }
             </div>
+
+            {/* Modal 'Excluir Artefato' */}
+            <ConfirmDelete
+                show={confirmationDelete}
+                pergunta="Deseja realmente excluir o artefato?"
+                toggle={handlePopModalDelete}
+                confirmDelete={deletarArtefato} />
+
         </div>
     );
 }

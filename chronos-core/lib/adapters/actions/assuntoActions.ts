@@ -1,10 +1,7 @@
-import { CronogramaInteractor } from './../../interactors/CronogramaInteractor';
 import { AssuntoInteractor } from '../../interactors/AssuntoInteractor';
-import { EnumCronogramaActions, Assunto, } from "../..";
-import { Exercicio, Revisao, Material } from '../../domain';
+import { Exercicio, Revisao, Material, Artefato, EnumCronogramaActions, Assunto } from '../../domain';
 
-const interactorAssunto = new AssuntoInteractor()
-const interactorCronograma = new CronogramaInteractor()
+const interactorAssunto = new AssuntoInteractor();
 
 //#region "Actions para CREATE ASSUNTO"
 export function createAssunto(assunto: Assunto) {
@@ -33,14 +30,14 @@ export function createAssuntoFailure(error: any) {
 export function fetchAssunto(idDisciplina: string, idAssunto: string) {
     return {
         type: EnumCronogramaActions.FETCH_ASSUNTO,
-        payload: { idDisciplina: idDisciplina, idAssunto: idAssunto }
+        payload: interactorAssunto.getAssunto(idDisciplina, idAssunto)
     };
 }
 
-export function fetchAssuntoSuccess(a: any) {
+export function fetchAssuntoSuccess(data: any) {
     return {
         type: EnumCronogramaActions.FETCH_ASSUNTO_SUCCESS,
-        payload: a
+        payload: data
     };
 }
 
@@ -102,15 +99,13 @@ export function updateAssuntoFailure(error: any) {
 export function createExercicio(exercicio: Exercicio) {
     return {
         type: EnumCronogramaActions.CREATE_EXERCICIO,
-        // payload: interactorAssunto.createExercicio(exercicio)
-        payload: interactorCronograma.getAllFull()
+        payload: interactorAssunto.createExercicio(exercicio)
     };
 }
 
 export function createExercicioSuccess(data: any) {
     return {
-        // type: EnumCronogramaActions.CREATE_EXERCICIO_SUCCESS,
-        type: EnumCronogramaActions.CREATE_MATERIAL_SUCCESS,
+        type: EnumCronogramaActions.CREATE_EXERCICIO_SUCCESS,
         payload: data
     };
 }
@@ -127,15 +122,13 @@ export function createExercicioFailure(error: any) {
 export function createRevisao(revisao: Revisao) {
     return {
         type: EnumCronogramaActions.CREATE_REVISAO,
-        // payload: interactorAssunto.createRevisao(revisao)
-        payload: interactorCronograma.getAllFull()
+        payload: interactorAssunto.createRevisao(revisao)
     };
 }
 
 export function createRevisaoSuccess(data: any) {
     return {
-        // type: EnumCronogramaActions.CREATE_REVISAO_SUCCESS,
-        type: EnumCronogramaActions.CREATE_MATERIAL_SUCCESS,
+        type: EnumCronogramaActions.CREATE_REVISAO_SUCCESS,
         payload: data
     };
 }
@@ -152,8 +145,7 @@ export function createRevisaoFailure(error: any) {
 export function createMaterial(material: Material) {
     return {
         type: EnumCronogramaActions.CREATE_MATERIAL,
-        // payload: interactorAssunto.createMaterial(material)
-        payload: interactorCronograma.getAllFull()
+        payload: interactorAssunto.createMaterial(material)
     };
 }
 
@@ -172,11 +164,34 @@ export function createMaterialFailure(error: any) {
 }
 //#endregion
 
-// #region 'Delete artefato'
-export function deleteArtefato(id: string) {
+//#region "Actions para UPDATE ARTEFATO"
+export function updateArtefato(artefato: Artefato) {
+    return {
+        type: EnumCronogramaActions.UPDATE_ARTEFATO,
+        payload: interactorAssunto.updateArtefato(artefato)
+    };
+}
+
+export function updateArtefatoSuccess(data: any) {
+    return {
+        type: EnumCronogramaActions.UPDATE_ARTEFATO_SUCCESS,
+        payload: data
+    };
+}
+
+export function updateArtefatoFailure(error: any) {
+    return {
+        type: EnumCronogramaActions.UPDATE_ARTEFATO_FAILURE,
+        payload: error
+    };
+}
+//#endregion
+
+//#region 'Actions para DELETE ARTEFATO'
+export function deleteArtefato(id: string, tipoArtefato: number) {
     return {
         type: EnumCronogramaActions.DELETE_ARTEFATO,
-        payload: interactorAssunto.deleteArtefato(id)
+        payload: interactorAssunto.deleteArtefato(id, tipoArtefato)
     }
 }
 
@@ -195,11 +210,10 @@ export function deleteArtefatoFailure(error: any) {
 }
 //#endregion
 
-//#region "Actions para CLEAR "
+//#region "Actions para CLEAR"
 export function clearAssuntoOnDetail() {
     return {
         type: EnumCronogramaActions.RESET_ASSUNTO,
     };
 }
-
 //#endregion

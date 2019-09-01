@@ -1,6 +1,6 @@
 {
     "name": "chronos-core",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "author": "Richiely Batista, Filipe Maciel, Mateus Stedler",
     "license": "",
     "main": "dist/index.js",
@@ -13,6 +13,7 @@
         "@types/react": "^16.8.22",
         "@types/redux-logger": "3.0.6",
         "axios": "^0.19.0",
+        "lodash": "^4.17.15",
         "redux": "4.0.0",
         "redux-logger": "3.0.6"
     },

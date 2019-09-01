@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { clearError, Material, createMaterial, createMaterialSuccess, createMaterialFailure } from "chronos-core";
+import { clearError, Material, createMaterial, createMaterialSuccess, createMaterialFailure, Artefato, updateArtefato, updateArtefatoSuccess, updateArtefatoFailure } from "chronos-core";
 import NewArtefatoMaterialForm from "../pages/forms/NewArtefatoMaterialForm";
 
 const mapStateToProps = (state: any) => ({
@@ -9,7 +9,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => {
     return {
         createMaterial: (material: Material) => {
-            var promisse = dispatch(createMaterial(material))
+            var promisse = dispatch(createMaterial(material));
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
@@ -22,7 +22,19 @@ const mapDispatchToProps = (dispatch: any) => {
             });
         },
 
-        updateMaterial: (material: Material) => { },
+        updateArtefato: (artefato: Artefato) => {
+            var promisse = dispatch(updateArtefato(artefato));
+
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!response.error && !data.exception) {
+                    dispatch(updateArtefatoSuccess(data));
+                }
+                else {
+                    dispatch(updateArtefatoFailure(data.message));
+                }
+            });
+        },
 
         clearError: () => {
             dispatch(clearError())

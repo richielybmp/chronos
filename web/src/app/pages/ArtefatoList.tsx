@@ -1,36 +1,34 @@
 import React, { useState } from 'react'
 import { ConfirmDelete, ModalContainer, ArtefatosSection, ExpansibleButtons, EmptyArtefatosHeader } from '../shared/components';
-import { Artefato } from 'chronos-core';
+import { Artefato, AssuntoState } from 'chronos-core';
 import { Segment } from 'semantic-ui-react';
 import NewArtefatoMaterialFormContainer from '../containers/NewArtefatoMaterialFormContainer';
 import NewArtefatoExercicioFormContainer from '../containers/NewArtefatoExercicioFormContainer';
 import NewArtefatoRevisaoFormContainer from '../containers/NewArtefatoRevisaoFormContainer';
 
 interface Props {
-    artefatos: Artefato[],
+    // artefatos: Artefato[],
+    assuntoOnDetail: AssuntoState,
     matchUrl: any,
     history: any,
-    deleteArtefato: (id: string) => void
 }
 
 function ArtefatoList(props: Props) {
 
-    const { artefatos, deleteArtefato } = props
+    // const { artefatos } = props
+    const { assunto, loading, error } = props.assuntoOnDetail
 
-    const hasArtefatos = artefatos.length > 0
+    const artefatos = assunto ? assunto.artefatos : [];
+
+    const hasArtefatos = assunto && assunto.artefatos.length > 0;
 
     //#region States
     const [novaRevisao, setNovaRevisao] = useState(false)
     const [novoMaterial, setNovoMaterial] = useState(false)
     const [novoExercicio, setNovoExercicio] = useState(false)
-
-    const [confirmationDelete, setConfirmationDelete] = useState(false)
     const [keyOnDetail, setKeyOnDetail] = useState("")
-
     const [idParaEditar, setIdParaEditar] = useState("")
 
-    const [idParaDeletar, setIdParaDeletar] = useState("")
-    // const [modalShowToggle, setmodalShowToggle] = useState(false)
     //#endregion
 
     //#region Handles
@@ -41,21 +39,6 @@ function ArtefatoList(props: Props) {
         setKeyOnDetail("");
         setIdParaEditar("");
     }
-
-    const handlePopModalDelete = () => {
-        setConfirmationDelete(!confirmationDelete)
-    }
-
-    // const handleDeletarArtefato = (id: string) => {
-    //     if (id != null) {
-    //         setConfirmationDelete(true)
-    //         setIdParaDeletar(id)
-    //     }
-    // }
-
-    // const handleUpdateArtefato = (id: string) => {
-    //     setidOnDetail(id)
-    // }
 
     const handleNovaRevisao = () => {
         setNovaRevisao(true)
@@ -73,14 +56,6 @@ function ArtefatoList(props: Props) {
     }
 
     //#endregion
-
-    const deletarArtefato = () => {
-        if (idParaDeletar) {
-            deleteArtefato(idParaDeletar)
-            setConfirmationDelete(false)
-            setIdParaDeletar("")
-        }
-    }
 
     const handleEditArtefato = (id: string, tipoArtefato: number) => {
         setIdParaEditar(id);
@@ -102,20 +77,11 @@ function ArtefatoList(props: Props) {
 
     return (
         <>
-            {/* Modal 'Excluir Artefato' */}
-            <ConfirmDelete
-                show={confirmationDelete}
-                pergunta="Deseja realmente excluir o artefato?"
-                toggle={handlePopModalDelete}
-                confirmDelete={deletarArtefato} />
-
-
             {novoMaterial && showMaterialForm(keyOnDetail, idParaEditar, handleClose)}
             {novoExercicio && showExerciciosForm(keyOnDetail, idParaEditar, handleClose)}
             {novaRevisao && showRevisaoForm(keyOnDetail, idParaEditar, handleClose)}
 
             <Segment basic>
-                {/* {true ? */}
                 {hasArtefatos ?
                     <>
                         <ExpansibleButtons
@@ -147,6 +113,7 @@ function showMaterialForm(keyOnDetail: string, id: string, handleClose: () => vo
             </ModalContainer>
         )
     }
+
 }
 
 function showExerciciosForm(keyOnDetail: string, id: string, handleClose: () => void) {

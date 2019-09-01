@@ -12,7 +12,7 @@ interface CardProps {
 export function RevisaoCard(props: CardProps) {
     const { actionDelete, artefato, actionEdit } = props;
 
-    let descricaoEscopo = ObtenhaEscopoRevisao((artefato as Revisao).escopo);
+    let descricaoEscopo = ObtenhaEscopoRevisao((artefato as Revisao).escopo.toString());
 
     return (
         <Card color='black'>
@@ -36,8 +36,8 @@ export function RevisaoCard(props: CardProps) {
     )
 }
 
-function ObtenhaEscopoRevisao(escopo: number) {
-    switch (escopo) {
+function ObtenhaEscopoRevisao(escopo: string) {
+    switch (parseInt(escopo)) {
         case EnumEscopo.DIARIA:
             return '24 horas';
         case EnumEscopo.SEMANAL:

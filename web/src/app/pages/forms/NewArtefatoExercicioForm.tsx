@@ -1,36 +1,39 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Container, Grid, Input } from 'semantic-ui-react';
+import { Form, Button, Container, Grid, Input, TextArea } from 'semantic-ui-react';
 import { PortalError } from '../../shared/components';
-import { AssuntoState, Exercicio } from 'chronos-core';
+import { AssuntoState, Exercicio, Artefato } from 'chronos-core';
 
 interface Props {
     assuntoOnDetail: AssuntoState,
     idOnDetail: string,
     close: () => void,
     createExercicio: (exercicio: Exercicio) => void,
-    updateExercicio: (exercicio: Exercicio) => void,
+    updateArtefato: (artefato: Artefato) => void,
     clearError: () => void,
 }
 
 const NewArtefatoExercicioForm = (props: Props) => {
 
-    const { close, createExercicio, updateExercicio, idOnDetail } = props;
+    const { close, createExercicio, updateArtefato, idOnDetail } = props;
     const { assunto, error } = props.assuntoOnDetail;
+
+    const descricaoBotao = idOnDetail !== "" ? "Editar" : "Salvar";
 
     //#region States
     const [artefatoData, setArtefatoData] = useState('')
     const [artefatoDataErro, setArtefatoDataErro] = useState('')
 
-    // Exercicios
     const [total, setTotal] = useState(0)
     const [totalErro, setTotalErro] = useState('')
+
     const [acertos, setAcertos] = useState(0)
     const [acertosErro, setAcertosErro] = useState('')
 
+    const [descricao, setDescricao] = useState('')
+    const [descricaoErro, setDescricaoErro] = useState('')
+
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
-
-    const descricaoBotao = idOnDetail !== "" ? "Editar" : "Salvar";
 
     // #region Handles
     const handleDataChange = (e: any) => {
@@ -54,6 +57,10 @@ const NewArtefatoExercicioForm = (props: Props) => {
             setAcertosErro("Quantidade de exercícios acertados é maior do que o total.")
         }
         setAcertos(valor)
+    }
+
+    const handleDescricaoChange = (value: string) => {
+        setDescricao(value);
     }
 
     const handleErrorClose = () => {
@@ -93,15 +100,18 @@ const NewArtefatoExercicioForm = (props: Props) => {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
 
             if (!ehEdicao) {
-                let exercicio = new Exercicio(total, acertos, 2);
-                exercicio.data = artefatoData;
-                exercicio.uuid_assunto = assunto.uuid;
+                const exercicio = new Exercicio('', assunto.uuid, artefatoData, descricao, total, acertos, 2);
                 createExercicio(exercicio);
                 close();
             }
             else if (artefato) {
-                // const nova_disciplina = new Disciplina(idOnDetail, disciplinaTitulo, disciplinaDescricao, [])
-                // updateDisciplina(cronograma.uuid, nova_disciplina)
+                let exercicio = artefato as Exercicio;
+                exercicio.data = artefatoData;
+                exercicio.descricao = descricao;
+                exercicio.quantidade = total;
+                exercicio.acertos = acertos;
+
+                updateArtefato(exercicio);
                 close();
             }
         }
@@ -111,15 +121,17 @@ const NewArtefatoExercicioForm = (props: Props) => {
     const listenForId = () => {
         if (assunto) {
             var artefato = assunto.artefatos.find(d => d.uuid === idOnDetail);
+
             if (artefato) {
-
                 const exercicio = (artefato as Exercicio);
+                const data = artefato.data.split(" ").length > 1 ?
+                    new Date(artefato.data).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : artefato.data
 
-                setArtefatoData(exercicio.data);
+                setArtefatoData(data);
                 setTotal(exercicio.quantidade);
                 setAcertos(exercicio.acertos);
+                setDescricao(exercicio.descricao);
                 setEhEdicao(true);
-
             }
         }
     }
@@ -184,6 +196,15 @@ const NewArtefatoExercicioForm = (props: Props) => {
                                 />
                             </div>
                         </Form.Field>
+                    </Grid.Column>
+                </Grid>
+                <Grid>
+                    <Grid.Column>
+                        <TextArea
+                            placeholder='Anotações'
+                            value={descricao}
+                            onChange={(e: any) => handleDescricaoChange(e.target.value.toString())}
+                        />
                     </Grid.Column>
                 </Grid>
                 <Grid>

@@ -8,7 +8,8 @@ interface Props {
     cronogramasState: CronogramasState,
     match: any,
     history: any,
-    clearError: () => void
+    clearError: () => void,
+    fetchCronogramas: () => void,
 }
 
 interface PropsSeletor {
@@ -70,6 +71,10 @@ function Relatorios(props: Props) {
         };
     }, [props.cronogramasState.cronogramas])
 
+    useEffect(() => {
+        props.fetchCronogramas();
+    }, [])
+
     const settings = SliderSettings();
 
     return (
@@ -82,7 +87,6 @@ function Relatorios(props: Props) {
                 <DisciplinasCountChart cronogramas={cronogramas} />
 
                 <AssuntosCountChart cronograma={onDetail} />
-
 
                 {onDetail &&
                     onDetail.disciplinas.map((disc: Disciplina, i) => {

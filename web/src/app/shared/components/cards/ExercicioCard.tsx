@@ -16,8 +16,6 @@ export function ExercicioCard(props: CardProps) {
     const acertos = (artefato as Exercicio).acertos;
     let proporcao = Math.floor(acertos * 100 / total);
 
-    proporcao = Math.floor(Math.random() * 101);
-
     const color = proporcao <= 50 ? 'red' : proporcao > 50 && proporcao <= 85 ? 'orange' : 'green';
 
     return (
@@ -31,11 +29,12 @@ export function ExercicioCard(props: CardProps) {
                 <br />
                 <Card.Content>{`${acertos} exercícios corretos de ${total}`}</Card.Content>
                 <Progress percent={proporcao} color={color} progress />
+                {/* <Card.Meta>{artefato.descricao}</Card.Meta> */}
                 <Card.Meta>{Utils.formatDateString(artefato.data)}</Card.Meta>
             </Card.Content>
             <Card.Content
                 style={{ marginRight: '0', cursor: 'pointer' }}
-                onClick={() => actionEdit(artefato.uuid, 1)}
+                onClick={() => actionEdit(artefato.uuid, 2)}
             >
                 <Icon
                     name='edit'

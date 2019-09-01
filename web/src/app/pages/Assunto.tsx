@@ -12,7 +12,7 @@ interface Props {
     cronogramaOnDetail: CronogramaState,
     delete: (id: string, callback: Function) => void,
     fetchAssunto: (idDisciplina: string, idAssunto: string) => void,
-    // clearError: () => void,
+    clearError: () => void,
     editAssunto: (assunto: Assunto) => void,
 }
 
@@ -58,12 +58,8 @@ const AssuntoDetail = (props: Props) => {
         }
     }
 
-    if (loading || props.assuntoOnDetail.loading) {
-        return <LoaderComponent tamanho='big' titulo="Carregando" />
-    }
-
     const handleErrorClose = () => {
-        // props.clearError()
+        props.clearError()
     }
 
     const handleUpdateAssunto = (descricao: string) => {
@@ -73,6 +69,9 @@ const AssuntoDetail = (props: Props) => {
 
     return (
         <>
+            {(loading || props.assuntoOnDetail.loading) &&
+                <LoaderComponent tamanho='big' titulo="Carregando" />
+            }
             {/* Modal 'Excluir" */}
             <ConfirmDelete
                 show={confirmationDelete}
@@ -115,7 +114,7 @@ const AssuntoDetail = (props: Props) => {
                     }
 
                     <AssuntoContent assunto={assunto} editAssunto={handleUpdateAssunto}>
-                        <ArtefatoListContainer history={props.history} artefatos={assunto.artefatos} matchUrl={props.match} />
+                        <ArtefatoListContainer history={props.history} matchUrl={props.match} />
                         <PortalError error={error} handleErrorClose={handleErrorClose} />
                     </AssuntoContent>
 

@@ -1,21 +1,22 @@
 import { Assunto } from '../domain/Assunto';
-import { Cronograma, Disciplina } from "../domain";
+import { Cronograma, Disciplina, Artefato, Material, Exercicio, Revisao } from "../domain";
 
 export class CronogramaRepository {
-    convertaAssunto(disciplina: Disciplina, idAssunto: string): any {
-        let toModel;
-        let assunto = disciplina.assuntos.find(a => a.uuid == idAssunto)
-
-        if (assunto) {
-            toModel = new Assunto(assunto.uuid, assunto.disciplina_uuid, assunto.descricao)
-            //TODO: atribuir os artefatos
-            //toModel.artefatos = assunto.artefatos
-        }
-
-        return toModel;
-    }
 
     constructor() {
+    }
+
+    convertaAssunto(assunto: any): Assunto {
+        let objAssunto = new Assunto(assunto.uuid, assunto.disciplina_uuid, assunto.descricao);
+        objAssunto.anotacao = assunto.anotacao;
+
+        objAssunto.artefatos = [];
+        objAssunto.artefatos.push(...this.convertaExercicios(assunto.exercicios));
+        objAssunto.artefatos.push(...this.convertaMateriais(assunto.materiais));
+        objAssunto.artefatos.push(...this.convertaRevisoes(assunto.revisoes));
+
+
+        return objAssunto;
     }
 
     // De-Para Cronogramas
@@ -59,11 +60,13 @@ export class CronogramaRepository {
         let assuntos: Assunto[] = [];
 
         listaDeAssuntos.forEach((el: any) => {
-            var assunto = new Assunto(el.uuid, el.disciplina_uuid, el.descricao);
+            let assunto = new Assunto(el.uuid, el.disciplina_uuid, el.descricao);
             assunto.anotacao = el.anotacao;
-            assunto.artefatos.push(...el.exercicios)
-            assunto.artefatos.push(...el.materiais)
-            assunto.artefatos.push(...el.revisoes)
+
+            assunto.artefatos = [];
+            assunto.artefatos.push(...this.convertaExercicios(el.exercicios));
+            assunto.artefatos.push(...this.convertaMateriais(el.materiais));
+            assunto.artefatos.push(...this.convertaRevisoes(el.revisoes));
 
             assuntos.push(assunto);
         });
@@ -105,5 +108,76 @@ export class CronogramaRepository {
             cronogramaDetalhe.fim = atual.fim;
         }
         return cronogramaDetalhe
+    }
+
+    convertaMateriais(materiais: any[]) {
+        let listaDeMateriais: Material[] = [];
+
+        materiais.forEach((el: any) => {
+            listaDeMateriais.push(this.convertaMaterial(el));
+        });
+
+        return listaDeMateriais;
+    }
+
+    convertaMaterial(material: any) {
+        let novo_material = new Material(
+            material.uuid,
+            material.uuid_assunto,
+            material.data,
+            material.descricao,
+            material.time,
+            material.escopo,
+            0
+        );
+
+        return novo_material;
+    }
+
+    convertaExercicios(exercicios: any[]) {
+        let listaDeExercicios: Exercicio[] = [];
+
+        exercicios.forEach((el: any) => {
+            listaDeExercicios.push(this.convertaExercicio(el));
+        });
+
+        return listaDeExercicios;
+    }
+
+    convertaExercicio(exercicio: any) {
+        let novo_exercicio = new Exercicio(
+            exercicio.uuid,
+            exercicio.assunto_uuid,
+            exercicio.data,
+            exercicio.descricao,
+            exercicio.quantidade,
+            exercicio.acertos,
+            2
+        );
+
+        return novo_exercicio;
+    }
+
+    convertaRevisoes(revisoes: any[]) {
+        let listaDeRevisoes: Revisao[] = [];
+
+        revisoes.forEach((el: any) => {
+            listaDeRevisoes.push(this.convertaRevisao(el));
+        });
+
+        return listaDeRevisoes;
+    }
+
+    convertaRevisao(revisao: any) {
+        let nova_revisao = new Revisao(
+            revisao.uuid,
+            revisao.assunto_uuid,
+            revisao.data,
+            revisao.descricao,
+            revisao.escopo,
+            1
+        );
+
+        return nova_revisao;
     }
 }

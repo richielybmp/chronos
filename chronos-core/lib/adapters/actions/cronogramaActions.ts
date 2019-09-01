@@ -1,5 +1,5 @@
 import { CronogramaInteractor } from '../../interactors/CronogramaInteractor';
-import { EnumCronogramaActions, Cronograma } from "../..";
+import { EnumCronogramaActions, Cronograma } from '../../domain';
 
 const interactorCronograma = new CronogramaInteractor();
 
@@ -10,7 +10,7 @@ type FetchCronogramasType = {
 
 export type CronogramaActionsType = FetchCronogramasType;
 
-//#region "Clear"
+//#region "Actions para CLEAR"
 export function clearChronosState() {
     return {
         type: EnumCronogramaActions.CLEAR_STATE,

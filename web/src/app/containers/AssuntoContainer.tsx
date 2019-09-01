@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { deleteAssunto, deleteAssuntoSuccess, deleteAssuntoFailure, fetchAssunto, fetchAssuntoSuccess, fetchAssuntoFailure, Assunto, updateAssunto, updateAssuntoSuccess, updateAssuntoFailure } from "chronos-core";
+import { deleteAssunto, deleteAssuntoSuccess, deleteAssuntoFailure, fetchAssunto, fetchAssuntoSuccess, fetchAssuntoFailure, Assunto, updateAssunto, updateAssuntoSuccess, updateAssuntoFailure, clearError } from "chronos-core";
 import AssuntoDetail from "../pages/Assunto";
 
 const mapStateToProps = (state: any) => {
@@ -28,13 +28,17 @@ const mapDispatchToProps = (dispatch: any) => {
         },
 
         fetchAssunto: (idDisciplina: string, idAssunto: string) => {
-            try {
-                dispatch(fetchAssunto(idDisciplina, idAssunto))
-                dispatch(fetchAssuntoSuccess({}));
-            }
-            catch (e) {
-                dispatch(fetchAssuntoFailure(e.message));
-            }
+            var promisse = dispatch(fetchAssunto(idDisciplina, idAssunto))
+
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!response.error && !data.exception) {
+                    dispatch(fetchAssuntoSuccess(data));
+                }
+                else {
+                    dispatch(fetchAssuntoFailure(data.message));
+                }
+            });
         },
 
         editAssunto: (assunto: Assunto) => {
@@ -49,6 +53,14 @@ const mapDispatchToProps = (dispatch: any) => {
                 }
             });
         },
+
+        clearError: () => {
+            try {
+                dispatch(clearError());
+            }
+            catch {
+            }
+        }
     }
 }
 
