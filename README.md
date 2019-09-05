@@ -61,15 +61,45 @@ Se tudo for executado com sucesso até aqui, você poderá executar o seguinte c
 
 Apenas vá para o [website oficial do Node.js](http://nodejs.org/) e pegue o instalador. Por fim, se assegure que você possui o `git` disponível no seu PATH pois o `npm` poderá precisar dele.
 
-## Install
+## Instalação do Chronos
 
 	$ git clone https://github.com/richielybmp/chronos.git
     $ cd chronos
+	$ yarn install
+
+Com a Arquitetura Clean, separamos o motor da aplicação no projeto `core`. Lá temos o domínio de dados, as classes responsáveis por intermediar a comunicação com nossa API, ações para o Redux, e configurações gerais.
+
+Já no projeto `web` temos a criação de componentes do front-end e a manipulação dos dados da nossa ferramenta.
+
+## Start
+
+    $ yarn start
+
+## Atualizar pacotes do projeto
+
+Caso desejar fazer atualizações no `core`, precisaremos realizar um `build` no projeto e depois atualizar a dependência no `package.json` do projeto `web` assim:
+
 	$ cd chronos-core
 	$ yarn build
 
-Volte para a pasta `chronos` e
+Volte para a pasta `chronos` e atualino o `package.json`
 
-	$ cd ..
-	$ cd web
-	$ yarn start
+	$"chronos-core": "file:../chronos-core"
+
+Dessa forma você estará referenciando o pacote `core` localmente.
+
+Feito isso, para usufruir das alterações realizadas, deve-se atualizar o pacote com o seguinte comando
+
+	$yarn upgrade chronos-core
+
+---
+
+## Languages & tools
+
+- [React](http://facebook.github.io/react) é usado para UI.
+- [Semantic UI](https://react.semantic-ui.com/) integrado com React
+- [TypeScript]()
+- [ChartJs 2]() para mostrar lindos gráficos.
+- [Redux]() 
+- [React Router]() para configurar as rotas.
+- [React Slick]() para nos ajudar com maravilhosos carrosséis.
