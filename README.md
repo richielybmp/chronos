@@ -61,6 +61,10 @@ Se tudo for executado com sucesso até aqui, você poderá executar o seguinte c
 
 Apenas vá para o [website oficial do Node.js](http://nodejs.org/) e pegue o instalador. Por fim, se assegure que você possui o `git` disponível no seu PATH pois o `npm` poderá precisar dele.
 
+### Instalação do Yarn
+
+Para a execução dos comandos de construção, atualização de dependências e execução dos projetos utilizaremos o `yarn`. Você pode fazer o download e seguir as instruções de instalação [aqui](https://yarnpkg.com/lang/pt-br/docs/install/#windows-stable).
+
 ## Instalação do Chronos
 
 	$ git clone https://github.com/richielybmp/chronos.git
@@ -96,10 +100,10 @@ Feito isso, para usufruir das alterações realizadas, deve-se atualizar o pacot
 
 ## Languages & tools
 
+- [TypeScript](https://www.typescriptlang.org/)
 - [React](http://facebook.github.io/react) é usado para UI.
+- [Redux](https://redux.js.org/basics/usage-with-react) 
+- [React Router](https://reacttraining.com/react-router/web/guides/quick-start) para configurar as rotas.
+- [React Slick](https://react-slick.neostack.com/) para nos ajudar com maravilhosos carrosséis.
 - [Semantic UI](https://react.semantic-ui.com/) integrado com React
-- [TypeScript]()
-- [ChartJs 2]() para mostrar lindos gráficos.
-- [Redux]() 
-- [React Router]() para configurar as rotas.
-- [React Slick]() para nos ajudar com maravilhosos carrosséis.
+- [ChartJs 2](https://github.com/jerairrest/react-chartjs-2) para mostrar lindos gráficos.
