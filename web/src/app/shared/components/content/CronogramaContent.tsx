@@ -27,6 +27,9 @@ export function CronogramaContent({ children, cronograma }: CronogramaContentPro
                 <Header.Content>
                     {cronograma.titulo}
                     <Header.Subheader>
+                        {cronograma.descricao}
+                    </Header.Subheader>
+                    <Header.Subheader>
                         {dataInicio} - {dataFim}
                     </Header.Subheader>
                 </Header.Content>

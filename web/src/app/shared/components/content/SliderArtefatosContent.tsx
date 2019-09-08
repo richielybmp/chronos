@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import { RevisaoCard, ConfirmDelete } from '..';
 import { MaterialCard, ExercicioCard } from '../cards';
 import { Artefato, AssuntoState } from 'chronos-core';
-import { Divider, Icon } from 'semantic-ui-react';
+import { Divider, Icon, Checkbox } from 'semantic-ui-react';
 
 interface Props {
     artefatos: Artefato[]
@@ -22,7 +22,9 @@ export function SliderArtefatosContent(props: Props) {
 
     const [idParaDeletar, setIdParaDeletar] = useState("");
     const [tipoParaDeletar, setTipoParaDeletar] = useState(-1);
-    const [confirmationDelete, setConfirmationDelete] = useState(false)
+    const [confirmationDelete, setConfirmationDelete] = useState(false);
+
+    const [artefatosFilter, setArtefatosFilter] = useState({ revisoes: true, materiais: true, exercicios: true });
 
     const materiais = artefatos.filter(x => x.tipoArtefato === 0);
     const revisoes = artefatos.filter(x => x.tipoArtefato === 1);
@@ -49,91 +51,121 @@ export function SliderArtefatosContent(props: Props) {
         }
     }
 
+    const handleArtefatoFilterChange = (value: number) => {
+        switch (value) {
+            case 1:
+                setArtefatosFilter({ ...artefatosFilter, revisoes: !artefatosFilter.revisoes });
+                break;
+            case 2:
+                setArtefatosFilter({ ...artefatosFilter, materiais: !artefatosFilter.materiais });
+                break;
+            case 3:
+                setArtefatosFilter({ ...artefatosFilter, exercicios: !artefatosFilter.exercicios });
+                break;
+            default:
+                break;
+        }
+    }
+
     return (
-        <div className="sidebar-content">
-            <div className="content-list">
-
-                {revisoes.length > 0 &&
-                    <>
-                        <div className="content" id="revisao">
-                            <h2>Revisões</h2>
-                            <Slider {...settings} className="my-slider">
-
-                                {revisoes.map((artefato: Artefato, index: number) => {
-                                    return (
-                                        <RevisaoCard
-                                            key={index}
-                                            artefato={artefato}
-                                            actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
-                                            actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
-                                        />
-                                    )
-                                })}
-
-                            </Slider>
-                        </div>
-
-                        <Divider />
-                    </>
-                }
-
-                {materiais.length > 0 &&
-                    <>
-                        <div className="content" id="material">
-                            <h2>Materiais de estudos</h2>
-                            <Slider {...settings} className="my-slider">
-
-                                {materiais.map((artefato: Artefato, index: number) => {
-                                    return (
-                                        <MaterialCard
-                                            key={index}
-                                            artefato={artefato}
-                                            actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
-                                            actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
-                                        />
-                                    )
-                                })}
-
-                            </Slider>
-                        </div>
-
-                        <Divider />
-                    </>
-                }
-
-                {exercicios.length > 0 &&
-                    <>
-                        <div className="content" id="material">
-                            <h2>Exercícios</h2>
-                            <Slider {...settings} className="my-slider">
-
-                                {exercicios.map((artefato: Artefato, index: number) => {
-                                    return (
-                                        <ExercicioCard
-                                            key={index}
-                                            artefato={artefato}
-                                            actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
-                                            actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
-                                        />
-                                    )
-                                })}
-
-                            </Slider>
-                        </div>
-
-                        <Divider />
-                    </>
-                }
+        <>
+            <div className='center-content'>
+                <Checkbox label='Revisões' checked={artefatosFilter.revisoes}
+                    onChange={() => handleArtefatoFilterChange(1)} />
+                <Checkbox label='Materiais' checked={artefatosFilter.materiais}
+                    onChange={() => handleArtefatoFilterChange(2)} />
+                <Checkbox label='Exercícios' checked={artefatosFilter.exercicios}
+                    onChange={() => handleArtefatoFilterChange(3)} />
             </div>
 
-            {/* Modal 'Excluir Artefato' */}
-            <ConfirmDelete
-                show={confirmationDelete}
-                pergunta="Deseja realmente excluir o artefato?"
-                toggle={handlePopModalDelete}
-                confirmDelete={deletarArtefato} />
+            <Divider />
 
-        </div>
+            <div className="sidebar-content">
+
+                <div className="content-list">
+
+                    {(revisoes.length > 0 && artefatosFilter.revisoes) &&
+                        <>
+                            <div className="content" id="revisao">
+                                <h2>Revisões</h2>
+                                <Slider {...settings} className="my-slider">
+
+                                    {revisoes.map((artefato: Artefato, index: number) => {
+                                        return (
+                                            <RevisaoCard
+                                                key={index}
+                                                artefato={artefato}
+                                                actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
+                                                actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
+                                            />
+                                        )
+                                    })}
+
+                                </Slider>
+                            </div>
+
+                            <Divider />
+                        </>
+                    }
+
+                    {(materiais.length > 0 && artefatosFilter.materiais) &&
+                        <>
+                            <div className="content" id="material">
+                                <h2>Materiais de estudos</h2>
+                                <Slider {...settings} className="my-slider">
+
+                                    {materiais.map((artefato: Artefato, index: number) => {
+                                        return (
+                                            <MaterialCard
+                                                key={index}
+                                                artefato={artefato}
+                                                actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
+                                                actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
+                                            />
+                                        )
+                                    })}
+
+                                </Slider>
+                            </div>
+
+                            <Divider />
+                        </>
+                    }
+
+                    {(exercicios.length > 0 && artefatosFilter.exercicios) &&
+                        <>
+                            <div className="content" id="exercicio">
+                                <h2>Exercícios</h2>
+                                <Slider {...settings} className="my-slider">
+
+                                    {exercicios.map((artefato: Artefato, index: number) => {
+                                        return (
+                                            <ExercicioCard
+                                                key={index}
+                                                artefato={artefato}
+                                                actionDelete={() => handleDeleteArtefato(artefato.uuid, artefato.tipoArtefato)}
+                                                actionEdit={() => handleEdit(artefato.uuid, artefato.tipoArtefato)}
+                                            />
+                                        )
+                                    })}
+
+                                </Slider>
+                            </div>
+
+                            <Divider />
+                        </>
+                    }
+                </div>
+
+                {/* Modal 'Excluir Artefato' */}
+                <ConfirmDelete
+                    show={confirmationDelete}
+                    pergunta="Deseja realmente excluir o artefato?"
+                    toggle={handlePopModalDelete}
+                    confirmDelete={deletarArtefato} />
+
+            </div>
+        </>
     );
 }
 

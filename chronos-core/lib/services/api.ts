@@ -94,10 +94,6 @@ api.interceptors.response.use(async response => {
         case 404:
         case 422:
         case 500:
-            return await new Promise((resolve, reject) => {
-                resolve(error.response)
-                reject(error.response)
-            });
             if (!isRefreshing) {
 
                 isRefreshing = true;

@@ -28,6 +28,7 @@ export function MaterialCard(props: CardProps) {
             </Card.Content>
             <Card.Content>
                 <Card.Description>{`${minutos} minutos`}</Card.Description>
+                <Card.Description>{artefato.descricao}</Card.Description>
             </Card.Content>
             <Card.Content
                 style={{ marginRight: '0', cursor: 'pointer' }}

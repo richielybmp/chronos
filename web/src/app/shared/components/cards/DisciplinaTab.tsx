@@ -30,14 +30,14 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
     const emEdicao = idOnDetail !== "";
 
     const [activeItem, setActiveItem] =
-        useState(hasDisciplinas ? disciplinas[0].descricao : "")
+        useState(hasDisciplinas ? disciplinas[0].nome : "")
 
     const [activeAssuntos, setActiveAssuntos] =
         useState(hasDisciplinas ? disciplinas[0].assuntos : [])
 
     const handleItemClick = (name: string) => {
         activeItem === name ? setActiveItem('') : setActiveItem(name)
-        var d = disciplinas.find(x => x.descricao === name)
+        var d = disciplinas.find(x => x.nome === name)
         if (d)
             setActiveAssuntos(d.assuntos)
     }
@@ -51,14 +51,14 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                             < div key={index}>
                                 <Accordion.Title
                                     style={{ backgroundColor: 'lightgrey' }}
-                                    active={activeItem === item.descricao}
+                                    active={activeItem === item.nome}
                                 >
                                     <Grid columns={3}>
                                         <Grid.Column mobile={12} tablet={10} computer={10}>
                                             <Label as='div' ribbon
                                                 size='large'
                                                 style={{ backgroundColor: '#23689c', color: '#fff' }}
-                                                onClick={() => handleItemClick(item.descricao)}
+                                                onClick={() => handleItemClick(item.nome)}
                                             >
                                                 {item.nome}
 
@@ -94,7 +94,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                         </Grid.Column>
                                     </Grid>
                                 </Accordion.Title>
-                                <Accordion.Content active={activeItem === item.descricao} style={{ backgroundColor: '#ececec' }}>
+                                <Accordion.Content active={activeItem === item.nome} style={{ backgroundColor: '#ececec' }}>
                                     <List divided relaxed selection animated verticalAlign='middle'>
                                         {activeAssuntos.length > 0 ?
                                             activeAssuntos.map((assunto: Assunto, idx: number) => {
@@ -106,7 +106,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                                         to={`${matchUrl.url}/assunto/${assunto.uuid}`}
                                                     >
                                                         <List.Header>{assunto.descricao}</List.Header>
-                                                        {/* <List.Description>Artefatos: {assunto.artefatos.length}</List.Description> */}
+                                                        <List.Description>Artefatos: {assunto.artefatos.length}</List.Description>
                                                         {/* <List.Description>Exercícios: {assunto.exercicios.length}</List.Description>  */}
                                                     </List.Item>
                                                 )

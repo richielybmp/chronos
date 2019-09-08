@@ -4,6 +4,8 @@ input.input-edit-assunto-descricao {
     border: none !important;
     border-bottom: 1px solid #ddd !important;
     background-color: #f8f8f8;
+    width: 100%;
+    font-style: italic;
 }
 
 input.input-edit-assunto-descricao:focus {

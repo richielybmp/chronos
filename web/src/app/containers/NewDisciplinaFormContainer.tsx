@@ -33,14 +33,14 @@ const mapDispatchToProps = (dispatch: any) => {
 
         updateDisciplina: (idCronograma: string, disciplina: Disciplina) => {
             var promisse = dispatch(updateDisciplina(idCronograma, disciplina))
-
             promisse.payload.update.then((response: any) => {
                 const data = response.data;
                 if (!response.error && !data.exception) {
                     dispatch(updateDisciplinaSuccess(data));
                 }
                 else {
-                    dispatch(updateDisciplinaFailure(data.message));
+                    var mensagem = "Ocorreu um erro na solicitação!";
+                    dispatch(updateDisciplinaFailure(mensagem));
                 }
             });
         },

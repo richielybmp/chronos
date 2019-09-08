@@ -9,7 +9,6 @@ interface MyProps {
 export function PortalError(props: MyProps) {
 
     const { error, handleErrorClose } = props
-
     return (
         <div>
             {

@@ -25,7 +25,7 @@ function baseOptions() {
 function ObtenhaDadosDisciplinas(cronogramas: Cronograma[]) {
 
     const dados_disciplinas = {
-        labels: ["Cronogramas"],
+        labels: ["Disciplinas"],
         datasets:
             cronogramas.map((el, i) => {
                 return {

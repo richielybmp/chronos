@@ -40,7 +40,6 @@ function CronogramaList(props: Props) {
     }
 
     return (
-        // <div style={{ height: '-webkit-fill-available' }}>
         <>
             <ModalNovoCronograma
                 history={props.history}

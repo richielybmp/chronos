@@ -57,8 +57,8 @@ const NewAssuntoForm = (props: Props) => {
                 // TODO: MUDAR O UPDATE
                 var obj = new Assunto(id, assunto.disciplina_uuid, assunto.descricao)
                 props.editAssunto(obj)
-                props.close()
             }
+            props.close()
         }
     }
     //#endregion

@@ -1,4 +1,4 @@
-import { EnumCronogramaActions, Material, Revisao, EnumEscopo, Exercicio } from "../../domain";
+import { EnumCronogramaActions } from "../../domain";
 import { CronogramaActionsType } from "../actions/cronogramaActions";
 import { ChronosStateType } from "../../frameworks";
 import { CronogramaRepository } from "../../storage";
@@ -24,19 +24,21 @@ export const chronosReducer = (
     let error;
     let cronograma;
     let assunto_atualizado;
+    let cronograma_antigo;
     switch (action.type) {
         //#region 'fetch cronogramas'
         case EnumCronogramaActions.FETCH_CRONOGRAMAS:
             return {
                 ...state,
-                cronogramasList: { cronogramas: [], error: null, loading: true }
+                cronogramasList: { cronogramas: [], error: null, loading: true },
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_SUCCESS:
             let cronogramas = repository.cronogramasToDomain(action.payload.cronogramas)
             return {
                 ...state,
                 cronogramasList: { cronogramas: cronogramas, error: null, loading: false },
-                cronogramaOnDetail: INITIAL_STATE_NOVO_CRONOGRAMA
+                cronogramaOnDetail: INITIAL_STATE_NOVO_CRONOGRAMA,
+                assuntoOnDetail: INITIAL_STATE_ASSUNTO_ON_DETAIL,
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -56,7 +58,8 @@ export const chronosReducer = (
         case EnumCronogramaActions.FETCH_CRONOGRAMA_SUCCESS:
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: false }
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: false },
+                assuntoOnDetail: INITIAL_STATE_ASSUNTO_ON_DETAIL,
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_FAILURE:
             error = action.payload || { message: action.payload.message };
@@ -96,7 +99,7 @@ export const chronosReducer = (
 
         //#region 'UPDATE cronograma'
         case EnumCronogramaActions.UPDATE_CRONOGRAMA:
-            var cronograma_antigo = state.cronogramaOnDetail.cronograma
+            cronograma_antigo = Object.assign({}, state.cronogramaOnDetail.cronograma);
             var cronograma_update = repository.cronogramasToDomain([action.payload.cronograma])[0]
 
             if (cronograma_antigo)
@@ -211,7 +214,7 @@ export const chronosReducer = (
 
         // #region 'UPDATE disciplina'
         case EnumCronogramaActions.UPDATE_DISCIPLINA:
-            var cronograma_antigo = state.cronogramaOnDetail.cronograma
+            cronograma_antigo = Object.assign({}, state.cronogramaOnDetail.cronograma);
             var disciplina_atualizada = action.payload.disciplina
 
             var cronograma_novo = cronograma_antigo
@@ -235,9 +238,10 @@ export const chronosReducer = (
             }
         case EnumCronogramaActions.UPDATE_DISCIPLINA_FAILURE:
             error = action.payload || { message: action.payload.message };
+            var cronograma_old = state.cronogramaOnDetail.old;
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: old, error: error, loading: false }
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: cronograma_old, old: null, error: error, loading: false }
             }
         //#endregion
 

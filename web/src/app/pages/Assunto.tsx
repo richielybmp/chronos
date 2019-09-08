@@ -53,7 +53,8 @@ const AssuntoDetail = (props: Props) => {
         if (assunto != null) {
             setConfirmationDelete(false)
             props.delete(assunto.uuid, () => {
-                props.history.goBack()
+                // TODO: se for navegação da combo, o goback apenas muda o 'location' e nao volta para o cronograma detail.
+                props.history.goBack();
             })
         }
     }

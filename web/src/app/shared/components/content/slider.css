@@ -16,16 +16,23 @@
     right: 15px;
 }
 
+.center-content {
+    padding-right: 25px;
+}
+.center-content .ui.checkbox {
+    padding-left: 20px;
+}
+
+
+
 @media (max-width: 1200px) {
     .arrow-next {
         right: -35px;
     }
 }
-    /* @media screen and (max-width: 480px) 
-    right: -12px
-    @media screen and (min-width: 485px)
-    right: -30px
-    @media screen and (min-width: 1000px) 
-    right: -40px
-    @media screen and (min-width: 1200px)
-    right: 15px */
+
+@media only screen and (min-device-width: 376px) and (max-device-width: 992px){
+ .slick-slider .slick-track {
+    left: 20px;
+}   
+}

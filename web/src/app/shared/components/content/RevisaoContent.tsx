@@ -8,7 +8,7 @@ interface Props {
 
 function RevisaoContent(props: Props) {
 
-    const [checked, setChecked] = useState()
+    const [checked, setChecked] = useState();
 
     const handleCheckChange = (el: number) => {
         setChecked(el)

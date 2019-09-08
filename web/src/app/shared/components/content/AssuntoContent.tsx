@@ -20,6 +20,11 @@ export function AssuntoContent({ children, assunto, editAssunto }: AssuntoConten
         setEditMode(!editMode)
     }
 
+    const handleEditAssunto = () => {
+        editAssunto(editName)
+        setEditMode(!editMode)
+    }
+
     return (
         <Container style={{ padding: '2em 0em' }}>
             <Header as='h1' dividing>
@@ -41,7 +46,7 @@ export function AssuntoContent({ children, assunto, editAssunto }: AssuntoConten
                             </Grid.Column>
 
                             <Grid.Column computer={3} mobile={8}>
-                                <Button fluid onClick={() => editAssunto(editName)} color='green'>
+                                <Button fluid onClick={() => handleEditAssunto()} color='green'>
                                     <Icon name='save' style={{ marginLeft: '10px' }} />
                                 </Button>
                             </Grid.Column>

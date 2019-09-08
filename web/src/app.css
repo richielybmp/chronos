@@ -79,7 +79,18 @@ textarea:focus{
     word-wrap: break-word;
 }
 
+.mySearchBar {
+    padding-bottom: 15px;
+    float: right;
+}
+
+.mySearchBar input{width: 350px;}
+
 @media (min-width: 360px) and (max-width: 667px) {
+    .mySearchBar {
+        float: none;
+    }
+
     .menu.transition.left.visible .item {
         width: 200px;
         height: 50px;
@@ -91,7 +102,6 @@ textarea:focus{
 
     .ui.divided.selection.list .list>.item, .ui.divided.selection.list>.item{
         height: 40px;
-        display: flex;
         align-items: center;
     }
 
