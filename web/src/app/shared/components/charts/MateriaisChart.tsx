@@ -45,21 +45,21 @@ function ObtenhaDadosAssuntos(assuntos: Assunto[]) {
 
                 const minutos_video = exercicios.reduce((a, b) => {
                     if (parseInt(b.tipoMaterial.toString()) === 1) {
-                        return a + b['minutos'];
+                        return parseInt(a.toString()) + parseInt(b['minutos'].toString());
                     }
                     return a;
                 }, 0);
 
                 const minutos_livros = exercicios.reduce((a, b) => {
                     if (parseInt(b.tipoMaterial.toString()) === 2) {
-                        return a + b['minutos'];
+                        return parseInt(a.toString()) + parseInt(b['minutos'].toString());
                     }
                     return a;
                 }, 0);
 
                 const minutos_internet = exercicios.reduce((a, b) => {
                     if (parseInt(b.tipoMaterial.toString()) === 3) {
-                        return a + b['minutos'];
+                        return parseInt(a.toString()) + parseInt(b['minutos'].toString());
                     }
                     return a;
                 }, 0);
@@ -82,7 +82,7 @@ function ObtenhaDadosAssuntos(assuntos: Assunto[]) {
 export function MateriaisChart(props: Props) {
     return (
         <div className="chart-container">
-            <h2>{`${props.disciplina.nome} - Materiais`}</h2>
+            <h2 className="center-content">Materiais</h2>
             <Bar
                 data={ObtenhaDadosAssuntos(props.disciplina.assuntos)}
                 height={10}

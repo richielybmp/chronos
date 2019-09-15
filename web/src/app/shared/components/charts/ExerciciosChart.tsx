@@ -1,6 +1,6 @@
 import React from 'react'
 import { Bar } from 'react-chartjs-2';
-import { Cronograma, Disciplina, Assunto, Exercicio, Artefato } from 'chronos-core';
+import { Disciplina, Assunto, Exercicio, Artefato } from 'chronos-core';
 
 interface Props {
     disciplina: Disciplina
@@ -31,10 +31,6 @@ function ObtenhaExercicios(artefatos: Artefato[]) {
         }
     });
 
-    // exercicios.push(new Exercicio(10, 8, 2));
-    // exercicios.push(new Exercicio(50, 35, 2));
-    // exercicios.push(new Exercicio(30, 22, 2));
-
     return exercicios;
 }
 
@@ -51,10 +47,10 @@ function ObtenhaDadosAssuntos(assuntos: Assunto[]) {
 
                 return {
                     label: el.descricao,
-                    backgroundColor: 'rgba(77,65,127,0.2)',
+                    backgroundColor: ['rgba(198, 211, 223, .5)', 'rgba(46, 121, 28, 0.5)'],
                     borderColor: 'rgba(77,69,110,1)',
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(78,68,117,0.4)',
+                    hoverBackgroundColor: ['rgba(198, 211, 223, .8)', 'rgba(46, 121, 28, 0.8)'],
                     hoverBorderColor: 'rgba(77,65,127,1)',
                     data: [total, acertos]
                 }
@@ -67,7 +63,7 @@ function ObtenhaDadosAssuntos(assuntos: Assunto[]) {
 export function ExerciciosChart(props: Props) {
     return (
         <div className="chart-container">
-            <h2>{`${props.disciplina.nome} - Exercícios`}</h2>
+            <h2 className="center-content">Exercícios</h2>
             <Bar
                 data={ObtenhaDadosAssuntos(props.disciplina.assuntos)}
                 height={10}

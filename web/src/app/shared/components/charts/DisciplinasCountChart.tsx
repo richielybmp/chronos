@@ -22,6 +22,10 @@ function baseOptions() {
     }
 }
 
+const colors = ['rgba(255,65,127,0.2)', 'rgba(0,65,127,0.2)', 'rgba(100,65,9,0.2) ', 'rgba(23,65,127,0.2) ', 'rgba(0,65,2,0.2) ', 'rgba(77,44,11,0.2) ', 'rgba(1,5,127,0.2) ', 'rgba(255,255,127,0.2) ', 'rgba(98,55,100,0.2) ']
+const colorshover = ['rgba(255,65,127,0.4)', 'rgba(0,65,127,0.4)', 'rgba(100,65,9,0.4) ', 'rgba(23,65,127,0.4) ', 'rgba(0,65,2,0.4) ', 'rgba(77,44,11,0.4) ', 'rgba(1,5,127,0.4) ', 'rgba(255,255,127,0.4) ', 'rgba(98,55,100,0.4) ']
+
+
 function ObtenhaDadosDisciplinas(cronogramas: Cronograma[]) {
 
     const dados_disciplinas = {
@@ -30,11 +34,11 @@ function ObtenhaDadosDisciplinas(cronogramas: Cronograma[]) {
             cronogramas.map((el, i) => {
                 return {
                     label: el.titulo,
-                    backgroundColor: 'rgba(77,65,127,0.2)',
-                    borderColor: 'rgba(77,69,110,1)',
+                    backgroundColor: colors[i],
+                    borderColor: colors[i],
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(78,68,117,0.4)',
-                    hoverBorderColor: 'rgba(77,65,127,1)',
+                    hoverBackgroundColor: colorshover[i],
+                    hoverBorderColor: colors[i],
                     data: [el.disciplinas.length]
                 }
             })

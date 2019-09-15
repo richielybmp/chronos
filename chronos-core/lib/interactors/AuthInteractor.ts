@@ -63,7 +63,6 @@ export class AuthInteractor {
         const params: any = this.obtenhaParams();
         return api.post('/reset-password',
             {
-                'email': 'email',
                 'token': params["token"],
                 'password': senha
             }

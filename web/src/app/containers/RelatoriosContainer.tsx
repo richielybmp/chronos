@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { clearError, deleteArtefato, deleteArtefatoSuccess, deleteArtefatoFailure, fetchCronogramas, fetchCronogramasSuccess, fetchCronogramasFailure } from "chronos-core";
+import { clearError, fetchCronogramas, fetchCronogramasSuccess, fetchCronogramasFailure } from "chronos-core";
 import Relatorios from "../pages/Relatorios";
 
 const mapStateToProps = (state: any) => {

@@ -52,10 +52,10 @@ const NewDisciplinaForm = (props: Props) => {
             setNovaDisciplinaTituloErro("Título da disciplina obrigatório.")
             inconsistente = true
         }
-        if (disciplinaDescricao === '') {
-            setNovaDisciplinaDescricaoErro("Descrição da disciplina obrigatório.")
-            inconsistente = true
-        }
+        // if (disciplinaDescricao === '') {
+        //     setNovaDisciplinaDescricaoErro("Descrição da disciplina obrigatório.")
+        //     inconsistente = true
+        // }
         return inconsistente;
     }
 

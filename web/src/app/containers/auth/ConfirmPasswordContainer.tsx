@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch: any) => {
                         callBack()
                 }
                 else {
-                    dispatch(confirmPasswordFailure(data.error ? data.error : data));
+                    dispatch(confirmPasswordFailure(data.error ? data.error : data.message));
                 }
             });
         },

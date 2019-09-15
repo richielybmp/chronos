@@ -58,10 +58,10 @@ export const MobileNav = ({ children, onSairClick, userName }: ResponsiveContain
                     onClick={() => handleItemClick('meus-cronogramas')}
                     as={Link} to={`/cronogramas`} />
                 <Menu.Item
-                    content="Relatórios"
-                    active={activeItem === 'relatorios'}
-                    onClick={() => handleItemClick('relatorios')}
-                    as={Link} to={'/cronogramas/relatorios'} />
+                    content="Andamento"
+                    active={activeItem === 'andamento'}
+                    onClick={() => handleItemClick('andamento')}
+                    as={Link} to={'/cronogramas/andamento'} />
                 <Menu.Item
                     content="Minha conta"
                     active={activeItem === 'profile'}

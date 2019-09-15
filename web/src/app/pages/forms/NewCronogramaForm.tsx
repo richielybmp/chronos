@@ -72,10 +72,10 @@ export const NewCronogramaForm = (props: Props) => {
             setNovoCronogramaTituloErro("Título do cronograma obrigatório.")
             inconsistente = true
         }
-        if (cronogramaDescricao === '') {
-            setNovoCronogramaDescricaoErro("Descrição do cronograma obrigatório.")
-            inconsistente = true
-        }
+        // if (cronogramaDescricao === '') {
+        //     setNovoCronogramaDescricaoErro("Descrição do cronograma obrigatório.")
+        //     inconsistente = true
+        // }
         if (cronogramaDataInicio === '') {
             setNovoCronogramaDataInicioErro('Data início do cronograma obrigatório.')
             inconsistente = true

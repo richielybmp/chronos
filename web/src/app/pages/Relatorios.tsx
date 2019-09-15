@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { SubHeader, DisciplinasCountChart, AssuntosCountChart, ExerciciosChart, MateriaisChart } from '../shared/components';
-import { Container, Dropdown, Divider, Icon } from 'semantic-ui-react';
-import { Cronograma, CronogramasState, Disciplina } from 'chronos-core';
+import { CronogramasState, Cronograma, Disciplina } from 'chronos-core';
+import { Dropdown, Container, Statistic, Icon } from 'semantic-ui-react';
+import { SubHeader, DisciplinasCountChart, AssuntosCountChart, StatisticExercicios, StatisticMateriais, ExerciciosChart, MateriaisChart, RevisoesChart } from '../shared/components';
 import Slider from 'react-slick';
 
 interface Props {
@@ -79,7 +79,7 @@ function Relatorios(props: Props) {
 
     return (
         <>
-            <SubHeader content="Relatórios" />
+            <SubHeader content="Andamento" />
 
             <Container className='chronos-charts'>
                 <SeletorCronogramas cronogramas={cronogramas} setOnDetail={handleOnDetail} />
@@ -90,20 +90,26 @@ function Relatorios(props: Props) {
 
                 {onDetail &&
                     onDetail.disciplinas.map((disc: Disciplina, i) => {
-                        return (<Slider {...settings} key={i} className="slider-relatorios-artefatos">
-                            <ExerciciosChart disciplina={disc} />
-                            <MateriaisChart disciplina={disc} />
-                        </Slider>)
+                        return (<div key={i}>
+                            <h2>{`${disc.nome}`}</h2>
+                            <Statistic.Group>
+                                <StatisticExercicios disciplina={disc} />
+                                <StatisticMateriais disciplina={disc} />
+                            </Statistic.Group>
+
+                            <Slider {...settings} key={i} className="slider-relatorios-artefatos">
+                                <ExerciciosChart disciplina={disc} />
+                                <MateriaisChart disciplina={disc} />
+                                <RevisoesChart disciplina={disc} />
+                            </Slider>
+                        </div>)
                     })
                 }
 
             </Container>
-
-            {/* <BlankFooter /> */}
         </>
     )
 }
-
 
 function NextArrow(props: any) {
     const { onClick } = props;

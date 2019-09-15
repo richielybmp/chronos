@@ -14,7 +14,7 @@ const Main = ({ match }: any) => {
             <Switch>
                 <Route path={`${match.url}`} exact component={CronogramaListContainer} />
                 <Route path={`${match.url}/profile`} component={ProfileContainer} />
-                <Route path={`${match.url}/relatorios`} component={RelatoriosContainer} />
+                <Route path={`${match.url}/andamento`} component={RelatoriosContainer} />
                 <Route path={`${match.url}/:id`} exact component={CronogramaContainer} />
                 <Route path={`${match.url}/:id/assunto/:id`} component={AssuntoContainer} />
             </Switch>

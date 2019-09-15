@@ -94,8 +94,9 @@ api.interceptors.response.use(async response => {
         case 404:
         case 422:
         case 500:
-            if (!isRefreshing) {
-
+            if (originalRequest.url != "https://cronos.vizzarconsultoria.com/api/login" ||
+                originalRequest.url != "https://cronos.vizzarconsultoria.com/api/user") { }
+            else if (!isRefreshing) {
                 isRefreshing = true;
 
                 // Atualizamos o login para evitar de cair a sessão com token na blacklist.

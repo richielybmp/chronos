@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LoaderComponent } from '../../shared/components';
 import RecoverPasswordForm from '../forms/RecoverPasswordForm';
 import { Modal, Button } from 'semantic-ui-react';
@@ -22,6 +22,10 @@ function RecoverPassword(props: Props) {
             setShowMessage(true);
         })
     }
+
+    useEffect(() => {
+        props.clearState();
+    }, [])
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />

@@ -34,9 +34,11 @@ export const Footer = () => {
                     </Grid.Column>
                     <Grid.Column width={7}>
                         <Header inverted as='h4' content='UFG - Especialização em Desenvolvimento Web e Mobile - Full Stack' />
-                        <p>
-                            Trabalho final da Especialização.
-                        </p>
+                        <List link inverted>
+                            <List.Item>
+                                Trabalho final da Especialização
+                            </List.Item>
+                        </List>
                     </Grid.Column>
                 </Grid>
 

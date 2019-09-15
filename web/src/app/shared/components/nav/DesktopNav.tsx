@@ -58,7 +58,7 @@ export const DesktopNav = ({ children, onSairClick, setOnDetail, cronogramas, us
                         </Dropdown.Menu>
                     </Dropdown>
 
-                    <Menu.Item content="Relatórios" active={activeItem === 'relatorios'} as={Link} to={'/cronogramas/relatorios'} />
+                    <Menu.Item content="Andamento" active={activeItem === 'andamento'} as={Link} to={'/cronogramas/andamento'} />
                     <Menu.Menu position='right'>
                         <Menu.Item content={`Bem vindo, ${userName}`} active={false} />
                         <Menu.Item content="Minha conta" active={activeItem === 'profile'} as={Link} to={'/cronogramas/profile'} />

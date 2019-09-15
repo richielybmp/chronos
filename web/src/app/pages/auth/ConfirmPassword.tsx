@@ -39,7 +39,7 @@ function ConfirmPassword(props: Props) {
                 <Modal closeIcon={true} size='tiny' open={showMessage} onClose={() => setShowMessage(false)}>
                     <Modal.Header>Recuperar senha</Modal.Header>
                     <Modal.Content>
-                        <p>Sua senha foi redefinida com sucesso.</p>
+                        <p>Sua senha foi alterada com sucesso.</p>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button
