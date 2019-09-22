@@ -14,11 +14,12 @@ interface Props {
     fetchAssunto: (idDisciplina: string, idAssunto: string) => void,
     clearError: () => void,
     editAssunto: (assunto: Assunto) => void,
+    fetchCronograma: (id: string) => void,
 }
 
 const AssuntoDetail = (props: Props) => {
 
-    const { match, editAssunto } = props
+    const { match, editAssunto, fetchCronograma } = props
 
     const { assunto, loading, error } = props.assuntoOnDetail
     const { cronograma } = props.cronogramaOnDetail
@@ -68,6 +69,10 @@ const AssuntoDetail = (props: Props) => {
             editAssunto(new Assunto(assunto.uuid, assunto.disciplina_uuid, descricao))
     }
 
+    const handleFetchCronograma = (id: string) => {
+        fetchCronograma(id);
+    }
+
     return (
         <>
             {(loading || props.assuntoOnDetail.loading) &&
@@ -86,7 +91,9 @@ const AssuntoDetail = (props: Props) => {
                         complement={{ assunto: true, disciplina: disciplina }}
                         titulo={assunto.descricao}
                         handlePopModal={handlePopModal}
-                        deleteAction={handleDeleteAction} />
+                        deleteAction={handleDeleteAction}
+                        fetchCronograma={handleFetchCronograma}
+                    />
 
                     {/* TODO: Componentizar */}
                     {disciplina &&

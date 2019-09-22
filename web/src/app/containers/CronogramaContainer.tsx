@@ -4,7 +4,8 @@ import {
     deleteCronograma,
     deleteCronogramaSuccess,
     deleteCronogramaFailure,
-    clearError
+    clearError,
+    setDisciplinaOnDetail
 } from "chronos-core";
 
 const mapStateToProps = (state: any) => {
@@ -34,6 +35,10 @@ const mapDispatchToProps = (dispatch: any) => {
 
         clearError: () => {
             dispatch(clearError())
+        },
+
+        setDisciplinaOnDetail: (disciplina: string) => {
+            dispatch(setDisciplinaOnDetail(disciplina));
         }
     }
 }

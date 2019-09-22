@@ -1,6 +1,5 @@
 import { combineReducers, applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
-import { Cronograma } from "../domain";
 import { chronosReducer } from "../adapters/redux/chronos";
 import { loadState, saveState } from './localStorage'
 import { throttle } from "lodash";

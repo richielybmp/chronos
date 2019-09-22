@@ -13,7 +13,6 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                debugger
                 if (!response.error && !data.exception) {
                     dispatch(createExercicioSuccess(data));
                 }

@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { deleteAssunto, deleteAssuntoSuccess, deleteAssuntoFailure, fetchAssunto, fetchAssuntoSuccess, fetchAssuntoFailure, Assunto, updateAssunto, updateAssuntoSuccess, updateAssuntoFailure, clearError } from "chronos-core";
+import { deleteAssunto, deleteAssuntoSuccess, deleteAssuntoFailure, fetchAssunto, fetchAssuntoSuccess, fetchAssuntoFailure, Assunto, updateAssunto, updateAssuntoSuccess, updateAssuntoFailure, clearError, fetchCronograma, fetchCronogramaSuccess, fetchCronogramaFailure } from "chronos-core";
 import AssuntoDetail from "../pages/Assunto";
 
 const mapStateToProps = (state: any) => {
@@ -60,6 +60,20 @@ const mapDispatchToProps = (dispatch: any) => {
             }
             catch {
             }
+        },
+
+        // Obter um cronograma específico.
+        fetchCronograma: (id: string) => {
+            var promisse = dispatch(fetchCronograma(id))
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!data.error && !data.exception) {
+                    dispatch(fetchCronogramaSuccess(data));
+                }
+                else {
+                    dispatch(fetchCronogramaFailure(data));
+                }
+            });
         }
     }
 }

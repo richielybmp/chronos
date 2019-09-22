@@ -33,13 +33,16 @@ const mapDispatchToProps = (dispatch: any) => {
 
         // Obter um cronograma específico.
         fetchCronograma: (id: string) => {
-            try {
-                dispatch(fetchCronograma(id))
-                dispatch(fetchCronogramaSuccess());
-            }
-            catch (e) {
-                dispatch(fetchCronogramaFailure(e.message));
-            }
+            var promisse = dispatch(fetchCronograma(id))
+            promisse.payload.then((response: any) => {
+                const data = response.data;
+                if (!data.error && !data.exception) {
+                    dispatch(fetchCronogramaSuccess(data));
+                }
+                else {
+                    dispatch(fetchCronogramaFailure(data));
+                }
+            });
         }
     }
 };

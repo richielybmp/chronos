@@ -51,15 +51,15 @@ export function fetchCronogramasFailure(error: any) {
 export function fetchCronograma(id: string) {
     return {
         type: EnumCronogramaActions.FETCH_CRONOGRAMA,
-        payload: id
-        //payload: interactorCronograma.getCronogramaById(id)
+        // payload: id
+        payload: interactorCronograma.getCronogramaById(id)
     };
 }
 
-export function fetchCronogramaSuccess() {
+export function fetchCronogramaSuccess(cronogramaSelecionado: any) {
     return {
         type: EnumCronogramaActions.FETCH_CRONOGRAMA_SUCCESS,
-        // payload: cronogramaSelecionado
+        payload: cronogramaSelecionado
     };
 }
 
@@ -142,6 +142,15 @@ export function deleteCronogramaFailure(error: any) {
     return {
         type: EnumCronogramaActions.DELETE_CRONOGRAMA_FAILURE,
         payload: error
+    };
+}
+//#endregion
+
+//#region "Actions para DEFINIR DISCIPLINA EM DETALHE"
+export function setDisciplinaOnDetail(disciplina: string) {
+    return {
+        type: EnumCronogramaActions.SET_DISCIPLINA_DETAIL,
+        payload: disciplina
     };
 }
 //#endregion

@@ -71,6 +71,9 @@ const NewAssuntoForm = (props: Props) => {
         }
     }, [props.assuntoOnDetail])
 
+    useEffect(() => {
+    }, [])
+
     return (
         <Form onSubmit={(e: any) => handleCreateAssunto(e)}>
             <PortalError error={error} handleErrorClose={handleErrorClose} />

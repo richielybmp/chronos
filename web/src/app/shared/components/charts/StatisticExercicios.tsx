@@ -1,28 +1,23 @@
 import React from 'react'
 import { Disciplina, Artefato, Exercicio } from 'chronos-core';
-import { Statistic } from 'semantic-ui-react';
-import { Polar } from 'react-chartjs-2';
+import { Statistic, Icon } from 'semantic-ui-react';
 
 interface Props {
-    disciplina: Disciplina
+    disciplina: Disciplina,
+    option: number,
 }
 
-export function StatisticExercicios({ disciplina }: Props) {
+export function StatisticExercicios({ disciplina, option }: Props) {
     var totalExercicios = totalDeExercicios(disciplina);
     var totalAcertos = totalDeAcertos(disciplina);
-    return (
-        <>
-            <Statistic size='tiny'>
-                <Statistic.Value>{totalExercicios}</Statistic.Value>
-                <Statistic.Label>Total de exercícios feitos</Statistic.Label>
-            </Statistic>
 
-            <Statistic size='tiny'>
-                <Statistic.Value>{totalAcertos}</Statistic.Value>
-                <Statistic.Label>Total de exercícios acertados</Statistic.Label>
-            </Statistic>
-        </>
-    )
+    return (
+        <Statistic size='tiny'>
+            <Statistic.Value>
+                {totalAcertos}/{totalExercicios}</Statistic.Value>
+            <Statistic.Label>Exercícios corretos</Statistic.Label>
+        </Statistic>
+    );
 }
 
 function totalDeExercicios(disciplina: Disciplina) {

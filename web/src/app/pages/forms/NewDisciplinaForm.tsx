@@ -83,8 +83,8 @@ const NewDisciplinaForm = (props: Props) => {
         if (cronograma) {
             var disciplina = cronograma.disciplinas.find(d => d.uuid === idOnDetail);
             if (disciplina) {
-                setNovaDisciplinaTitulo(disciplina.nome)
-                setNovaDisciplinaDescricao(disciplina.descricao)
+                setNovaDisciplinaTitulo(disciplina.nome != null ? disciplina.nome : "")
+                setNovaDisciplinaDescricao(disciplina.descricao != null ? disciplina.descricao : "")
                 setEhEdicao(true)
             }
         }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Accordion, List, Label, Button, Grid, Dropdown } from 'semantic-ui-react'
 import { Disciplina, Assunto } from 'chronos-core';
 import { EmptyHeader } from '..';
@@ -11,7 +11,9 @@ interface DisciplinaTabProps {
     handleUpdateDisciplina: (id: string) => void,
     handleCreateAssunto: (id: string) => void,
     handleAssuntoOnDetail: (idDisciplina: string, idAssunto: string) => void,
-    idOnDetail: string
+    idOnDetail: string,
+    disciplinaOnDetail: string,
+    handleSetDisciplinaOnDetail: (id: string) => void,
 }
 
 export function DisciplinaTab(props: DisciplinaTabProps) {
@@ -23,20 +25,26 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
         handleUpdateDisciplina,
         handleCreateAssunto,
         idOnDetail,
-        handleAssuntoOnDetail
+        handleAssuntoOnDetail,
+        handleSetDisciplinaOnDetail,
+        disciplinaOnDetail
     } = props
 
     const hasDisciplinas = disciplinas.length > 0;
     const emEdicao = idOnDetail !== "";
 
-    const [activeItem, setActiveItem] =
-        useState(hasDisciplinas ? disciplinas[0].nome : "")
+    useEffect(() => {
+        var d = disciplinas.find(x => x.nome === disciplinaOnDetail)
+        if (d)
+            setActiveAssuntos(d.assuntos)
+    }, [disciplinaOnDetail])
 
     const [activeAssuntos, setActiveAssuntos] =
         useState(hasDisciplinas ? disciplinas[0].assuntos : [])
 
     const handleItemClick = (name: string) => {
-        activeItem === name ? setActiveItem('') : setActiveItem(name)
+        // activeItem === name ? setActiveItem('') : setActiveItem(name)
+        disciplinaOnDetail === name ? handleSetDisciplinaOnDetail('') : handleSetDisciplinaOnDetail(name)
         var d = disciplinas.find(x => x.nome === name)
         if (d)
             setActiveAssuntos(d.assuntos)
@@ -51,7 +59,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                             < div key={index}>
                                 <Accordion.Title
                                     style={{ backgroundColor: 'lightgrey' }}
-                                    active={activeItem === item.nome}
+                                    active={disciplinaOnDetail === item.nome}
                                 >
                                     <Grid columns={3}>
                                         <Grid.Column mobile={12} tablet={10} computer={10}>
@@ -94,7 +102,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
                                         </Grid.Column>
                                     </Grid>
                                 </Accordion.Title>
-                                <Accordion.Content active={activeItem === item.nome} style={{ backgroundColor: '#ececec' }}>
+                                <Accordion.Content active={disciplinaOnDetail === item.nome} style={{ backgroundColor: '#ececec' }}>
                                     <List divided relaxed selection animated verticalAlign='middle'>
                                         {activeAssuntos.length > 0 ?
                                             activeAssuntos.map((assunto: Assunto, idx: number) => {

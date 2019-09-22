@@ -64,7 +64,7 @@ textarea:focus{
     margin: 15px 0;
     align-items: center; 
     justify-content: center;
-     display: flex
+    display: flex
 }
 
 .slider-relatorios-artefatos .slick-track{
@@ -145,6 +145,10 @@ textarea:focus{
     }
 
     .dropdown .menu {
+        width: 100%;
+    }
+
+    .center-content.statistic{
         width: 100%;
     }
 }

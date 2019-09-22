@@ -5,6 +5,7 @@ export type ChronosStateType = {
     novoCronograma: CronogramaState,
     cronogramaOnDetail: CronogramaState,
     assuntoOnDetail: AssuntoState,
+    disciplinaOnDetail: string,
 }
 
 export interface CronogramasState {
@@ -32,4 +33,5 @@ export type CronogramaStateType = {
     novoCronograma: CronogramaState,
     cronogramaOnDetail: CronogramaState,
     assuntoOnDetail: AssuntoState,
+    disciplinaOnDetail: string
 }

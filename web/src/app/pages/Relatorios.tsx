@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { CronogramasState, Cronograma, Disciplina } from 'chronos-core';
-import { Dropdown, Container, Statistic, Icon } from 'semantic-ui-react';
-import { SubHeader, DisciplinasCountChart, AssuntosCountChart, StatisticExercicios, StatisticMateriais, ExerciciosChart, MateriaisChart, RevisoesChart } from '../shared/components';
+import { Dropdown, Container, Statistic, Icon, Grid, GridColumn } from 'semantic-ui-react';
+import { SubHeader, DisciplinasCountChart, AssuntosCountChart, StatisticExercicios, StatisticMateriais, ExerciciosChart, MateriaisChart, RevisoesChart, LoaderComponent, StatisticRevisoes } from '../shared/components';
 import Slider from 'react-slick';
 
 interface Props {
@@ -54,7 +54,7 @@ function BlankFooter() {
 
 function Relatorios(props: Props) {
 
-    const cronogramas = props.cronogramasState.cronogramas;
+    const { cronogramas, error, loading } = props.cronogramasState;
 
     const [onDetail, setOnDetail] = useState<TipoState>()
 
@@ -79,6 +79,9 @@ function Relatorios(props: Props) {
 
     return (
         <>
+            {loading &&
+                <LoaderComponent tamanho='medium' titulo="Carregando" />
+            }
             <SubHeader content="Andamento" />
 
             <Container className='chronos-charts'>
@@ -92,10 +95,19 @@ function Relatorios(props: Props) {
                     onDetail.disciplinas.map((disc: Disciplina, i) => {
                         return (<div key={i}>
                             <h2>{`${disc.nome}`}</h2>
-                            <Statistic.Group>
-                                <StatisticExercicios disciplina={disc} />
-                                <StatisticMateriais disciplina={disc} />
-                            </Statistic.Group>
+                            <Grid style={{ margin: "20px", justifyContent: "center" }} columns={4}>
+                                <Statistic.Group>
+                                    <GridColumn className="center-content statistic" mobile={12}>
+                                        <StatisticExercicios disciplina={disc} option={0} />
+                                    </GridColumn>
+                                    <GridColumn className="center-content statistic" mobile={12}>
+                                        <StatisticMateriais disciplina={disc} />
+                                    </GridColumn>
+                                    <GridColumn className="center-content statistic">
+                                        <StatisticRevisoes disciplina={disc} />
+                                    </GridColumn>
+                                </Statistic.Group>
+                            </Grid>
 
                             <Slider {...settings} key={i} className="slider-relatorios-artefatos">
                                 <ExerciciosChart disciplina={disc} />

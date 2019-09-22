@@ -8,10 +8,14 @@ import {
     fetchAssuntoFailure,
     fetchAssuntoSuccess,
     clearAssuntoOnDetail,
+    setDisciplinaOnDetail,
 } from "chronos-core";
 
-const mapStateToProps = (state: any) => ({
-});
+const mapStateToProps = (state: any) => {
+    return {
+        disciplinaOnDetail: state.cronogramas.disciplinaOnDetail
+    }
+};
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
@@ -44,7 +48,11 @@ const mapDispatchToProps = (dispatch: any) => {
         },
 
         clearAssuntoOnDetail: () => {
-            dispatch(clearAssuntoOnDetail())
+            dispatch(clearAssuntoOnDetail());
+        },
+
+        setDisciplinaOnDetail: (disciplina: string) => {
+            dispatch(setDisciplinaOnDetail(disciplina));
         }
     }
 };

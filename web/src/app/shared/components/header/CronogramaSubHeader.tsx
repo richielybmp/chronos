@@ -8,11 +8,12 @@ interface CronogramaSubHeaderProps {
     complement: any,
     handlePopModal: () => void,
     deleteAction: () => void
+    fetchCronograma?: (id: string) => void
 }
 
 export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
 
-    const { titulo, handlePopModal, deleteAction } = props
+    const { titulo, handlePopModal, deleteAction, fetchCronograma } = props
     const context = useContext(ChronosContext);
 
     var cronograma = context.getState().cronogramas != null && context.getState().cronogramas.cronogramaOnDetail.cronograma;
@@ -30,7 +31,9 @@ export function CronogramaSubHeader(props: CronogramaSubHeaderProps) {
                                 (
                                     <>
                                         <Breadcrumb.Section
-                                            as={Link} to={`/cronogramas/${cronograma.uuid}`}
+                                            as={Link}
+                                            to={`/cronogramas/${cronograma.uuid}`}
+                                            onClick={fetchCronograma != null ? () => fetchCronograma(cronograma.uuid) : undefined}
                                             active>{cronograma.titulo}</Breadcrumb.Section>
                                         <Breadcrumb.Divider icon='right chevron' />
                                         <Breadcrumb.Section active>{props.complement.disciplina.nome}</Breadcrumb.Section>

@@ -20,12 +20,12 @@ export function MainNav({ logOut, children, fetchCronograma, cronogramaList, aut
     const handleLogOut = () => {
         setIsLoading(true)
         logOut(() => {
-            window.location.href = '/'
+            window.location.href = '/';
         })
     }
 
     const handleSetOnDetail = (id: string) => {
-        fetchCronograma(id)
+        fetchCronograma(id);
     }
 
     if (authState.user) {

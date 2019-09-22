@@ -9,15 +9,17 @@ interface Props {
     disciplinas: Disciplina[],
     matchUrl: any,
     history: any,
+    disciplinaOnDetail: string,
     deleteDisciplina: (id: string) => void,
     fetchAssunto: (idDisciplina: string, idAssunto: string) => void,
-    clearAssuntoOnDetail: () => void
+    clearAssuntoOnDetail: () => void,
+    setDisciplinaOnDetail: (id: string) => void,
 }
 
 function DisciplinaList(props: Props) {
-    const { disciplinas, matchUrl, deleteDisciplina, fetchAssunto } = props
+    const { disciplinas, matchUrl, deleteDisciplina, fetchAssunto, setDisciplinaOnDetail, disciplinaOnDetail } = props;
 
-    const hasDisciplinas = disciplinas.length > 0
+    const hasDisciplinas = disciplinas.length > 0;
 
     //#region States
     const [novaDisciplina, setnovaDisciplina] = useState(false)
@@ -73,6 +75,10 @@ function DisciplinaList(props: Props) {
     const handleCloseModal = () => {
         setmodalShowToggle(false)
     }
+
+    const handleSetDisciplinaOnDetail = (idDisciplina: string) => {
+        setDisciplinaOnDetail(idDisciplina);
+    }
     //#endregion
 
     const deletarDisciplina = () => {
@@ -122,6 +128,8 @@ function DisciplinaList(props: Props) {
                 handleCreateAssunto={handelCreateAssunto}
                 handleAssuntoOnDetail={handleAssuntoOnDetail}
                 idOnDetail={idOnDetail}
+                disciplinaOnDetail={disciplinaOnDetail}
+                handleSetDisciplinaOnDetail={handleSetDisciplinaOnDetail}
             />
         </>
     )

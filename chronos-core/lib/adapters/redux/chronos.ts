@@ -3,6 +3,7 @@ import { CronogramaActionsType } from "../actions/cronogramaActions";
 import { ChronosStateType } from "../../frameworks";
 import { CronogramaRepository } from "../../storage";
 import _ = require("lodash");
+import { string } from "prop-types";
 
 const repository = new CronogramaRepository();
 
@@ -15,6 +16,7 @@ const INITIAL_STATE = {
     novoCronograma: INITIAL_STATE_NOVO_CRONOGRAMA,
     cronogramaOnDetail: INITIAL_STATE_NOVO_CRONOGRAMA,
     assuntoOnDetail: INITIAL_STATE_ASSUNTO_ON_DETAIL,
+    disciplinaOnDetail: "",
 };
 
 export const chronosReducer = (
@@ -50,15 +52,15 @@ export const chronosReducer = (
 
         //#region 'fetch cronograma'
         case EnumCronogramaActions.FETCH_CRONOGRAMA:
-            cronograma = state.cronogramasList.cronogramas.find(x => x.uuid == action.payload)
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: cronograma, loading: true }
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: true }
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_SUCCESS:
+            cronograma = repository.cronogramasToDomain([action.payload.cronograma[0]]);
             return {
                 ...state,
-                cronogramaOnDetail: { ...state.cronogramaOnDetail, loading: false },
+                cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: cronograma[0], loading: false },
                 assuntoOnDetail: INITIAL_STATE_ASSUNTO_ON_DETAIL,
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_FAILURE:
@@ -518,6 +520,11 @@ export const chronosReducer = (
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
             }
+        //#endregion
+
+        // #region 'SET DISCIPLINA DETAIL'
+        case EnumCronogramaActions.SET_DISCIPLINA_DETAIL:
+            return { ...state, disciplinaOnDetail: action.payload }
         //#endregion
 
         //#region 'RESET'

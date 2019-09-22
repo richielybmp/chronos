@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CronogramaState } from 'chronos-core';
 import ModalNovoCronograma from './modal/ModalNovoCronograma';
 import { LoaderComponent, EmptyHeader, CronogramaSubHeader, CronogramaContent, ConfirmDelete, PortalError } from '../shared/components';
@@ -9,7 +9,8 @@ interface Props {
     history: any,
     cronogramaOnDetail: CronogramaState,
     delete: (id: string, callback: Function) => void,
-    clearError: () => void
+    clearError: () => void,
+    setDisciplinaOnDetail: (id: string) => void
 }
 
 const CronogramaDetail = (props: Props) => {
@@ -18,6 +19,11 @@ const CronogramaDetail = (props: Props) => {
 
     const [modalShowToggle, setmodalShowToggle] = useState(false)
     const [confirmationDelete, setConfirmationDelete] = useState(false)
+
+
+    useEffect(() => {
+        props.setDisciplinaOnDetail("");
+    }, [])
 
     //#region Handles
     const handlePopModal = () => {
@@ -73,7 +79,12 @@ const CronogramaDetail = (props: Props) => {
             {
                 cronograma != null ? (
                     <>
-                        <CronogramaSubHeader complement={null} titulo={cronograma.titulo} handlePopModal={handlePopModal} deleteAction={handleDeleteAction} />
+                        <CronogramaSubHeader
+                            complement={null}
+                            titulo={cronograma.titulo}
+                            handlePopModal={handlePopModal}
+                            deleteAction={handleDeleteAction}
+                        />
                         <CronogramaContent cronograma={cronograma}>
                             <DisciplinaListContainer history={props.history} disciplinas={cronograma.disciplinas} matchUrl={props.match} />
                             <PortalError error={error} handleErrorClose={handleErrorClose} />

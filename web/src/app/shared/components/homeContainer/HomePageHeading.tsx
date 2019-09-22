@@ -17,7 +17,7 @@ const HomePageHeading = ({ mobile }: any) => (
         />
         <Header
             as='h2'
-            content='Melhore seus estudos seguindo seus cronogramas.'
+            content='Melhore seus estudos acompanhando seus cronogramas.'
             inverted
             style={{
                 fontSize: mobile ? '1.5em' : '1.7em',
