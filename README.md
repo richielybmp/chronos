@@ -21,9 +21,16 @@ Chronos está em constante desenvolvimento. Contudo, os usuários podem utilizá
 
 ### Capturas de Tela
 
-[CAPTURA DE TELA 1 AQUI]
+![chronos](https://github.com/richielybmp/chronos/blob/master/web/src/assets/images/chronos.png)
 
-[CAPTURA DE TELA 2 AQUI]
+![chronos](https://github.com/richielybmp/chronos/blob/master/web/src/assets/images/new.png)
+
+![chronos](https://github.com/richielybmp/chronos/blob/master/web/src/assets/images/cronogramas.png)
+
+![chronos](https://github.com/richielybmp/chronos/blob/master/web/src/assets/images/cronograma.png)
+
+![chronos](https://github.com/richielybmp/chronos/blob/master/web/src/assets/images/artefato.png)
+
 
 ### Instruções de Configuração e Instalação
 
