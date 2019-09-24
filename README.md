@@ -19,6 +19,10 @@ Como se pode observar, separamos os diretórios da ferramenta em duas frentes: [
 
 Chronos está em constante desenvolvimento. Contudo, os usuários podem utilizá-lo sem preocupações e caso encontrem algum problema, sintam-se à vontade para relatar [aqui](https://github.com/richielybmp/chronos/issues/new).
 
+Fazemos uso da API desenvolvida [aqui](https://github.com/devfilsk/api-chronos). Ela é o coração da nossa ferramenta.
+
+Em conjunto, temos o aplicativo Android em desenvolvimento [aqui](https://github.com/mstedler/Chronos)
+
 ### Capturas de Tela
 
 ![chronos](https://github.com/richielybmp/chronos/blob/master/web/src/assets/images/chronos.png)
