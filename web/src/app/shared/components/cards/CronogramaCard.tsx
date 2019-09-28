@@ -21,9 +21,11 @@ export function CronogramaCard(props: CronogramaCardProps) {
             as={Link}
             to={`cronogramas/${uuid}`}
             onClick={props.setOnDetail}
-            color='black'>
+            color='black'
+            className="cronograma_card"
+        >
             <Card.Content>
-                <Card.Header>{titulo}</Card.Header>
+                <Card.Header className="cronograma_card_header" >{titulo}</Card.Header>
                 <Card.Meta>{descricao}</Card.Meta>
             </Card.Content>
             <Card.Content extra>
