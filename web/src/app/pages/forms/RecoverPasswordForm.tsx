@@ -87,7 +87,7 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
 						    </span>
                             <div>
                                 <Link className="txt1" to={`${process.env.PUBLIC_URL}/cadastrar`}>
-                                    Sign up
+                                    Criar conta
 							    </Link>
                             </div>
                         </div>

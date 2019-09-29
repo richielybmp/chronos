@@ -122,7 +122,7 @@ export default function SignInForm(props: SignInFormProps) {
 						    </span>
                             <div>
                                 <Link className="txt1" to={`${process.env.PUBLIC_URL}/cadastrar`}>
-                                    Sign up
+                                    Criar conta
 							    </Link>
                             </div>
                         </div>

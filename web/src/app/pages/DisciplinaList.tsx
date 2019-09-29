@@ -4,6 +4,7 @@ import { EmptyHeader } from '../shared/components/header/EmptyHeader';
 import { DisciplinaTab, ConfirmDelete, ModalContainer } from '../shared/components';
 import NewDisciplinaFormContainer from '../containers/NewDisciplinaFormContainer';
 import ModalNovoAssunto from './modal/ModalNovoAssunto';
+import { Label, Icon } from 'semantic-ui-react';
 
 interface Props {
     disciplinas: Disciplina[],
@@ -119,6 +120,10 @@ function DisciplinaList(props: Props) {
                 close={handleCloseModal} />
 
             {showDisciplinaForm(idOnDetail, handleClose)}
+
+            <Label style={{ float: 'right' }}>
+                <Icon name='info' /> Clique no cabeçalho das Disciplinas para visualizar os Assuntos
+            </Label>
 
             <DisciplinaTab
                 disciplinas={disciplinas}

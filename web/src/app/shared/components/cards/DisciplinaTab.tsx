@@ -51,7 +51,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
     }
 
     return (
-        <div>
+        <div style={{ float: 'left', width: '100%' }}>
             <Accordion fluid styled>
                 {
                     disciplinas.map((item: Disciplina, index: number) => {

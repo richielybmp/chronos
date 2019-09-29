@@ -251,6 +251,10 @@ iframe {
   background: rgba(0,0,0,0.1);
 }
 
+.placeholder-image{
+  width: calc(100% - 560px);
+}
+
 .login100-more2 {
   width: calc(100% - 560px);
   background-repeat: no-repeat;
