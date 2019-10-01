@@ -1,0 +1,43 @@
+.banner {
+    background-repeat: no-repeat;
+    height:770px;
+    margin-bottom: 25px;
+    background-position: center center;
+    background-size: cover;
+}
+
+.b1{
+    background-image: url("../../../../assets/images/banner_cronogramas.png");
+}
+
+.b2{
+    background-image: url("../../../../assets/images/banner_cronograma.png");
+}
+
+.b3{
+    background-image: url("../../../../assets/images/banner_artefatos.png");
+}
+
+@media only screen and (max-width: 767px) {
+
+    .banner{
+        height:281px;
+        background-position: unset;
+        background-size: unset;
+    }
+
+    .b1 {
+        background-image: url("../../../../assets/images/banner_cronogramas_mobile.png");
+        background-color: #2196f3;
+    }
+
+    .b2 {
+        background-image: url("../../../../assets/images/banner_cronograma_mobile.png");
+        background-color: #9c27b0;
+    }
+
+    .b3 {
+        background-image: url("../../../../assets/images/banner_artefatos_mobile.png");
+        background-color: #4caf50;
+    }
+}
