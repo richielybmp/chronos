@@ -18,7 +18,30 @@
     background-image: url("../../../../assets/images/banner_artefatos.png");
 }
 
-@media only screen and (max-width: 767px) {
+@media (min-width: 768px) and (max-width: 1024px) {
+      .banner{
+        height:450px;
+        background-position: unset;
+        background-size: unset;
+    }
+  .b1 {
+        background-image: url("../../../../assets/images/banner_cronogramas_tablet.png");
+        background-color: #2196f3;
+    }
+
+    .b2 {
+        background-image: url("../../../../assets/images/banner_cronograma_tablet.png");
+        background-color: #9c27b0;
+    }
+
+    .b3 {
+        background-image: url("../../../../assets/images/banner_artefatos_tablet.png");
+        background-color: #4caf50;
+    }
+  
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
 
     .banner{
         height:281px;

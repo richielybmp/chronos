@@ -10,9 +10,6 @@ import "./sliderhome.css"
 export default function HomeSlider() {
     return (
         <>
-            <Header className="center-content " as='h1'>
-                Crie! Organize! Acompanhe! Se torne melhor!
-            </Header>
             <Slider {...SliderSettings()} className="my-slider">
                 <div className="banner b1">
                 </div>
@@ -31,8 +28,8 @@ function SliderSettings() {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: false,
-        autoplaySpeed: 3000 // 5 segundos
+        autoplay: true,
+        autoplaySpeed: 3000 // 3 segundos
     };
 
     return settings;
