@@ -32,6 +32,8 @@ export const NewCronogramaForm = (props: Props) => {
     const [cronogramaDataFimErro, setNovoCronogramaDataFimErro] = useState('')
 
     const [ehEdicao, setEhEdicao] = useState(false)
+
+    const [dataMinima, setDataMinima] = useState(new Date().toISOString().substring(0, 10))
     //#endregion
 
     //#region 'Handles'
@@ -72,16 +74,20 @@ export const NewCronogramaForm = (props: Props) => {
             setNovoCronogramaTituloErro("Título do cronograma obrigatório.")
             inconsistente = true
         }
-        // if (cronogramaDescricao === '') {
-        //     setNovoCronogramaDescricaoErro("Descrição do cronograma obrigatório.")
-        //     inconsistente = true
-        // }
         if (cronogramaDataInicio === '') {
             setNovoCronogramaDataInicioErro('Data início do cronograma obrigatório.')
             inconsistente = true
         }
         if (cronogramaDataFim === '') {
             setNovoCronogramaDataFimErro('Data fim do cronograma obrigatório.')
+            inconsistente = true
+        }
+
+        var inicio = new Date(cronogramaDataInicio.replace(/-/g, '\/'))
+        var fim = new Date(cronogramaDataFim.replace(/-/g, '\/'))
+
+        if (inicio > fim) {
+            setNovoCronogramaDataFimErro('Data fim do cronograma deve ser após a data início.')
             inconsistente = true
         }
         return inconsistente;
@@ -124,6 +130,7 @@ export const NewCronogramaForm = (props: Props) => {
             setNovoCronogramaDataFim(dateF)
             setNovoCronogramaTitulo(cronograma.titulo)
             setNovoCronogramaDescricao(cronograma.descricao)
+            setDataMinima(cronograma.inicio.substring(0, 10))
             setEhEdicao(true)
         }
     }, [props.cronogramaOnDetail])
@@ -169,27 +176,29 @@ export const NewCronogramaForm = (props: Props) => {
                     <Grid.Column width={8}>
                         <Form.Field className={cronogramaDataInicioErro.length > 0 ? "error" : ""}>
                             <label>Data de início</label>
-                            <Input
-                                type="date"
-                                icon='calendar alternate outline'
-                                iconPosition='left'
-                                placeholder='Data final'
-                                defaultValue={cronogramaDataInicio}
-                                onChange={(e) => handleDataInicioChange(e)}
-                            />
+                            <div className="ui left icon input">
+                                <input type="date"
+                                    placeholder='Data inicial'
+                                    onChange={(e) => handleDataInicioChange(e)}
+                                    value={cronogramaDataInicio}
+                                    min={dataMinima}
+                                />
+                                <i className="calendar alternate outline icon"></i>
+                            </div>
                         </Form.Field>
                     </Grid.Column>
                     <Grid.Column width={8}>
                         <Form.Field className={cronogramaDataFimErro.length > 0 ? "error" : ""}>
                             <label>Data estimada do término</label>
-                            <Input
-                                type="date"
-                                icon='calendar alternate outline'
-                                iconPosition='left'
-                                placeholder='Data final'
-                                defaultValue={cronogramaDataFim}
-                                onChange={(e) => handleDataFimChange(e)}
-                            />
+                            <div className="ui left icon input">
+                                <input type="date"
+                                    placeholder='Data final'
+                                    onChange={(e) => handleDataFimChange(e)}
+                                    value={cronogramaDataFim}
+                                    min={dataMinima}
+                                />
+                                <i className="calendar alternate outline icon"></i>
+                            </div>
                         </Form.Field>
                     </Grid.Column>
 

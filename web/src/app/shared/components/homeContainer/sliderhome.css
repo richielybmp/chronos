@@ -18,8 +18,8 @@
     background-image: url("../../../../assets/images/banner_artefatos.png");
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
-      .banner{
+@media (min-width: 754px) and (max-width: 1024px) {
+    .banner{
         height:450px;
         background-position: unset;
         background-size: unset;
@@ -41,7 +41,13 @@
   
 }
 
-@media (min-width: 320px) and (max-width: 768px) {
+@media (min-width: 1024px) and (max-width: 1536px){
+    .banner {
+        height:615px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 753px) {
 
     .banner{
         height:281px;
