@@ -1,72 +1,12 @@
-.banner {
-    background-repeat: no-repeat;
-    height:770px;
-    margin-bottom: 25px;
-    background-position: center center;
-    background-size: cover;
+.banner-slider img{
+    height: 100%;
+    width:100%
 }
 
-.b1{
-    background-image: url("../../../../assets/images/banner_cronogramas.png");
+.slick-slider.banner-slider.slick-initialized{
+    margin-bottom: 15vh;
 }
 
-.b2{
-    background-image: url("../../../../assets/images/banner_cronograma.png");
-}
-
-.b3{
-    background-image: url("../../../../assets/images/banner_artefatos.png");
-}
-
-@media (min-width: 754px) and (max-width: 1024px) {
-    .banner{
-        height:450px;
-        background-position: unset;
-        background-size: unset;
-    }
-  .b1 {
-        background-image: url("../../../../assets/images/banner_cronogramas_tablet.png");
-        background-color: #2196f3;
-    }
-
-    .b2 {
-        background-image: url("../../../../assets/images/banner_cronograma_tablet.png");
-        background-color: #9c27b0;
-    }
-
-    .b3 {
-        background-image: url("../../../../assets/images/banner_artefatos_tablet.png");
-        background-color: #4caf50;
-    }
-  
-}
-
-@media (min-width: 1024px) and (max-width: 1536px){
-    .banner {
-        height:615px;
-    }
-}
-
-@media (min-width: 320px) and (max-width: 753px) {
-
-    .banner{
-        height:281px;
-        background-position: unset;
-        background-size: unset;
-    }
-
-    .b1 {
-        background-image: url("../../../../assets/images/banner_cronogramas_mobile.png");
-        background-color: #2196f3;
-    }
-
-    .b2 {
-        background-image: url("../../../../assets/images/banner_cronograma_mobile.png");
-        background-color: #9c27b0;
-    }
-
-    .b3 {
-        background-image: url("../../../../assets/images/banner_artefatos_mobile.png");
-        background-color: #4caf50;
-    }
+.banner-slider .slick-dots {
+    bottom: auto;
 }

@@ -5,14 +5,19 @@ import Slider from 'react-slick';
 
 export default function HomeSlider() {
     return (
-        <Slider {...SliderSettings()} className="my-slider">
-            <div className="banner b1">
-            </div>
-            <div className="banner b2">
-            </div>
-            <div className="banner b3">
-            </div>
-        </Slider>
+        <div>
+            <Slider {...SliderSettings()} className="banner-slider">
+                <div>
+                    <img src={`${process.env.PUBLIC_URL}/img/banner_cronogramas.png`} />
+                </div>
+                <div>
+                    <img src={`${process.env.PUBLIC_URL}/img/banner_cronograma.png`} />
+                </div>
+                <div>
+                    <img src={`${process.env.PUBLIC_URL}/img/banner_artefatos.png`} />
+                </div>
+            </Slider>
+        </div>
     )
 }
 
@@ -23,7 +28,7 @@ function SliderSettings() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 3000 // 3 segundos
+        autoplaySpeed: 3000 // 4 segundos
     };
 
     return settings;
