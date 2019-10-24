@@ -20,13 +20,22 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!data.error && !data.exception) {
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(recoverPasswordFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(recoverPasswordFailure(data.error));
+                    }
+                    else {
+                        dispatch(recoverPasswordFailure(data));
+                    }
+                }
+                else if (!response.error && !data.exception) {
                     dispatch(recoverPasswordSuccess());
                     if (callBack)
                         callBack()
-                }
-                else {
-                    dispatch(recoverPasswordFailure(data.error ? data.error : data.message));
                 }
             });
         },

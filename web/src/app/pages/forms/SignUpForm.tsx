@@ -105,25 +105,25 @@ export default function SignUpForm(props: SignUpFormProps) {
     					</span>
 
                         <div className={`wrap-input100 validate-input ${emailError !== "" && "alert-validate"}`} data-validate={emailError}>
-                            <input className={`input100 ${emailHasValue}`} type="text" name="email" value={email} onChange={(e) => handleEmailChange(e.target.value)}></input>
+                            <input maxLength={100} className={`input100 ${emailHasValue}`} type="text" name="email" value={email} onChange={(e) => handleEmailChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">E-mail</span>
                         </div>
 
                         <div className={`wrap-input100 validate-input ${nameError !== "" && "alert-validate"}`} data-validate={nameError}>
-                            <input className={`input100 ${nameHasValue}`} type="text" name="email" value={name} onChange={(e) => handleNameChange(e.target.value)}></input>
+                            <input maxLength={100} className={`input100 ${nameHasValue}`} type="text" name="email" value={name} onChange={(e) => handleNameChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">Nome</span>
                         </div>
 
                         <div className={`wrap-input100 validate-input ${passwordError !== "" && "alert-validate"}`} data-validate={passwordError}>
-                            <input className={`input100 ${passwordHasValue}`} type="password" name="pass" value={password} onChange={(e) => handlePasswordChange(e.target.value)}></input>
+                            <input maxLength={50} className={`input100 ${passwordHasValue}`} type="password" name="pass" value={password} onChange={(e) => handlePasswordChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">Senha</span>
                         </div>
 
                         <div className={`wrap-input100 validate-input ${confirmPasswordError !== "" && "alert-validate"}`} data-validate={confirmPasswordError}>
-                            <input className={`input100 ${confirmPasswordHasValue}`} type="password" name="pass" value={confirmPassword} onChange={(e) => handleConfirmPasswordChange(e.target.value)}></input>
+                            <input maxLength={50} className={`input100 ${confirmPasswordHasValue}`} type="password" name="pass" value={confirmPassword} onChange={(e) => handleConfirmPasswordChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">Confirme a senha</span>
                         </div>

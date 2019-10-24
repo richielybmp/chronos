@@ -74,6 +74,7 @@ export default function SignInForm(props: SignInFormProps) {
                                 type="text"
                                 name="email"
                                 value={email}
+                                maxLength={100}
                                 onChange={(e) => handleEmailChange(e.target.value)}>
                             </input>
                             <span className="focus-input100"></span>
@@ -86,6 +87,7 @@ export default function SignInForm(props: SignInFormProps) {
                                 type="password"
                                 name="pass"
                                 value={password}
+                                maxLength={50}
                                 onChange={(e) => handlePasswordChange(e.target.value)}>
                             </input>
                             <span className="focus-input100"></span>

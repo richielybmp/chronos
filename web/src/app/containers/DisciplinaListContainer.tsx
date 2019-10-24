@@ -24,11 +24,20 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(deleteDisciplinaSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(deleteDisciplinaFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(deleteDisciplinaFailure(data.error));
+                    }
+                    else {
+                        dispatch(deleteDisciplinaFailure(data));
+                    }
                 }
-                else {
-                    dispatch(deleteDisciplinaFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(deleteDisciplinaSuccess(data));
                 }
             });
         },
@@ -38,11 +47,20 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(fetchAssuntoSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(fetchAssuntoFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(fetchAssuntoFailure(data.error));
+                    }
+                    else {
+                        dispatch(fetchAssuntoFailure(data));
+                    }
                 }
-                else {
-                    dispatch(fetchAssuntoFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(fetchAssuntoSuccess(data));
                 }
             });
         },

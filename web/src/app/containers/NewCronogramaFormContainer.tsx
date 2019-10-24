@@ -23,11 +23,20 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(createCronogramaSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(createCronogramaFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(createCronogramaFailure(data.error));
+                    }
+                    else {
+                        dispatch(createCronogramaFailure(data));
+                    }
                 }
-                else {
-                    dispatch(createCronogramaFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(createCronogramaSuccess(data));
                 }
             });
         },
@@ -38,12 +47,21 @@ const mapDispatchToProps = (dispatch: any) => {
             promisse.payload.update.then((response: any) => {
                 const data = response.data;
 
-                if (!response.error && !data.exception) {
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(updateCronogramaFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(updateCronogramaFailure(data.error));
+                    }
+                    else {
+                        dispatch(updateCronogramaFailure(data));
+                    }
+                }
+                else if (!response.error && !data.exception && !data.error) {
                     dispatch(updateCronogramaSuccess(JSON.parse(response.config.data)));
                 }
-                else {
-                    dispatch(updateCronogramaFailure(data.message));
-                }
+
             });
         },
 

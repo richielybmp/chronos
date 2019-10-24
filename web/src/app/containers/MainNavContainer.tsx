@@ -28,15 +28,24 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!data.error && !data.exception) {
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(logOutUserFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(logOutUserFailure(data.error));
+                    }
+                    else {
+                        dispatch(logOutUserFailure(data));
+                    }
+                }
+                else if (!response.error && !data.exception && !data.error) {
                     dispatch(clearAuthState());
                     dispatch(clearChronosState());
                     dispatch(logOutUserSuccess());
                     if (callback)
                         callback()
-                }
-                else {
-                    dispatch(logOutUserFailure(response.error));
                 }
             });
         },
@@ -46,11 +55,20 @@ const mapDispatchToProps = (dispatch: any) => {
             var promisse = dispatch(fetchCronograma(id))
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!data.error && !data.exception) {
-                    dispatch(fetchCronogramaSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(fetchCronogramaFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(fetchCronogramaFailure(data.error));
+                    }
+                    else {
+                        dispatch(fetchCronogramaFailure(data));
+                    }
                 }
-                else {
-                    dispatch(fetchCronogramaFailure(data));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(fetchCronogramaSuccess(data));
                 }
             });
         }

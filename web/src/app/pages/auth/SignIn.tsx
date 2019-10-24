@@ -17,6 +17,7 @@ interface Props {
 function SignIn(props: Props) {
 
     const { loading, error } = props.auth
+    const { clearUserError } = props
 
     const context = useContext(ChronosContext)
 
@@ -37,8 +38,11 @@ function SignIn(props: Props) {
     }, [props.auth.user])
 
     useEffect(() => {
-        props.clearUserError();
-    }, [])
+        const clear = () => {
+            clearUserError();
+        };
+        clear();
+    }, [clearUserError])
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />

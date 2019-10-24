@@ -11,15 +11,18 @@ interface ModalProps {
 export function ConfirmDelete(props: ModalProps) {
 
     const { show, toggle, confirmDelete, pergunta } = props;
-    const [modalShow, setmodalShowToggle] = useState(show)
+    const [modalShow, setmodalShowToggle] = useState(show);
 
     useEffect(() => {
-        setmodalShowToggle(show);
-    }, [props.show])
+        const setModalShow = () => {
+            setmodalShowToggle(show);
+        };
+        setModalShow();
+    }, [show])
 
     const close = () => {
-        setmodalShowToggle(!modalShow)
-        toggle()
+        setmodalShowToggle(!modalShow);
+        toggle();
     }
 
     if (modalShow) {

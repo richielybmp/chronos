@@ -30,7 +30,6 @@ const NewArtefatoExercicioForm = (props: Props) => {
     const [acertosErro, setAcertosErro] = useState('')
 
     const [descricao, setDescricao] = useState('')
-    const [descricaoErro, setDescricaoErro] = useState('')
 
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion

@@ -8,13 +8,13 @@ export default function HomeSlider() {
         <div>
             <Slider {...SliderSettings()} className="banner-slider">
                 <div>
-                    <img src={`${process.env.PUBLIC_URL}/img/banner_cronogramas.png`} />
+                    <img src={`${process.env.PUBLIC_URL}/img/banner_cronogramas.png`} alt='banner_cronogramas' />
                 </div>
                 <div>
-                    <img src={`${process.env.PUBLIC_URL}/img/banner_cronograma.png`} />
+                    <img src={`${process.env.PUBLIC_URL}/img/banner_cronograma.png`} alt='banner_cronograma' />
                 </div>
                 <div>
-                    <img src={`${process.env.PUBLIC_URL}/img/banner_artefatos.png`} />
+                    <img src={`${process.env.PUBLIC_URL}/img/banner_artefatos.png`} alt='banner_artefatos' />
                 </div>
             </Slider>
         </div>

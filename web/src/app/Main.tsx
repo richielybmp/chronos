@@ -5,7 +5,6 @@ import CronogramaListContainer from './containers/CronogramaListContainer';
 import CronogramaContainer from './containers/CronogramaContainer';
 import AssuntoContainer from './containers/AssuntoContainer';
 import ProfileContainer from './containers/ProfileContainer';
-import { SubHeader } from './shared/components';
 import RelatoriosContainer from './containers/RelatoriosContainer';
 
 const Main = ({ match }: any) => {
@@ -22,10 +21,10 @@ const Main = ({ match }: any) => {
     )
 }
 
-const pageTeste = () => {
-    return (
-        <SubHeader content="Nova página" />
-    )
-}
+// const pageTeste = () => {
+//     return (
+//         <SubHeader content="Nova página" />
+//     )
+// }
 
 export default Main

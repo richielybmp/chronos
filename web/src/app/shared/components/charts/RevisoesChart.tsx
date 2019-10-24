@@ -66,16 +66,16 @@ function ObtenhaEscopos(el: Assunto) {
 
     for (let i = 0; i < revisoes.length; i++) {
 
-        if (revisoes[i].escopo == EnumEscopo.DIARIA) {
+        if (revisoes[i].escopo === EnumEscopo.DIARIA) {
             escopo_diario.push(revisoes[i]);
         }
-        if (revisoes[i].escopo == EnumEscopo.SEMANAL) {
+        if (revisoes[i].escopo === EnumEscopo.SEMANAL) {
             escopo_semanal.push(revisoes[i]);
         }
-        if (revisoes[i].escopo == EnumEscopo.QUINZENAL) {
+        if (revisoes[i].escopo === EnumEscopo.QUINZENAL) {
             escopo_quinzenal.push(revisoes[i]);
         }
-        if (revisoes[i].escopo == EnumEscopo.MENSAL) {
+        if (revisoes[i].escopo === EnumEscopo.MENSAL) {
             escopo_mensal.push(revisoes[i]);
         }
     }

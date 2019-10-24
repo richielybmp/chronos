@@ -73,13 +73,13 @@ export default function ConfirmPasswordForm(props: ConfirmPasswordFormProps) {
     					</span>
 
                         <div className={`wrap-input100 validate-input ${passwordError !== "" && "alert-validate"}`} data-validate={passwordError}>
-                            <input className={`input100 ${passwordHasValue}`} type="password" name="pass" value={password} onChange={(e) => handlePasswordChange(e.target.value)}></input>
+                            <input maxLength={50} className={`input100 ${passwordHasValue}`} type="password" name="pass" value={password} onChange={(e) => handlePasswordChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">Nova senha</span>
                         </div>
 
                         <div className={`wrap-input100 validate-input ${confirmPasswordError !== "" && "alert-validate"}`} data-validate={confirmPasswordError}>
-                            <input className={`input100 ${confirmPasswordHasValue}`} type="password" name="pass" value={confirmPassword} onChange={(e) => handleConfirmPasswordChange(e.target.value)}></input>
+                            <input maxLength={50} className={`input100 ${confirmPasswordHasValue}`} type="password" name="pass" value={confirmPassword} onChange={(e) => handleConfirmPasswordChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">Confirme a senha</span>
                         </div>

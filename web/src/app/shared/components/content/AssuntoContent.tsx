@@ -31,7 +31,7 @@ export function AssuntoContent({ children, assunto, editAssunto }: AssuntoConten
                 {!editMode ?
                     <Header.Content>
                         {assunto.descricao}
-                        <a onClick={() => handleEditMode()}>
+                        <a onClick={() => handleEditMode()} href="#" rel="noopener noreferrer">
                             <Icon name='edit' style={{ marginLeft: '10px' }} />
                         </a>
                     </Header.Content>

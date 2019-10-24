@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox, Form, Grid, Segment } from 'semantic-ui-react';
+import { Checkbox, Form, Grid } from 'semantic-ui-react';
 
 interface Props {
     setOptionSelected: (option: number) => void,

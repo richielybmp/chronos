@@ -22,11 +22,20 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(createDisciplinaSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(createDisciplinaFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(createDisciplinaFailure(data.error));
+                    }
+                    else {
+                        dispatch(createDisciplinaFailure(data));
+                    }
                 }
-                else {
-                    dispatch(createDisciplinaFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(createDisciplinaSuccess(data));
                 }
             });
         },
@@ -35,12 +44,20 @@ const mapDispatchToProps = (dispatch: any) => {
             var promisse = dispatch(updateDisciplina(idCronograma, disciplina))
             promisse.payload.update.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(updateDisciplinaSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(createDisciplinaFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(createDisciplinaFailure(data.error));
+                    }
+                    else {
+                        dispatch(updateDisciplinaFailure(data));
+                    }
                 }
-                else {
-                    var mensagem = "Ocorreu um erro na solicitação!";
-                    dispatch(updateDisciplinaFailure(mensagem));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(updateDisciplinaSuccess(data));
                 }
             });
         },

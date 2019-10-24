@@ -22,13 +22,21 @@ const mapDispatchToProps = (dispatch: any) => {
             promisse.payload.then((response: any) => {
                 const data = response.data;
 
-                if (!response.error && (!data.exception || response.status !== "404")) {
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(deleteCronogramaFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(deleteCronogramaFailure(data.error));
+                    }
+                    else {
+                        dispatch(deleteCronogramaFailure(data));
+                    }
+                }
+                else if (!response.error && (!data.exception || response.status !== "404") && !data.error) {
                     dispatch(deleteCronogramaSuccess(data));
                     if (callback)
                         callback()
-                }
-                else {
-                    dispatch(deleteCronogramaFailure(data.message));
                 }
             });
         },

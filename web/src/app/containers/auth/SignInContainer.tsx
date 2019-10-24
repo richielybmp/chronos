@@ -25,12 +25,22 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!data.error && !data.exception) {
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(signInUserFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(signInUserFailure(data.error));
+                    }
+                    else {
+                        dispatch(signInUserFailure(data));
+                    }
+                }
+                else if (!response.error && !data.exception && !data.error) {
                     dispatch(signInUserSuccess(data));
                 }
-                else {
-                    dispatch(signInUserFailure(data.error));
-                }
+
             });
         },
 

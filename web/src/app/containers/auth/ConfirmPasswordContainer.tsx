@@ -16,14 +16,23 @@ const mapDispatchToProps = (dispatch: any) => {
             promisse.payload.then((response: any) => {
                 const data = response.data;
 
-                if (!data.error && !data.exception) {
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(confirmPasswordFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(confirmPasswordFailure(data.error));
+                    }
+                    else {
+                        dispatch(confirmPasswordFailure(data));
+                    }
+                }
+                else if (!response.error && !data.exception) {
                     dispatch(confirmPasswordSuccess(data));
                     if (callBack)
                         callBack()
                 }
-                else {
-                    dispatch(confirmPasswordFailure(data.error ? data.error : data.message));
-                }
+
             });
         },
 

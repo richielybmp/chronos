@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CronogramasState, Cronograma, Disciplina } from 'chronos-core';
-import { Dropdown, Container, Statistic, Icon, Grid, GridColumn } from 'semantic-ui-react';
+import { Dropdown, Container, Statistic, Grid, GridColumn } from 'semantic-ui-react';
 import { SubHeader, DisciplinasCountChart, AssuntosCountChart, StatisticExercicios, StatisticMateriais, ExerciciosChart, MateriaisChart, RevisoesChart, LoaderComponent, StatisticRevisoes } from '../shared/components';
 import Slider from 'react-slick';
 
@@ -40,40 +40,32 @@ function SeletorCronogramas(props: PropsSeletor) {
     )
 }
 
-function BlankFooter() {
-    return (
-        <div style={{
-            backgroundColor: '#dbdbdb',
-            height: '100px',
-            bottom: '0',
-            position: 'fixed',
-            width: '100%'
-        }} />
-    )
-}
-
 function Relatorios(props: Props) {
 
-    const { cronogramas, error, loading } = props.cronogramasState;
+    const { cronogramas, loading } = props.cronogramasState;
+    const { fetchCronogramas } = props;
 
     const [onDetail, setOnDetail] = useState<TipoState>()
 
     const handleOnDetail = (id: string) => {
-        const detalhe = cronogramas.find(c => c.uuid == id);
+        const detalhe = cronogramas.find(c => c.uuid === id);
         setOnDetail(detalhe && detalhe);
     }
 
     useEffect(() => {
-        if (props.cronogramasState.cronogramas) {
-            setOnDetail(props.cronogramasState.cronogramas[0]);
+        if (cronogramas) {
+            setOnDetail(cronogramas[0]);
         }
         return () => {
         };
-    }, [props.cronogramasState.cronogramas])
+    }, [cronogramas])
 
     useEffect(() => {
-        props.fetchCronogramas();
-    }, [])
+        const fetch = () => {
+            fetchCronogramas();
+        };
+        fetch();
+    }, [fetchCronogramas])
 
     const settings = SliderSettings();
 
@@ -123,23 +115,23 @@ function Relatorios(props: Props) {
     )
 }
 
-function NextArrow(props: any) {
-    const { onClick } = props;
-    return (
-        <div className="arrow-next" onClick={onClick}>
-            <Icon link name='chevron right' size="big" color="violet" />
-        </div>
-    );
-}
+// function NextArrow(props: any) {
+//     const { onClick } = props;
+//     return (
+//         <div className="arrow-next" onClick={onClick}>
+//             <Icon link name='chevron right' size="big" color="violet" />
+//         </div>
+//     );
+// }
 
-function PrevArrow(props: any) {
-    const { onClick } = props;
-    return (
-        <div className="arrow-prev" onClick={onClick}>
-            <Icon link name='chevron left' size="big" color="violet" />
-        </div>
-    );
-}
+// function PrevArrow(props: any) {
+//     const { onClick } = props;
+//     return (
+//         <div className="arrow-prev" onClick={onClick}>
+//             <Icon link name='chevron left' size="big" color="violet" />
+//         </div>
+//     );
+// }
 
 function SliderSettings() {
     const settings = {

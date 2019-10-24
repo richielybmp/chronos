@@ -14,8 +14,11 @@ export function ModalContainer(props: ModalProps) {
     const [modalShow, setmodalShowToggle] = useState(show)
 
     useEffect(() => {
-        setmodalShowToggle(show);
-    }, [props.show])
+        const setModalShow = () => {
+            setmodalShowToggle(show);
+        };
+        setModalShow();
+    }, [show])
 
     const close = () => {
         setmodalShowToggle(!modalShow)

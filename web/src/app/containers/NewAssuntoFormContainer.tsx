@@ -21,11 +21,20 @@ const mapDispatchToProps = (dispatch: any) => {
             var promisse = dispatch(createAssunto(assunto))
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(createAssuntoSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(createAssuntoFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(createAssuntoFailure(data.error));
+                    }
+                    else {
+                        dispatch(createAssuntoFailure(data));
+                    }
                 }
-                else {
-                    dispatch(createAssuntoFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(createAssuntoSuccess(data));
                 }
             });
         },
@@ -34,11 +43,20 @@ const mapDispatchToProps = (dispatch: any) => {
             var promisse = dispatch(updateAssunto(assunto))
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(updateAssuntoSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(updateAssuntoFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(updateAssuntoFailure(data.error));
+                    }
+                    else {
+                        dispatch(updateAssuntoFailure(data));
+                    }
                 }
-                else {
-                    dispatch(updateAssuntoFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(updateAssuntoSuccess(data));
                 }
             });
         },

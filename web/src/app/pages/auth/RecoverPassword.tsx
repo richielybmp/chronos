@@ -16,16 +16,20 @@ function RecoverPassword(props: Props) {
 
     const { loading, error } = props.auth;
     const [showMessage, setShowMessage] = useState(false);
+    const { clearState } = props;
+
+    useEffect(() => {
+        const clear = () => {
+            clearState();
+        };
+        clear();
+    }, [clearState])
 
     const handleRecuperar = (email: string) => {
         props.recoverPassword(email, () => {
             setShowMessage(true);
         })
     }
-
-    useEffect(() => {
-        props.clearState();
-    }, [])
 
     if (loading) {
         return <LoaderComponent tamanho='big' titulo="Carregando" />

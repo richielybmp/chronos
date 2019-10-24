@@ -13,11 +13,20 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(createRevisaoSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(createRevisaoFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(createRevisaoFailure(data.error));
+                    }
+                    else {
+                        dispatch(createRevisaoFailure(data));
+                    }
                 }
-                else {
-                    dispatch(createRevisaoFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(createRevisaoSuccess(data));
                 }
             });
         },
@@ -27,11 +36,20 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(updateArtefatoSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(updateArtefatoFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(updateArtefatoFailure(data.error));
+                    }
+                    else {
+                        dispatch(updateArtefatoFailure(data));
+                    }
                 }
-                else {
-                    dispatch(updateArtefatoFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(updateArtefatoSuccess(data));
                 }
             });
         },

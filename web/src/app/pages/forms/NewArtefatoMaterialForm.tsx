@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Container, Grid, Input, Dropdown, TextArea } from 'semantic-ui-react';
 import { PortalError } from '../../shared/components';
-import { AssuntoState, Material, updateArtefato, Artefato } from 'chronos-core';
+import { AssuntoState, Material, Artefato } from 'chronos-core';
 
 interface Props {
     assuntoOnDetail: AssuntoState,
@@ -46,7 +46,6 @@ const NewArtefatoMaterialForm = (props: Props) => {
     const [tipoMaterialErro, setTipoMaterialErro] = useState('')
 
     const [descricao, setDescricao] = useState('')
-    const [descricaoErro, setDescricaoErro] = useState('')
 
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion

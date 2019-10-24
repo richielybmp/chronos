@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import { RevisaoCard, ConfirmDelete } from '..';
 import { MaterialCard, ExercicioCard } from '../cards';
 import { Artefato, AssuntoState } from 'chronos-core';
-import { Form, Grid, Checkbox, Divider, Icon, ButtonGroup } from 'semantic-ui-react';
+import { Divider, Icon, Checkbox } from 'semantic-ui-react';
 
 interface Props {
     artefatos: Artefato[]
@@ -24,48 +24,14 @@ export function SliderArtefatosContent(props: Props) {
     const [tipoParaDeletar, setTipoParaDeletar] = useState(-1);
     const [confirmationDelete, setConfirmationDelete] = useState(false);
 
-    const [inicio, setInicio] = useState('');
-    const [fim, setFim] = useState('');
-
     const [artefatosFilter, setArtefatosFilter] = useState({ revisoes: true, materiais: true, exercicios: true });
 
-    const filtrarArtefatos = (tipo: number) => {
-        return artefatos.filter(x => x.tipoArtefato === tipo);
-    }
-
-    const filtrarArtefatosData = (tipo: number) => {
-        return artefatos.filter(x => x.tipoArtefato === tipo && (x.data >= inicio && x.data <= fim));
-    }
-
-    const [materiais, setMateriais] = useState(filtrarArtefatos(0));
-    const [revisoes, setRevisoes] = useState(filtrarArtefatos(1));
-    const [exercicios, setExercicios] = useState(filtrarArtefatos(2));
-
-    const handleFiltroData = () => {
-        console.log(`${inicio} ${fim}`);
-
-        if ((inicio != undefined && inicio != '') && (fim != undefined && fim != '')) {
-            var dtInicio = new Date(inicio.replace(/-/g, '\/'));
-            var dtFim = new Date(fim.replace(/-/g, '\/'));
-
-            if (dtInicio < dtFim) {
-                setMateriais(filtrarArtefatosData(0));
-                setRevisoes(filtrarArtefatosData(1));
-                setExercicios(filtrarArtefatosData(2));
-            }
-        }
-    }
-
-    const handleLimparFiltro = () => {
-        setInicio('');
-        setFim('');
-        setMateriais(filtrarArtefatos(0));
-        setRevisoes(filtrarArtefatos(1));
-        setExercicios(filtrarArtefatos(2));
-    }
+    const materiais = artefatos.filter(x => x.tipoArtefato === 0);
+    const revisoes = artefatos.filter(x => x.tipoArtefato === 1);
+    const exercicios = artefatos.filter(x => x.tipoArtefato === 2);
 
     const handlePopModalDelete = () => {
-        setConfirmationDelete(!confirmationDelete);
+        setConfirmationDelete(!confirmationDelete)
     }
 
     const handleDeleteArtefato = (idArtefato: string, tipoArtefato: number) => {
@@ -103,39 +69,6 @@ export function SliderArtefatosContent(props: Props) {
 
     return (
         <>
-            <div className='center-content'>
-                <Form>
-                    <Form.Group>
-                        <Grid>
-                            <Grid.Column mobile='16' computer='6'>
-                                <Form.Input
-                                    label='Início'
-                                    name='inicio'
-                                    type='date'
-                                    value={inicio}
-                                    onChange={(e) => setInicio(e.target.value)}
-                                />
-                            </Grid.Column>
-                            <Grid.Column mobile='16' computer='6'>
-                                <Form.Input
-                                    label='Fim'
-                                    name='fim'
-                                    type='date'
-                                    value={fim}
-                                    onChange={(e) => setFim(e.target.value)}
-                                />
-                            </Grid.Column>
-                            <Grid.Column mobile='16' computer='4'>
-                                <ButtonGroup className="recuo-button-filter">
-                                    <Form.Button color='blue' content='Buscar' onClick={() => handleFiltroData()} />
-                                    <Form.Button content='Limpar' onClick={() => handleLimparFiltro()} style={{ marginLeft: '10px' }} />
-                                </ButtonGroup>
-                            </Grid.Column>
-                        </Grid>
-                    </Form.Group>
-                </Form>
-            </div>
-
             <div className='center-content'>
                 <Checkbox label='Revisões' checked={artefatosFilter.revisoes}
                     onChange={() => handleArtefatoFilterChange(1)} />
@@ -259,11 +192,10 @@ function SliderSettings() {
         infinite: false,
         speed: 300,
         slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToScroll: 2,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
         initialSlide: 0,
-        swipe: false,
         responsive: [
             {
                 breakpoint: 992,

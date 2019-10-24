@@ -13,25 +13,29 @@ interface Props {
 
 function CronogramaList(props: Props) {
 
-    const [modalShowToggle, setmodalShowToggle] = useState(false)
+    const [modalShowToggle, setmodalShowToggle] = useState(false);
 
-    const { cronogramas, loading } = props.cronogramaList
+    const { cronogramas, loading } = props.cronogramaList;
+    const { fetchCronogramas } = props;
 
     useEffect(() => {
-        props.fetchCronogramas()
-    }, [])
+        const fetch = () => {
+            fetchCronogramas();
+        };
+        fetch();
+    }, [fetchCronogramas])
 
     //#region 'Handles'
     const handleCronogramaOnDetail = (id: string) => {
-        props.fetchCronograma(id)
+        props.fetchCronograma(id);
     }
 
     const handlePopModal = () => {
-        setmodalShowToggle(!modalShowToggle)
+        setmodalShowToggle(!modalShowToggle);
     }
 
     const handleCloseModal = () => {
-        setmodalShowToggle(false)
+        setmodalShowToggle(false);
     }
     //#endregion
 
@@ -57,4 +61,4 @@ function CronogramaList(props: Props) {
     )
 }
 
-export default CronogramaList
+export default CronogramaList;

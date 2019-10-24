@@ -38,7 +38,7 @@ export const authReducer = (
                 user: action.payload, error: undefined, loading: false
             };
         case EnumAuthActions.SIGN_IN_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 user: null, error: error, loading: false
@@ -57,7 +57,7 @@ export const authReducer = (
                 newUser: action.payload, error: undefined, loading: false
             };
         case EnumAuthActions.SIGN_UP_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 newUser: null, user: null, error: error, loading: false
@@ -76,7 +76,7 @@ export const authReducer = (
             logout()
             return state
         case EnumAuthActions.LOG_OUT_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 user: null, error: error, loading: false
@@ -94,7 +94,7 @@ export const authReducer = (
                 ...state, user: { user: novo_user }, error: null, loading: false
             }
         case EnumAuthActions.UPDATE_USER_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 error: error, loading: false
@@ -107,7 +107,7 @@ export const authReducer = (
         case EnumAuthActions.RECOVER_PASSWORD_SUCCESS:
             return { ...state, error: null, loading: false }
         case EnumAuthActions.RECOVER_PASSWORD_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return { ...state, error: error, loading: false }
         //#endregion
 
@@ -117,7 +117,7 @@ export const authReducer = (
         case EnumAuthActions.CONFIRM_PASSWORD_SUCCESS:
             return { ...state, error: null, loading: false }
         case EnumAuthActions.CONFIRM_PASSWORD_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return { ...state, error: error, loading: false }
         //#endregion
 
@@ -141,4 +141,20 @@ export const authReducer = (
         default:
             return state;
     }
+}
+
+function getErrorMessage(action: { type: EnumAuthActions; payload: any; }) {
+    var error;
+
+    if (action.payload.msg) {
+        error = action.payload.msg;
+    }
+    else if (action.payload.message) {
+        error = action.payload.message;
+    }
+    else {
+        error = action.payload;
+    }
+
+    return error;
 }

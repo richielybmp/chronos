@@ -1,6 +1,6 @@
 import React from 'react'
 import { Disciplina, Artefato, Exercicio } from 'chronos-core';
-import { Statistic, Icon } from 'semantic-ui-react';
+import { Statistic } from 'semantic-ui-react';
 
 interface Props {
     disciplina: Disciplina,

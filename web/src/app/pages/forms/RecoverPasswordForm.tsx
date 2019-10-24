@@ -55,7 +55,7 @@ export default function RecoverPasswordForm(props: RecoverPasswordFormProps) {
     					</span>
 
                         <div className={`wrap-input100 validate-input ${emailError !== "" && "alert-validate"}`} data-validate={emailError}>
-                            <input className={`input100 ${emailHasValue}`} type="text" name="email" value={email} onChange={(e) => handleEmailChange(e.target.value)}></input>
+                            <input maxLength={100} className={`input100 ${emailHasValue}`} type="text" name="email" value={email} onChange={(e) => handleEmailChange(e.target.value)}></input>
                             <span className="focus-input100"></span>
                             <span className="label-input100">E-mail</span>
                         </div>

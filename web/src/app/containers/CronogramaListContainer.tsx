@@ -22,11 +22,20 @@ const mapDispatchToProps = (dispatch: any) => {
             var promisse = dispatch(fetchCronogramas())
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!data.error && !data.exception) {
-                    dispatch(fetchCronogramasSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(fetchCronogramasFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(fetchCronogramasFailure(data.error));
+                    }
+                    else {
+                        dispatch(fetchCronogramasFailure(data));
+                    }
                 }
-                else {
-                    dispatch(fetchCronogramasFailure(data));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(fetchCronogramasSuccess(data));
                 }
             });
         },
@@ -36,11 +45,20 @@ const mapDispatchToProps = (dispatch: any) => {
             var promisse = dispatch(fetchCronograma(id))
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!data.error && !data.exception) {
-                    dispatch(fetchCronogramaSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(fetchCronogramaFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(fetchCronogramaFailure(data.error));
+                    }
+                    else {
+                        dispatch(fetchCronogramaFailure(data));
+                    }
                 }
-                else {
-                    dispatch(fetchCronogramaFailure(data));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(fetchCronogramaSuccess(data));
                 }
             });
         }

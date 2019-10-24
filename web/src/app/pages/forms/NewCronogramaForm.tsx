@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Grid, Container, Input } from 'semantic-ui-react';
+import { Form, Button, Grid, Container } from 'semantic-ui-react';
 import { Cronograma, CronogramaState } from 'chronos-core';
 import { LoaderComponent, PortalError } from '../../shared/components';
 
@@ -17,6 +17,7 @@ interface Props {
 export const NewCronogramaForm = (props: Props) => {
 
     const { cronograma, error, loading } = props.novoCronograma
+    const { resetMe } = props
 
     //#region 'States'
     const [cronogramaTitulo, setNovoCronogramaTitulo] = useState('')
@@ -34,6 +35,42 @@ export const NewCronogramaForm = (props: Props) => {
     const [ehEdicao, setEhEdicao] = useState(false)
 
     const [dataMinima, setDataMinima] = useState(new Date().toISOString().substring(0, 10))
+    //#endregion
+
+    //#region 'Effects'
+    useEffect(() => {
+        const reset = () => {
+            resetMe();
+        };
+        return () => {
+            reset();
+        }
+    }, [resetMe])
+
+    useEffect(() => {
+        if (cronograma && !error) {
+            props.close()
+        }
+    })
+
+    useEffect(() => {
+        if (props.cronogramaOnDetail.cronograma != null) {
+            const { cronograma } = props.cronogramaOnDetail
+
+            const dateI = cronograma.inicio.split(" ").length > 1 ?
+                new Date(cronograma.inicio).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : cronograma.inicio
+            const dateF = cronograma.fim.split(" ").length > 1 ?
+                new Date(cronograma.fim).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : cronograma.fim
+
+            setNovoCronogramaDataInicio(dateI)
+            setNovoCronogramaDataFim(dateF)
+            setNovoCronogramaTitulo(cronograma.titulo)
+            setNovoCronogramaDescricao(cronograma.descricao)
+            setDataMinima(cronograma.inicio.substring(0, 10))
+            setEhEdicao(true)
+        }
+    }, [props.cronogramaOnDetail])
+
     //#endregion
 
     //#region 'Handles'
@@ -83,8 +120,8 @@ export const NewCronogramaForm = (props: Props) => {
             inconsistente = true
         }
 
-        var inicio = new Date(cronogramaDataInicio.replace(/-/g, '\/'))
-        var fim = new Date(cronogramaDataFim.replace(/-/g, '\/'))
+        var inicio = new Date(cronogramaDataInicio.replace(/-/g, '/'))
+        var fim = new Date(cronogramaDataFim.replace(/-/g, '/'))
 
         if (inicio > fim) {
             setNovoCronogramaDataFimErro('Data fim do cronograma deve ser após a data início.')
@@ -110,37 +147,7 @@ export const NewCronogramaForm = (props: Props) => {
         }
     }
 
-    //#region 'Effects'
-    useEffect(() => {
-        if (cronograma && !error) {
-            props.close()
-        }
-    })
 
-    useEffect(() => {
-        if (props.cronogramaOnDetail.cronograma != null) {
-            const { cronograma } = props.cronogramaOnDetail
-
-            const dateI = cronograma.inicio.split(" ").length > 1 ?
-                new Date(cronograma.inicio).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : cronograma.inicio
-            const dateF = cronograma.fim.split(" ").length > 1 ?
-                new Date(cronograma.fim).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : cronograma.fim
-
-            setNovoCronogramaDataInicio(dateI)
-            setNovoCronogramaDataFim(dateF)
-            setNovoCronogramaTitulo(cronograma.titulo)
-            setNovoCronogramaDescricao(cronograma.descricao)
-            setDataMinima(cronograma.inicio.substring(0, 10))
-            setEhEdicao(true)
-        }
-    }, [props.cronogramaOnDetail])
-
-    useEffect(() => {
-        return () => {
-            props.resetMe()
-        };
-    }, []);
-    //#endregion
 
     if (loading) {
         return (<Container style={{ padding: '5em 1em' }}>
@@ -161,6 +168,7 @@ export const NewCronogramaForm = (props: Props) => {
                             <input
                                 placeholder='Meu cronograma'
                                 value={cronogramaTitulo}
+                                maxLength={100}
                                 onChange={(e) => handleTituloChange(e)} />
                         </Form.Field>
                     </Grid.Column>
@@ -170,6 +178,7 @@ export const NewCronogramaForm = (props: Props) => {
                             <input
                                 placeholder='Breve descrição do cronograma'
                                 value={cronogramaDescricao}
+                                maxLength={100}
                                 onChange={(e) => handleDescricaoChange(e)} />
                         </Form.Field>
                     </Grid.Column>

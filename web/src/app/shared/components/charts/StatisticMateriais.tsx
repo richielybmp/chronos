@@ -1,5 +1,5 @@
 import React from 'react'
-import { Disciplina, Artefato, Exercicio, Material } from 'chronos-core';
+import { Disciplina, Artefato, Material } from 'chronos-core';
 import { Statistic } from 'semantic-ui-react';
 
 interface Props {

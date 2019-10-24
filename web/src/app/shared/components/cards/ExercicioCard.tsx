@@ -1,6 +1,6 @@
 import React from 'react';
-import { Artefato, Revisao, EnumEscopo, Exercicio } from 'chronos-core';
-import { Card, Icon, Label, Divider, Progress } from 'semantic-ui-react';
+import { Artefato, Exercicio } from 'chronos-core';
+import { Card, Icon, Progress } from 'semantic-ui-react';
 import Utils from '../../../utils/utils';
 
 interface CardProps {

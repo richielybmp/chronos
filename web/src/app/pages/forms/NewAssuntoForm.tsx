@@ -69,7 +69,7 @@ const NewAssuntoForm = (props: Props) => {
             setAssuntoDescricao(assunto.descricao)
             setEhEdicao(true)
         }
-    }, [props.assuntoOnDetail])
+    }, [props.assuntoOnDetail, idDisciplina])
 
     useEffect(() => {
     }, [])
@@ -85,6 +85,7 @@ const NewAssuntoForm = (props: Props) => {
                             <input
                                 placeholder='Assunto'
                                 value={assuntoDescricao}
+                                maxLength={100}
                                 onChange={(e) => handleTituloChange(e)} />
                         </Form.Field>
                     </Grid.Column>

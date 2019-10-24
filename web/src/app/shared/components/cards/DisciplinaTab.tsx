@@ -37,7 +37,7 @@ export function DisciplinaTab(props: DisciplinaTabProps) {
         var d = disciplinas.find(x => x.nome === disciplinaOnDetail)
         if (d)
             setActiveAssuntos(d.assuntos)
-    }, [disciplinaOnDetail])
+    }, [disciplinaOnDetail, disciplinas])
 
     const [activeAssuntos, setActiveAssuntos] =
         useState(hasDisciplinas ? disciplinas[0].assuntos : [])

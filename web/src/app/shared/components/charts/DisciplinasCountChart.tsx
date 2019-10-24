@@ -28,7 +28,6 @@ const colorshover = ['rgba(255,65,127,0.4)', 'rgba(0,65,127,0.4)', 'rgba(100,65,
 
 function ObtenhaDadosDisciplinas(cronogramas: Cronograma[]) {
 
-    var colorIndex = 0;
     const dados_disciplinas = {
         labels: ["Disciplinas"],
         datasets:

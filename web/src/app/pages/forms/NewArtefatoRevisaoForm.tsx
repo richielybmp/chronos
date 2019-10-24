@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Container, Grid, Input, Label, TextArea, Segment } from 'semantic-ui-react';
+import { Form, Button, Container, Grid, Input, Label, Segment } from 'semantic-ui-react';
 import { PortalError } from '../../shared/components';
 import { AssuntoState, Revisao, Artefato } from 'chronos-core';
 import RevisaoContent from '../../shared/components/content/RevisaoContent';
-import Utils from '../../utils/utils';
 
 interface Props {
     assuntoOnDetail: AssuntoState,
@@ -27,7 +26,6 @@ const NewArtefatoRevisaoForm = (props: Props) => {
     const [optionRevisaoErro, setOptionRevisaoErro] = useState('')
 
     const [descricao, setDescricao] = useState('')
-    const [descricaoErro, setDescricaoErro] = useState('')
 
     const [ehEdicao, setEhEdicao] = useState(false)
     //#endregion
@@ -42,10 +40,6 @@ const NewArtefatoRevisaoForm = (props: Props) => {
 
     const handleOptionSelected = (option: number) => {
         setOptionRevisao(option);
-    }
-
-    const handleDescricaoChange = (value: string) => {
-        setDescricao(value);
     }
 
     const handleErrorClose = () => {
@@ -103,7 +97,6 @@ const NewArtefatoRevisaoForm = (props: Props) => {
                     new Date(artefato.data).toLocaleString("pt-br").split(" ")[0].split('/').reverse().join('-') : artefato.data
 
                 const escopo = (artefato as Revisao).escopo.toString();
-
                 setArtefatoData(data);
                 setOptionRevisao(parseInt(escopo));
                 setDescricao(artefato.descricao);
@@ -116,7 +109,7 @@ const NewArtefatoRevisaoForm = (props: Props) => {
     useEffect(() => {
         listenForId();
         return listenForId;
-    }, [props.idOnDetail])
+    }, [idOnDetail])
 
     return (
         <Form onSubmit={(e: any, dispatch: any) => handleCreateRevisao(e)}>
@@ -141,12 +134,6 @@ const NewArtefatoRevisaoForm = (props: Props) => {
 
                 <Segment basic>
                     <RevisaoContent setOptionSelected={handleOptionSelected} value={optionRevisao} />
-
-                    <TextArea
-                        placeholder='Anotações'
-                        value={descricao}
-                        onChange={(e: any) => handleDescricaoChange(e.target.value.toString())}
-                    />
                 </Segment>
 
                 {optionRevisaoErro.length > 0 &&

@@ -1,6 +1,5 @@
 
-import React, { useState } from "react";
-import { Divider, Checkbox } from "semantic-ui-react";
+import React from "react";
 import { Artefato } from "chronos-core";
 import SliderArtefatosContainer from "../../../containers/SliderArtefatosContainer";
 

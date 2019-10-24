@@ -17,9 +17,14 @@ function SignUp(props: Props) {
     const { loading, error, newUser } = props.auth
     const [criouUsuario, setCriouUsuario] = useState(false)
 
+    const { clearState } = props
+
     useEffect(() => {
-        props.clearState();
-    }, [])
+        const clear = () => {
+            clearState();
+        };
+        clear();
+    }, [clearState])
 
     useEffect(() => {
         listenForAuthUser();

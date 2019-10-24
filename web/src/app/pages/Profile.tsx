@@ -18,9 +18,13 @@ const Profile = (props: ProfileProps) => {
 
     const { error, loading } = authState
 
+
     useEffect(() => {
-        clearUserError()
-    }, [])
+        const clear = () => {
+            clearUserError();
+        };
+        clear();
+    }, [clearUserError])
 
     const [editName, setEditName] = useState('');
     const [editMode, setEditMode] = useState(false);
@@ -74,7 +78,7 @@ const Profile = (props: ProfileProps) => {
                                         <Icon name='cancel' style={{ marginLeft: '10px' }} />
                                     </a>
 
-                                    <a onClick={() => handleUpdateUser()} rel="noopener noreferrer">
+                                    <a onClick={() => handleUpdateUser()} href="#" rel="noopener noreferrer">
                                         <Icon name='save' style={{ marginLeft: '10px' }} />
                                     </a>
                                 </List.Content>

@@ -88,7 +88,7 @@ const NewDisciplinaForm = (props: Props) => {
                 setEhEdicao(true)
             }
         }
-    }, [props.cronogramaOnDetail])
+    }, [props.cronogramaOnDetail, cronograma, idOnDetail])
 
     return (
         <Form onSubmit={(e: any, dispatch: any) => handleCreateDisciplina(e)}>
@@ -101,6 +101,7 @@ const NewDisciplinaForm = (props: Props) => {
                             <input
                                 placeholder='Disciplina'
                                 value={disciplinaTitulo}
+                                maxLength={100}
                                 onChange={(e) => handleTituloChange(e)} />
                         </Form.Field>
                     </Grid.Column>
@@ -111,6 +112,7 @@ const NewDisciplinaForm = (props: Props) => {
                             <input
                                 placeholder='Descrição'
                                 value={disciplinaDescricao}
+                                maxLength={150}
                                 onChange={(e) => handleDescricaoChange(e)} />
                         </Form.Field>
                     </Grid.Column>

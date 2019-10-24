@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { ConfirmDelete, ModalContainer, ArtefatosSection, ExpansibleButtons, EmptyArtefatosHeader } from '../shared/components';
-import { Artefato, AssuntoState } from 'chronos-core';
+import { ModalContainer, ArtefatosSection, ExpansibleButtons, EmptyArtefatosHeader } from '../shared/components';
+import { AssuntoState } from 'chronos-core';
 import { Segment } from 'semantic-ui-react';
 import NewArtefatoMaterialFormContainer from '../containers/NewArtefatoMaterialFormContainer';
 import NewArtefatoExercicioFormContainer from '../containers/NewArtefatoExercicioFormContainer';
@@ -16,7 +16,7 @@ interface Props {
 function ArtefatoList(props: Props) {
 
     // const { artefatos } = props
-    const { assunto, loading, error } = props.assuntoOnDetail
+    const { assunto } = props.assuntoOnDetail
 
     const artefatos = assunto ? assunto.artefatos : [];
 

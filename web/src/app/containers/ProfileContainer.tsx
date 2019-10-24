@@ -17,11 +17,20 @@ const mapDispatchToProps = (dispatch: any) => {
 
             promisse.payload.then((response: any) => {
                 const data = response.data;
-                if (!response.error && !data.exception) {
-                    dispatch(updateUserSuccess(data));
+
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(updateUserFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(updateUserFailure(data.error));
+                    }
+                    else {
+                        dispatch(updateUserFailure(data));
+                    }
                 }
-                else {
-                    dispatch(updateUserFailure(data.message));
+                else if (!response.error && !data.exception && !data.error) {
+                    dispatch(updateUserSuccess(data));
                 }
             });
         },
@@ -50,8 +59,6 @@ const mapDispatchToProps = (dispatch: any) => {
         },
     }
 };
-
-// const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
 
 export default connect(
     mapStateToProps,

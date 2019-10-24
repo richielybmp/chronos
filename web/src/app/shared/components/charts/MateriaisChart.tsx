@@ -1,6 +1,6 @@
 import React from 'react'
 import { Bar } from 'react-chartjs-2';
-import { Cronograma, Disciplina, Assunto, Exercicio, Artefato, Material } from 'chronos-core';
+import { Disciplina, Assunto, Artefato, Material } from 'chronos-core';
 
 interface Props {
     disciplina: Disciplina

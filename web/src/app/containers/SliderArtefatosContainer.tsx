@@ -14,13 +14,21 @@ const mapDispatchToProps = (dispatch: any) => {
             promisse.payload.then((response: any) => {
                 const data = response.data;
 
-                if (!response.error && (!data.exception || response.status !== "404")) {
+                if (response.status === 500 || data.error) {
+                    if (data.exception) {
+                        dispatch(deleteArtefatoFailure(data.message));
+                    }
+                    else if (data.error) {
+                        dispatch(deleteArtefatoFailure(data.error));
+                    }
+                    else {
+                        dispatch(deleteArtefatoFailure(data));
+                    }
+                }
+                else if (!response.error && !data.exception && !data.error) {
                     dispatch(deleteArtefatoSuccess(data));
                     if (callback)
                         callback()
-                }
-                else {
-                    dispatch(deleteArtefatoFailure(data.message));
                 }
             });
         },

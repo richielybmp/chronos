@@ -1,9 +1,8 @@
-import { EnumCronogramaActions } from "../../domain";
+import { EnumCronogramaActions, EnumAuthActions } from "../../domain";
 import { CronogramaActionsType } from "../actions/cronogramaActions";
 import { ChronosStateType } from "../../frameworks";
 import { CronogramaRepository } from "../../storage";
 import _ = require("lodash");
-import { string } from "prop-types";
 
 const repository = new CronogramaRepository();
 
@@ -43,7 +42,7 @@ export const chronosReducer = (
                 assuntoOnDetail: INITIAL_STATE_ASSUNTO_ON_DETAIL,
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMAS_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 cronogramasList: { cronogramas: [], error: error, loading: false }
@@ -64,7 +63,7 @@ export const chronosReducer = (
                 assuntoOnDetail: INITIAL_STATE_ASSUNTO_ON_DETAIL,
             };
         case EnumCronogramaActions.FETCH_CRONOGRAMA_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: null, error: error, loading: false }
@@ -87,7 +86,7 @@ export const chronosReducer = (
                 novoCronograma: { old: null, cronograma: action.payload, error: null, loading: false }
             };
         case EnumCronogramaActions.CREATE_CRONOGRAMA_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 novoCronograma: { old: null, cronograma: null, error: error, loading: false }
@@ -128,7 +127,7 @@ export const chronosReducer = (
                 },
             };
         case EnumCronogramaActions.UPDATE_CRONOGRAMA_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             const old = state.cronogramaOnDetail.old;
             return {
                 ...state,
@@ -148,7 +147,7 @@ export const chronosReducer = (
                 cronogramaOnDetail: { cronograma: null, old: null, error: null, loading: false }
             }
         case EnumCronogramaActions.DELETE_CRONOGRAMA_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
@@ -173,7 +172,7 @@ export const chronosReducer = (
                 cronogramaOnDetail: { cronograma: cronograma_atualizado, old: null, error: null, loading: false }
             }
         case EnumCronogramaActions.CREATE_DISCIPLINA_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
@@ -207,7 +206,7 @@ export const chronosReducer = (
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, cronograma: cronograma, error: null, loading: false }
             }
         case EnumCronogramaActions.DELETE_DISCIPLINA_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
@@ -239,7 +238,7 @@ export const chronosReducer = (
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: false }
             }
         case EnumCronogramaActions.UPDATE_DISCIPLINA_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             var cronograma_old = state.cronogramaOnDetail.old;
             return {
                 ...state,
@@ -269,7 +268,7 @@ export const chronosReducer = (
                 cronogramaOnDetail: { cronograma: cronograma_atual, old: null, error: null, loading: false }
             }
         case EnumCronogramaActions.CREATE_ASSUNTO_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
@@ -292,7 +291,7 @@ export const chronosReducer = (
                 assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assuntoDetalhe, loading: false }
             }
         case EnumCronogramaActions.FETCH_ASSUNTO_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
@@ -338,7 +337,7 @@ export const chronosReducer = (
                 }
             }
         case EnumCronogramaActions.UPDATE_ASSUNTO_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
@@ -372,7 +371,7 @@ export const chronosReducer = (
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: null, loading: false }
             }
         case EnumCronogramaActions.DELETE_ASSUNTO_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 cronogramaOnDetail: { ...state.cronogramaOnDetail, error: error, loading: false }
@@ -397,7 +396,7 @@ export const chronosReducer = (
                 assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
             }
         case EnumCronogramaActions.CREATE_EXERCICIO_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
@@ -422,7 +421,7 @@ export const chronosReducer = (
                 assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
             }
         case EnumCronogramaActions.CREATE_MATERIAL_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
@@ -447,7 +446,7 @@ export const chronosReducer = (
                 assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
             }
         case EnumCronogramaActions.CREATE_REVISAO_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
@@ -468,7 +467,7 @@ export const chronosReducer = (
                 assuntoOnDetail: { ...state.assuntoOnDetail, assunto: assunto_atualizado, error: null, loading: false }
             }
         case EnumCronogramaActions.UPDATE_ARTEFATO_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
@@ -515,7 +514,7 @@ export const chronosReducer = (
                 }
             }
         case EnumCronogramaActions.DELETE_ARTEFATO_FAILURE:
-            error = action.payload || { message: action.payload.message };
+            error = getErrorMessage(action);
             return {
                 ...state,
                 assuntoOnDetail: { ...state.assuntoOnDetail, error: error, loading: false }
@@ -568,4 +567,21 @@ const obtenhaIDArtefatoDeletado = (artefato: any) => {
         return artefato.exercicio;
     }
 
+}
+
+
+function getErrorMessage(action: { type: EnumCronogramaActions; payload: any; }) {
+    var error;
+
+    if (action.payload.msg) {
+        error = action.payload.msg;
+    }
+    else if (action.payload.message) {
+        error = action.payload.message;
+    }
+    else {
+        error = action.payload;
+    }
+
+    return error;
 }

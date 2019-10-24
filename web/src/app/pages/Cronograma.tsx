@@ -20,10 +20,14 @@ const CronogramaDetail = (props: Props) => {
     const [modalShowToggle, setmodalShowToggle] = useState(false)
     const [confirmationDelete, setConfirmationDelete] = useState(false)
 
+    const { setDisciplinaOnDetail } = props
 
     useEffect(() => {
-        props.setDisciplinaOnDetail("");
-    }, [])
+        const setDisciplina = () => {
+            setDisciplinaOnDetail("");
+        };
+        setDisciplina();
+    }, [setDisciplinaOnDetail])
 
     //#region Handles
     const handlePopModal = () => {
