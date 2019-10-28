@@ -3,7 +3,6 @@ import { clearError, deleteArtefato, deleteArtefatoSuccess, deleteArtefatoFailur
 import { SliderArtefatosContent } from "../shared/components";
 
 const mapStateToProps = (state: any) => ({
-    assuntoOnDetail: state.cronogramas.assuntoOnDetail,
 });
 
 const mapDispatchToProps = (dispatch: any) => {

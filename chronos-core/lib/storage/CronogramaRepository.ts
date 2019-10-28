@@ -123,7 +123,7 @@ export class CronogramaRepository {
     convertaMaterial(material: any) {
         let novo_material = new Material(
             material.uuid,
-            material.uuid_assunto,
+            material.assunto_uuid,
             material.data,
             material.descricao,
             material.time,

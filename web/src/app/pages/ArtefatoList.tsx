@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ModalContainer, ArtefatosSection, ExpansibleButtons, EmptyArtefatosHeader } from '../shared/components';
 import { AssuntoState } from 'chronos-core';
 import { Segment } from 'semantic-ui-react';
@@ -7,7 +7,6 @@ import NewArtefatoExercicioFormContainer from '../containers/NewArtefatoExercici
 import NewArtefatoRevisaoFormContainer from '../containers/NewArtefatoRevisaoFormContainer';
 
 interface Props {
-    // artefatos: Artefato[],
     assuntoOnDetail: AssuntoState,
     matchUrl: any,
     history: any,
@@ -15,12 +14,11 @@ interface Props {
 
 function ArtefatoList(props: Props) {
 
-    // const { artefatos } = props
     const { assunto } = props.assuntoOnDetail
 
     const artefatos = assunto ? assunto.artefatos : [];
 
-    const hasArtefatos = assunto && assunto.artefatos.length > 0;
+    const hasArtefatos = artefatos && artefatos.length > 0;
 
     //#region States
     const [novaRevisao, setNovaRevisao] = useState(false)
@@ -28,6 +26,10 @@ function ArtefatoList(props: Props) {
     const [novoExercicio, setNovoExercicio] = useState(false)
     const [keyOnDetail, setKeyOnDetail] = useState("")
     const [idParaEditar, setIdParaEditar] = useState("")
+
+    const materiais = artefatos.filter(x => x.tipoArtefato === 0);
+    const revisoes = artefatos.filter(x => x.tipoArtefato === 1);
+    const exercicios = artefatos.filter(x => x.tipoArtefato === 2);
 
     //#endregion
 
@@ -90,7 +92,8 @@ function ArtefatoList(props: Props) {
                             actionNewRevisao={handleNovaRevisao}
                         />
                         <br />
-                        <ArtefatosSection artefatos={artefatos} handleEdit={handleEditArtefato} />
+
+                        <ArtefatosSection m={materiais} r={revisoes} e={exercicios} handleEdit={handleEditArtefato} />
                     </>
                     :
                     <EmptyArtefatosHeader

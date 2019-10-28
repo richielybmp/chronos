@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./slider.css";
 import Slider from 'react-slick';
 import { RevisaoCard, ConfirmDelete } from '..';
 import { MaterialCard, ExercicioCard } from '../cards';
-import { Artefato, AssuntoState } from 'chronos-core';
-import { Divider, Icon, Checkbox } from 'semantic-ui-react';
+import { Artefato } from 'chronos-core';
+import { Divider, Icon, Checkbox, Form, Grid, ButtonGroup } from 'semantic-ui-react';
 
 interface Props {
-    artefatos: Artefato[]
-    , assuntoOnDetail: AssuntoState
+    m: Artefato[]
+    , r: Artefato[]
+    , e: Artefato[]
     , deleteArtefato: (id: string, tipo: number, callBack: Function) => void
     , handleEdit: (id: string, tipo: number) => void
     , clearError: () => void
@@ -18,21 +19,31 @@ export function SliderArtefatosContent(props: Props) {
 
     const settings = SliderSettings();
 
-    const { artefatos, deleteArtefato, handleEdit } = props;
+    const { m, r, e, deleteArtefato, handleEdit } = props;
 
     const [idParaDeletar, setIdParaDeletar] = useState("");
     const [tipoParaDeletar, setTipoParaDeletar] = useState(-1);
     const [confirmationDelete, setConfirmationDelete] = useState(false);
 
+    const [inicio, setInicio] = useState('');
+    const [fim, setFim] = useState('');
+
     const [artefatosFilter, setArtefatosFilter] = useState({ revisoes: true, materiais: true, exercicios: true });
 
-    const materiais = artefatos.filter(x => x.tipoArtefato === 0);
-    const revisoes = artefatos.filter(x => x.tipoArtefato === 1);
-    const exercicios = artefatos.filter(x => x.tipoArtefato === 2);
+    const [materiais, setMateriais] = useState(m);
+    const [revisoes, setRevisoes] = useState(r);
+    const [exercicios, setExercicios] = useState(e);
 
     const handlePopModalDelete = () => {
         setConfirmationDelete(!confirmationDelete)
     }
+
+    useEffect(() => {
+        setMateriais(m);
+        setRevisoes(r);
+        setExercicios(e);
+        handleFiltroData();
+    }, [m, r, e])
 
     const handleDeleteArtefato = (idArtefato: string, tipoArtefato: number) => {
         if (idArtefato && tipoArtefato !== -1) {
@@ -67,8 +78,63 @@ export function SliderArtefatosContent(props: Props) {
         }
     }
 
+    const handleFiltroData = () => {
+
+        if ((inicio != undefined && inicio != '') && (fim != undefined && fim != '')) {
+            var dtInicio = new Date(inicio.replace(/-/g, '\/'));
+            var dtFim = new Date(fim.replace(/-/g, '\/'));
+
+            if (dtInicio < dtFim) {
+                setMateriais(m.filter(x => x.data >= inicio && x.data <= fim + 1))
+                setRevisoes(r.filter(x => x.data >= inicio && x.data <= fim + 1))
+                setExercicios(e.filter(x => x.data >= inicio && x.data <= fim + 1))
+            }
+        }
+    }
+
+    const handleLimparFiltro = () => {
+        setInicio('');
+        setFim('');
+        setMateriais(m);
+        setRevisoes(r);
+        setExercicios(e);
+    }
+
     return (
         <>
+            <div className='center-content'>
+                <Form>
+                    <Form.Group>
+                        <Grid>
+                            <Grid.Column mobile='16' computer='6'>
+                                <Form.Input
+                                    label='Início'
+                                    name='inicio'
+                                    type='date'
+                                    value={inicio}
+                                    onChange={(e) => setInicio(e.target.value)}
+                                />
+                            </Grid.Column>
+                            <Grid.Column mobile='16' computer='6'>
+                                <Form.Input
+                                    label='Fim'
+                                    name='fim'
+                                    type='date'
+                                    value={fim}
+                                    onChange={(e) => setFim(e.target.value)}
+                                />
+                            </Grid.Column>
+                            <Grid.Column mobile='16' computer='4'>
+                                <ButtonGroup className="recuo-button-filter">
+                                    <Form.Button color='blue' content='Filtrar' onClick={() => handleFiltroData()} />
+                                    <Form.Button content='Limpar' onClick={() => handleLimparFiltro()} style={{ marginLeft: '10px' }} />
+                                </ButtonGroup>
+                            </Grid.Column>
+                        </Grid>
+                    </Form.Group>
+                </Form>
+            </div>
+
             <div className='center-content'>
                 <Checkbox label='Revisões' checked={artefatosFilter.revisoes}
                     onChange={() => handleArtefatoFilterChange(1)} />
