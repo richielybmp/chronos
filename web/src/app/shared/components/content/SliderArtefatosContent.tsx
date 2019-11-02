@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import { RevisaoCard, ConfirmDelete } from '..';
 import { MaterialCard, ExercicioCard } from '../cards';
 import { Artefato } from 'chronos-core';
-import { Divider, Icon, Checkbox, Form, Grid, ButtonGroup } from 'semantic-ui-react';
+import { Divider, Icon, Checkbox, Form, Grid, ButtonGroup, Input } from 'semantic-ui-react';
 
 interface Props {
     m: Artefato[]
@@ -29,6 +29,8 @@ export function SliderArtefatosContent(props: Props) {
     const [fim, setFim] = useState('');
 
     const [artefatosFilter, setArtefatosFilter] = useState({ revisoes: true, materiais: true, exercicios: true });
+
+    const [pesquisa, setPesquisa] = useState('');
 
     const [materiais, setMateriais] = useState(m);
     const [revisoes, setRevisoes] = useState(r);
@@ -92,6 +94,18 @@ export function SliderArtefatosContent(props: Props) {
         }
     }
 
+    const handleFiltroDescricao = () => {
+
+        if (pesquisa != '' || pesquisa.length > 0) {
+            setMateriais(m.filter(x => x.descricao && x.descricao.toLowerCase().includes(pesquisa)));
+            setRevisoes(r.filter(x => x.descricao && x.descricao.toLowerCase().includes(pesquisa)));
+            setExercicios(e.filter(x => x.descricao && x.descricao.toLowerCase().includes(pesquisa)));
+        }
+        else {
+            handleLimparFiltro();
+        }
+    }
+
     const handleLimparFiltro = () => {
         setInicio('');
         setFim('');
@@ -102,6 +116,14 @@ export function SliderArtefatosContent(props: Props) {
 
     return (
         <>
+            <div className='center-content'>
+                <Input
+                    action={{ icon: 'search', onClick: () => handleFiltroDescricao() }}
+                    defaultValue={pesquisa}
+                    onChange={(e) => setPesquisa(e.target.value)}
+                    placeholder='Buscar...' />
+            </div>
+
             <div className='center-content'>
                 <Form>
                     <Form.Group>

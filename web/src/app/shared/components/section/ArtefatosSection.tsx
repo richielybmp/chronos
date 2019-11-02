@@ -4,11 +4,9 @@ import { Artefato } from "chronos-core";
 import SliderArtefatosContainer from "../../../containers/SliderArtefatosContainer";
 
 interface Props {
-    //artefatos: Artefato[]
     m: Artefato[]
     , r: Artefato[]
     , e: Artefato[]
-
     , handleEdit: (id: string, tipo: number) => void
 }
 

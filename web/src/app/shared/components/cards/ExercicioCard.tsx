@@ -29,7 +29,7 @@ export function ExercicioCard(props: CardProps) {
                 <br />
                 <Card.Content>{`${acertos} exercícios corretos de ${total}`}</Card.Content>
                 <Progress percent={proporcao} color={color} progress />
-                {/* <Card.Meta>{artefato.descricao}</Card.Meta> */}
+                <Card.Meta>{artefato.descricao}</Card.Meta>
                 <Card.Meta>{Utils.formatDateString(artefato.data)}</Card.Meta>
             </Card.Content>
             <Card.Content
