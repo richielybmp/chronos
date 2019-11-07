@@ -23,15 +23,15 @@ function baseOptions() {
 }
 
 function ObtenhaRevisoes(artefatos: Artefato[]) {
-    var exercicios: Revisao[] = [];
+    var revisoes: Revisao[] = [];
 
     artefatos.forEach(element => {
         if (element.tipoArtefato === 1) {
-            exercicios.push(element as Revisao);
+            revisoes.push(element as Revisao);
         }
     });
 
-    return exercicios;
+    return revisoes;
 }
 
 function ObtenhaDadosAssuntos(assuntos: Assunto[]) {
@@ -66,19 +66,24 @@ function ObtenhaEscopos(el: Assunto) {
 
     for (let i = 0; i < revisoes.length; i++) {
 
-        if (revisoes[i].escopo === EnumEscopo.DIARIA) {
+        if (revisoes[i].escopo as EnumEscopo == EnumEscopo.DIARIA) {
             escopo_diario.push(revisoes[i]);
+            continue
         }
-        if (revisoes[i].escopo === EnumEscopo.SEMANAL) {
+        if (revisoes[i].escopo as EnumEscopo == EnumEscopo.SEMANAL) {
             escopo_semanal.push(revisoes[i]);
+            continue
         }
-        if (revisoes[i].escopo === EnumEscopo.QUINZENAL) {
+        if (revisoes[i].escopo as EnumEscopo == EnumEscopo.QUINZENAL) {
             escopo_quinzenal.push(revisoes[i]);
+            continue
         }
-        if (revisoes[i].escopo === EnumEscopo.MENSAL) {
+        if (revisoes[i].escopo as EnumEscopo == EnumEscopo.MENSAL) {
             escopo_mensal.push(revisoes[i]);
+            continue
         }
     }
+
     return { escopo_diario, escopo_semanal, escopo_quinzenal, escopo_mensal };
 }
 
