@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Form, Message, Icon } from 'semantic-ui-react';
 import '../../../style/css/main.css';
 import '../../../style/css/util.css';
+import '../../../style/fonts/font-awesome-4.7.0/css/font-awesome.css'
 
 interface SignInFormProps {
     error: any,
