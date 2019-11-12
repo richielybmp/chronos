@@ -42,8 +42,8 @@ function ObtenhaDadosAssuntos(assuntos: Assunto[]) {
             assuntos.map((el, i) => {
                 const exercicios = ObtenhaExercicios(el.artefatos);
 
-                const total = exercicios.reduce((a, b) => a + b.quantidade, 0);
-                const acertos = exercicios.reduce((a, b) => a + b.acertos, 0);
+                const total = exercicios.reduce((a, b) => parseInt(a.toString()) + parseInt(b.quantidade.toString()), 0);
+                const acertos = exercicios.reduce((a, b) => parseInt(a.toString()) + parseInt(b.acertos.toString()), 0);
 
                 return {
                     label: el.descricao,

@@ -24,9 +24,10 @@ function totalDeExercicios(disciplina: Disciplina) {
     const total = disciplina.assuntos.reduce((aa, element) => {
         var exercicios = ObtenhaExercicios(element.artefatos);
         const tot = exercicios.reduce((a, b) => {
-            return a + b['quantidade'];
+            return parseInt(a.toString()) + parseInt(b['quantidade'].toString());
         }, 0);
 
+        debugger
         return parseInt(aa.toString()) + parseInt(tot.toString());
     }, 0);
 
@@ -37,7 +38,7 @@ function totalDeAcertos(disciplina: Disciplina) {
     const total = disciplina.assuntos.reduce((aa, element) => {
         var exercicios = ObtenhaExercicios(element.artefatos);
         const tot = exercicios.reduce((a, b) => {
-            return a + b['acertos'];
+            return parseInt(a.toString()) + parseInt(b['acertos'].toString());
         }, 0);
 
         return parseInt(aa.toString()) + parseInt(tot.toString());
